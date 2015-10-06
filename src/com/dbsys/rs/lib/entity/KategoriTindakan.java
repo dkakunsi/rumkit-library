@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "kategori")
 public class KategoriTindakan {
@@ -61,6 +63,7 @@ public class KategoriTindakan {
 		this.parent = parent;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "kategori", cascade = CascadeType.PERSIST, targetEntity = Tindakan.class)
 	public List<Tindakan> getDaftarTindakan() {
 		return daftarTindakan;
@@ -70,6 +73,7 @@ public class KategoriTindakan {
 		this.daftarTindakan = daftarTindakan;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST, targetEntity = KategoriTindakan.class)
 	public List<KategoriTindakan> getDaftarSubKategori() {
 		return daftarSubKategori;
