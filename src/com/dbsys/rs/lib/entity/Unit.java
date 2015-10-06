@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "unit")
 public class Unit {
@@ -52,6 +54,7 @@ public class Unit {
 		this.bobot = bobot;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST)
 	public List<Operator> getDaftarOperator() {
 		return daftarOperator;
