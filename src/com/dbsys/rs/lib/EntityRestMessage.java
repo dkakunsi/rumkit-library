@@ -18,6 +18,10 @@ import com.dbsys.rs.lib.entity.Unit;
 public class EntityRestMessage<T> extends RestMessage {
 	private T model;
 	
+	public EntityRestMessage() {
+		super();
+	}
+	
 	protected EntityRestMessage(Exception ex) {
 		super(ex);
 	}

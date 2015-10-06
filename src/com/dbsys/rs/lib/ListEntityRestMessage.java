@@ -23,6 +23,10 @@ import com.dbsys.rs.lib.entity.Unit;
 public class ListEntityRestMessage<T> extends RestMessage {
 	private List<T> list;
 	
+	public ListEntityRestMessage() {
+		super();
+	}
+	
 	protected ListEntityRestMessage(Exception ex) {
 		super(ex);
 	}

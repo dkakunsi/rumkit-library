@@ -4,6 +4,10 @@ public class RestMessage {
 	private String message;
 	private Type tipe;
 	private Object object;
+
+	public RestMessage() {
+		super();
+	}
 	
 	protected RestMessage(String message, Type tipe) {
 		super();
