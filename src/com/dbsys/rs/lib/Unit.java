@@ -1,14 +1,32 @@
 package com.dbsys.rs.lib;
 
-public interface Unit {
+public class Unit {
 
-	public Long getId();
-	public void setId(Long id);
+	protected Long id;
+	protected String nama;
+	protected Float bobot;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public String getNama() {
+		return nama;
+	}
+	
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
+	
+	public Float getBobot() {
+		return bobot;
+	}
 
-	public String getNama();
-	public void setNama(String nama);
-
-	public Float getBobot();
-	public void setBobot(Float bobot);
-
+	public void setBobot(Float bobot) {
+		this.bobot = bobot;
+	}
 }
