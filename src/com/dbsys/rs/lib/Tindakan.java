@@ -1,36 +1,90 @@
 package com.dbsys.rs.lib;
 
-public interface Tindakan {
+public class Tindakan {
 	
 	public enum Satuan {
 		TINDAKAN, HARI, JAM
 	}
 
-	public Long getId();
-	public void setId(Long id);
+	protected Long id;
+	protected String kode;
+	protected String nama;
+	protected Long tarif;
+	protected KategoriTindakan kategori;
+	protected Kelas kelas;
+	protected Tanggungan tanggungan;
+	protected Satuan satuan;
+	protected String keterangan;
 
-	public String getKode();
-	public void setKode(String kode);
+	public Long getId() {
+		return id;
+	}
 
-	public String getNama();
-	public void setNama(String nama);
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	public Long getTarif();
-	public void setTarif(Long tarif);
+	public String getKode() {
+		return kode;
+	}
 
-	public KategoriTindakan getKategori();
-	public void setKategori(KategoriTindakan kategori);
+	public void setKode(String kode) {
+		this.kode = kode;
+	}
 
-	public Kelas getKelas();
-	public void setKelas(Kelas kelas);
+	public String getNama() {
+		return nama;
+	}
 
-	public Tanggungan getTanggungan();
-	public void setTanggungan(Tanggungan tanggungan);
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
 
-	public Satuan getSatuan();
-	public void setSatuan(Satuan satuan);
+	public Long getTarif() {
+		return tarif;
+	}
 
-	public String getKeterangan();
-	public void setKeterangan(String keterangan);
+	public void setTarif(Long tarif) {
+		this.tarif = tarif;
+	}
 
+	public KategoriTindakan getKategori() {
+		return kategori;
+	}
+
+	public void setKategori(KategoriTindakan kategori) {
+		this.kategori = kategori;
+	}
+
+	public Kelas getKelas() {
+		return kelas;
+	}
+
+	public void setKelas(Kelas kelas) {
+		this.kelas = kelas;
+	}
+
+	public Tanggungan getTanggungan() {
+		return tanggungan;
+	}
+
+	public void setTanggungan(Tanggungan tanggungan) {
+		this.tanggungan = tanggungan;
+	}
+
+	public Satuan getSatuan() {
+		return satuan;
+	}
+
+	public void setSatuan(Satuan satuan) {
+		this.satuan = satuan;
+	}
+
+	public String getKeterangan() {
+		return keterangan;
+	}
+
+	public void setKeterangan(String keterangan) {
+		this.keterangan = keterangan;
+	}
 }

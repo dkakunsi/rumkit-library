@@ -2,40 +2,55 @@ package com.dbsys.rs.lib;
 
 import java.sql.Date;
 
-public interface Token {
+public class Token {
 
 	public enum StatusToken {
 		ACTIVE, LOCK
 	}
 
-	public String getKode();
+	protected String kode;
+	protected Operator operator;
+	protected Date tanggalBuat;
+	protected Date tanggalExpire;
+	protected StatusToken status;
 
-	public void setKode(String kode);
+	public String getKode() {
+		return kode;
+	}
 
-	/**
-	 * Mengambil operator.
-	 * 
-	 * @return operator
-	 */
-	public Operator getOperator();
+	public void setKode(String kode) {
+		this.kode = kode;
+	}
 
-	/**
-	 * Mengatur operator.
-	 * 
-	 * @param operator
-	 */
-	public void setOperator(Operator operator);
+	public Operator getOperator() {
+		return operator;
+	}
 
-	public Date getTanggalBuat();
+	public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
 
-	public void setTanggalBuat(Date tanggalBuat);
+	public Date getTanggalBuat() {
+		return tanggalBuat;
+	}
 
-	public Date getTanggalExpire();
+	public void setTanggalBuat(Date tanggalBuat) {
+		this.tanggalBuat = tanggalBuat;
+	}
 
-	public void setTanggalExpire(Date tanggalExpire);
+	public Date getTanggalExpire() {
+		return tanggalExpire;
+	}
 
-	public StatusToken getStatus();
+	public void setTanggalExpire(Date tanggalExpire) {
+		this.tanggalExpire = tanggalExpire;
+	}
 
-	public void setStatus(StatusToken status);
-	
+	public StatusToken getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusToken status) {
+		this.status = status;
+	}
 }

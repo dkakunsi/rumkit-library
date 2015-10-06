@@ -2,21 +2,42 @@ package com.dbsys.rs.lib;
 
 import java.util.List;
 
-public interface KategoriTindakan {
+public class KategoriTindakan {
 
-	public Long getId();
-	public void setId(Long id);
+	protected Long id;
+	protected String nama;
+	protected KategoriTindakan parent;
 
-	public String getNama();
-	public void setNama(String nama);
-
-	public KategoriTindakan getParent();
-	public void setParent(KategoriTindakan parent);
-
-	public List<Tindakan> getDaftarTindakan();
-	public void setDaftarTindakan(List<Tindakan> daftarTindakan);
-
-	public List<KategoriTindakan> getDaftarSubKategori();
-	public void setDaftarSubKategori(List<KategoriTindakan> daftarSubKategori);
-
+	protected List<KategoriTindakan> daftarSubKategori;
+	protected List<Tindakan> daftarTindakan;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getNama() {
+		return nama;
+	}
+	public void setNama(String nama) {
+		this.nama = nama;
+	}
+	public KategoriTindakan getParent() {
+		return parent;
+	}
+	public void setParent(KategoriTindakan parent) {
+		this.parent = parent;
+	}
+	public List<KategoriTindakan> getDaftarSubKategori() {
+		return daftarSubKategori;
+	}
+	public void setDaftarSubKategori(List<KategoriTindakan> daftarSubKategori) {
+		this.daftarSubKategori = daftarSubKategori;
+	}
+	public List<Tindakan> getDaftarTindakan() {
+		return daftarTindakan;
+	}
+	public void setDaftarTindakan(List<Tindakan> daftarTindakan) {
+		this.daftarTindakan = daftarTindakan;
+	}
 }

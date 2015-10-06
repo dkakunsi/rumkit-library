@@ -1,16 +1,36 @@
 package com.dbsys.rs.lib;
 
-public interface Pegawai {
+public class Pegawai {
 
-	public Long getId();
-	public void setId(Long id);
+	protected Long id;
+	protected String nip;
+	protected Penduduk penduduk;
 
-	public String getNip();
-	public void setNip(String nip);
+	public Long getId() {
+		return id;
+	}
 
-	public Penduduk getPenduduk();
-	public void setPenduduk(Penduduk penduduk);
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	public abstract String getName();
+	public String getNip() {
+		return nip;
+	}
 
+	public void setNip(String nip) {
+		this.nip = nip;
+	}
+
+	public Penduduk getPenduduk() {
+		return penduduk;
+	}
+
+	public void setPenduduk(Penduduk penduduk) {
+		this.penduduk = penduduk;
+	}
+
+	public String getName() {
+		return "";
+	}
 }

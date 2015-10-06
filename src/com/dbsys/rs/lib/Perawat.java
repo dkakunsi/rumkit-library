@@ -1,5 +1,5 @@
 package com.dbsys.rs.lib;
 
-public interface Perawat extends Pegawai {
+public class Perawat extends Pegawai {
 
 }
