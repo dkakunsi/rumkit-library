@@ -1,5 +1,13 @@
 package com.dbsys.rs.lib;
 
+import com.dbsys.rs.lib.entity.Barang;
+import com.dbsys.rs.lib.entity.Operator;
+import com.dbsys.rs.lib.entity.Pegawai;
+import com.dbsys.rs.lib.entity.Penduduk;
+import com.dbsys.rs.lib.entity.Tindakan;
+import com.dbsys.rs.lib.entity.Token;
+import com.dbsys.rs.lib.entity.Unit;
+
 /**
  * Kelas untukmen-generate entity menjadi JSON.
  * 

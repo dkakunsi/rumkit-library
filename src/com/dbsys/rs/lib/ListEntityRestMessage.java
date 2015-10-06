@@ -2,6 +2,17 @@ package com.dbsys.rs.lib;
 
 import java.util.List;
 
+import com.dbsys.rs.lib.entity.Apoteker;
+import com.dbsys.rs.lib.entity.BahanHabisPakai;
+import com.dbsys.rs.lib.entity.Dokter;
+import com.dbsys.rs.lib.entity.ObatFarmasi;
+import com.dbsys.rs.lib.entity.Operator;
+import com.dbsys.rs.lib.entity.Pekerja;
+import com.dbsys.rs.lib.entity.Penduduk;
+import com.dbsys.rs.lib.entity.Perawat;
+import com.dbsys.rs.lib.entity.Tindakan;
+import com.dbsys.rs.lib.entity.Unit;
+
 /**
  * Kelas untuk men-generate daftar entity menjadi objek JSON.
  * 
