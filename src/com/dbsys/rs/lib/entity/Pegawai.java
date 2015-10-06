@@ -36,16 +36,28 @@ public abstract class Pegawai {
 	public Long getId() {
 		return id;
 	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@Column(name = "nip")
 	public String getNip() {
 		return nip;
+	}
+	
+	public void setNip(String nip) {
+		this.nip = nip;
 	}
 
 	@OneToOne(cascade = CascadeType.PERSIST, targetEntity = Penduduk.class)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;
+	}
+
+	public void setPenduduk(Penduduk penduduk) {
+		this.penduduk = penduduk;
 	}
 	
 	@Transient
