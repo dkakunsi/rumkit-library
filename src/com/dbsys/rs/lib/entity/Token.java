@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Representasi tabel token.
@@ -107,6 +108,7 @@ public class Token {
 	 * 
 	 * @return true jika sudah expire, selain itu false
 	 */
+	@JsonIgnore
 	@Transient
 	public boolean isExpire() {
 		return tanggalExpire.before(DateUtil.getDate());
@@ -140,6 +142,7 @@ public class Token {
 	}
 
 	@Transient
+	@JsonIgnore
 	public boolean isLock() {
 		return status.equals(StatusToken.LOCK);
 	}
