@@ -2,6 +2,7 @@ package com.dbsys.rs.lib;
 
 import com.dbsys.rs.lib.entity.Barang;
 import com.dbsys.rs.lib.entity.Operator;
+import com.dbsys.rs.lib.entity.Pasien;
 import com.dbsys.rs.lib.entity.Pegawai;
 import com.dbsys.rs.lib.entity.Penduduk;
 import com.dbsys.rs.lib.entity.Tindakan;
@@ -65,5 +66,9 @@ public class EntityRestMessage<T> extends RestMessage {
 
 	public static EntityRestMessage<Pegawai> createPegawai(Pegawai pegawai) {
 		return new EntityRestMessage<Pegawai>(pegawai);
+	}
+
+	public static EntityRestMessage<Pasien> createPasien(Pasien pasien) {
+		return new EntityRestMessage<Pasien>(pasien);
 	}
 }

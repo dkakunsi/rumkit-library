@@ -28,6 +28,10 @@ public class PasienRawatInap extends Pasien {
 		super();
 	}
 
+	public PasienRawatInap(PasienRawatJalan pasien) {
+		super();
+	}
+
 	@Column(name = "tanggal_keluar")
 	public Date getTanggalKeluar() {
 		return tanggalKeluar;
@@ -37,6 +41,11 @@ public class PasienRawatInap extends Pasien {
 		this.tanggalKeluar = tanggalKeluar;
 	}
 
+	/**
+	 * Keadaan pasien saat keluar.
+	 * 
+	 * @return keadaan pasien
+	 */
 	@Column(name = "keadaan")
 	public KeadaanPasien getKeadaan() {
 		return keadaan;
