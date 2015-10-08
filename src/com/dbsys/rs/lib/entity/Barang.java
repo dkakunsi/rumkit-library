@@ -101,6 +101,10 @@ public abstract class Barang {
 	@Transient
 	public abstract String getName();
 
+	public void setName(String name) {
+		// do nothing
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
