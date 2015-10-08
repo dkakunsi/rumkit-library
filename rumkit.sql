@@ -46,6 +46,7 @@ CREATE TABLE penduduk (
 
 CREATE TABLE pasien (
 	id int(10) auto_increment,
+	tipe varchar(255) not null,
 	kode varchar(255) not null,
 	status int(1) not null,
 	tanggungan int(1) not null,
@@ -57,7 +58,6 @@ CREATE TABLE pasien (
 	keadaan int(1),
 	penduduk int(10) not null,
 	ruang_perawatan int(10) not null,
-	tipe varchar(255) not null,
 	primary key (id),
 	foreign key (penduduk) references penduduk(id),
 	foreign key (ruang_perawatan) references unit(id)
@@ -123,6 +123,7 @@ CREATE TABLE barang (
 	jumlah int(10) not null,
 	satuan varchar(255) not null,
 	harga int(10) not null,
+	tanggungan int(1) not null,
 	tipe varchar(255) not null,
 	keterangan varchar(255),
 	primary key (id)
