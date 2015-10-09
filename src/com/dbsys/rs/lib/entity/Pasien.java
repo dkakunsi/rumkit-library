@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pasien")
@@ -42,6 +43,7 @@ public abstract class Pasien {
 	
 	public Pasien() {
 		super();
+		this.penduduk = new Penduduk();
 	}
 
 	@Id
@@ -108,6 +110,7 @@ public abstract class Pasien {
 		this.tanggungan = tanggungan;
 	}
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
@@ -122,10 +125,18 @@ public abstract class Pasien {
 	public String getNama() {
 		return penduduk.getNama();
 	}
-	
+
+	public void setNama(String nama) {
+		penduduk.setNama(nama);
+	}
+
 	@Transient
 	public Kelamin getKelamin() {
 		return penduduk.getKelamin();
+	}
+
+	public void setKelamin(Kelamin kelamin) {
+		penduduk.setKelamin(kelamin);
 	}
 
 	@Transient
@@ -133,9 +144,17 @@ public abstract class Pasien {
 		return penduduk.getTanggalLahir();
 	}
 
+	public void setTanggalLahir(Date tanggalLahir) {
+		penduduk.setTanggalLahir(tanggalLahir);
+	}
+
 	@Transient
 	public String getDarah() {
 		return penduduk.getDarah();
+	}
+
+	public void setDarah(String darah) {
+		penduduk.setDarah(darah);
 	}
 
 	@Transient
@@ -143,11 +162,28 @@ public abstract class Pasien {
 		return penduduk.getAgama();
 	}
 
+	public void setAgama(String agama) {
+		penduduk.setAgama(agama);
+	}
+
 	@Transient
 	public String getTelepon() {
 		return penduduk.getTelepon();
 	}
 
+	public void setTelepon(String telepon) {
+		penduduk.setTelepon(telepon);
+	}
+	
+	@Transient
+	public String getNik() {
+		return penduduk.getNik();
+	}
+
+	public void setNik(String nik) {
+		penduduk.setNik(nik);
+	}
+	
 	@Transient
 	public abstract String getName();
 

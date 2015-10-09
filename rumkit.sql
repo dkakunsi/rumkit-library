@@ -41,7 +41,6 @@ CREATE TABLE penduduk (
 	darah varchar(255) not null,
 	agama varchar(255) not null,
 	telepon varchar(255) not null,
-	tipe varchar(255) not null,
 	unique(kode),
 	unique(nik),
 	primary key (id)

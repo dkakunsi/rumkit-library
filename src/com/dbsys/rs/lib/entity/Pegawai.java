@@ -34,6 +34,7 @@ public abstract class Pegawai {
 
 	public Pegawai() {
 		super();
+		this.penduduk = new Penduduk();
 	}
 
 	@Id
