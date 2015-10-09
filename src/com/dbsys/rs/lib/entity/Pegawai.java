@@ -1,5 +1,7 @@
 package com.dbsys.rs.lib.entity;
 
+import java.sql.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -13,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pegawai")
@@ -50,6 +55,7 @@ public abstract class Pegawai {
 		this.nip = nip;
 	}
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.PERSIST, targetEntity = Penduduk.class)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
@@ -65,6 +71,78 @@ public abstract class Pegawai {
 	
 	public void setName(String name) {
 		// do nothing
+	}
+
+	@Transient
+	public String getKode() {
+		return penduduk.getKode();
+	}
+
+	public void setKode(String kode) {
+		penduduk.setKode(kode);
+	}
+
+	@Transient
+	public String getNik() {
+		return penduduk.getNik();
+	}
+
+	public void setNik(String nik) {
+		penduduk.setNik(nik);
+	}
+
+	@Transient
+	public String getNama() {
+		return penduduk.getNama();
+	}
+
+	public void setNama(String nama) {
+		penduduk.setNama(nama);
+	}
+
+	@Transient
+	public Kelamin getKelamin() {
+		return penduduk.getKelamin();
+	}
+
+	public void setKelamin(Kelamin kelamin) {
+		penduduk.setKelamin(kelamin);
+	}
+
+	@Transient
+	public Date getTanggalLahir() {
+		return penduduk.getTanggalLahir();
+	}
+
+	public void setTanggalLahir(Date tanggalLahir) {
+		penduduk.setTanggalLahir(tanggalLahir);
+	}
+
+	@Transient
+	public String getDarah() {
+		return penduduk.getDarah();
+	}
+
+	public void setDarah(String darah) {
+		penduduk.setDarah(darah);
+	}
+
+	@Transient
+	public String getAgama() {
+		return penduduk.getAgama();
+	}
+
+	public void setAgama(String agama) {
+		penduduk.setAgama(agama);
+	}
+
+	@Transient
+	public String getTelepon() {
+		return penduduk.getTelepon();
+	}
+
+	public void setTelepon(String telepon) {
+		penduduk.setTelepon(telepon);
 	}
 
 	@Override

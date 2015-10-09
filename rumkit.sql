@@ -16,6 +16,7 @@ CREATE TABLE operator (
 	password varchar(255) not null,
 	role int(1) not null,
 	unit int(10) not null,
+	unique (username),
 	primary key (id),
 	foreign key (unit) references unit (id)
 ) ENGINE = InnoDB;
@@ -41,6 +42,8 @@ CREATE TABLE penduduk (
 	agama varchar(255) not null,
 	telepon varchar(255) not null,
 	tipe varchar(255) not null,
+	unique(kode),
+	unique(nik),
 	primary key (id)
 ) ENGINE = InnoDB;
 
@@ -58,6 +61,7 @@ CREATE TABLE pasien (
 	keadaan int(1),
 	penduduk int(10) not null,
 	ruang_perawatan int(10) not null,
+	unique(kode),
 	primary key (id),
 	foreign key (penduduk) references penduduk(id),
 	foreign key (ruang_perawatan) references unit(id)
@@ -69,6 +73,7 @@ CREATE TABLE pegawai (
 	spesialisasi int(1),
 	tipe varchar(255) not null,
 	penduduk int(10) not null,
+	unique(nip),
 	primary key (id),
 	foreign key (penduduk) references penduduk(id)
 ) ENGINE = InnoDB;
@@ -91,6 +96,7 @@ CREATE TABLE tindakan (
 	kelas int(1) not null,
 	tanggungan int(1) not null,
 	kategori int(10) not null,
+	unique(kode),
 	primary key (id),
 	foreign key (kategori) references kategori_tindakan(id)
 ) ENGINE = InnoDB;
@@ -126,6 +132,7 @@ CREATE TABLE barang (
 	tanggungan int(1) not null,
 	tipe varchar(255) not null,
 	keterangan varchar(255),
+	unique(kode),
 	primary key (id)
 ) ENGINE = InnoDB;
 
