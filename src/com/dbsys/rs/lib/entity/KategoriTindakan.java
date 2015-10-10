@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "kategori")
+@Table(name = "kategori_tindakan")
 public class KategoriTindakan {
 
 	private Long id;

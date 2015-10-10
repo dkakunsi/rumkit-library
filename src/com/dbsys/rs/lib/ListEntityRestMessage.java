@@ -5,6 +5,7 @@ import java.util.List;
 import com.dbsys.rs.lib.entity.Apoteker;
 import com.dbsys.rs.lib.entity.BahanHabisPakai;
 import com.dbsys.rs.lib.entity.Dokter;
+import com.dbsys.rs.lib.entity.KategoriTindakan;
 import com.dbsys.rs.lib.entity.ObatFarmasi;
 import com.dbsys.rs.lib.entity.Operator;
 import com.dbsys.rs.lib.entity.Pekerja;
@@ -89,5 +90,9 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	public static ListEntityRestMessage<Pekerja> createListPekerja(List<Pekerja> list) {
 		return new ListEntityRestMessage<Pekerja>(list);
+	}
+
+	public static ListEntityRestMessage<KategoriTindakan> createListKategori(List<KategoriTindakan> list) {
+		return new ListEntityRestMessage<KategoriTindakan>(list);
 	}
 }
