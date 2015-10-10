@@ -191,7 +191,7 @@ public abstract class Pasien {
 	}
 	
 	public void setKodePenduduk(String kode) {
-		penduduk.kode = kode;
+		penduduk.setKode(kode);
 	}
 	
 	@Transient
