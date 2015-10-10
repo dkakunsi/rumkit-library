@@ -210,6 +210,13 @@ public abstract class Pasien {
 		// Do Nothing
 	}
 
+	public void generateKode() {
+		Integer i = Math.abs(hashCode());
+		Integer t = Math.abs(tanggalMasuk.hashCode());
+		
+		this.kode = String.format("%s-%s", i, t);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
