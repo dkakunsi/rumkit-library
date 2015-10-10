@@ -123,6 +123,15 @@ public abstract class Pasien {
 	}
 
 	@Transient
+	public Long getIdPenduduk() {
+		return penduduk.getId();
+	}
+	
+	public void setIdPenduduk(Long idPenduduk) {
+		penduduk.setId(idPenduduk);
+	}
+	
+	@Transient
 	public String getNama() {
 		return penduduk.getNama();
 	}

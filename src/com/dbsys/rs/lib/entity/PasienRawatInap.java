@@ -30,6 +30,14 @@ public class PasienRawatInap extends Pasien {
 
 	public PasienRawatInap(PasienRawatJalan pasien) {
 		super();
+		setPenduduk(pasien.getPenduduk());
+		setCicilan(pasien.getCicilan());
+		setId(pasien.getId());
+		setKode(pasien.getKode());
+		setStatus(pasien.getStatus());
+		setTanggalMasuk(pasien.getTanggalMasuk());
+		setTanggungan(pasien.getTanggungan());
+		setTotalTagihan(pasien.getTotalTagihan());
 	}
 
 	public PasienRawatInap(PasienRawatInap pasien) {

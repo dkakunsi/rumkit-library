@@ -73,6 +73,14 @@ public abstract class Pegawai {
 	public void setName(String name) {
 		// do nothing
 	}
+	
+	public Long getIdPenduduk() {
+		return penduduk.getId();
+	}
+	
+	public void setIdPenduduk(Long idPenduduk) {
+		penduduk.setId(idPenduduk);
+	}
 
 	@Transient
 	public String getKode() {
