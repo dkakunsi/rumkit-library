@@ -48,7 +48,7 @@ CREATE TABLE penduduk (
 
 CREATE TABLE pasien (
 	id int(10) auto_increment,
-	tipe varchar(255) not null,
+	tipe int(1) not null,
 	kode varchar(255) not null,
 	status int(1) not null,
 	tanggungan int(1) not null,
