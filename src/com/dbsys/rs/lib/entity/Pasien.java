@@ -4,43 +4,48 @@ import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.Kelas;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pasien")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-	name = "tipe",
-	discriminatorType = DiscriminatorType.STRING
-)
-public abstract class Pasien {
+public class Pasien {
 
 	public enum StatusPasien {
 		OPEN, PAID, UNPAID
 	}
+
+	public enum KeadaanPasien {
+		SEMBUH, RUJUK, SAKIT, MATI, LARI
+	}
 	
-	protected Long id;
-	protected String kode;
-	protected Date tanggalMasuk;
-	protected Long totalTagihan;
-	protected Long cicilan;
-	protected StatusPasien status;
-	protected Tanggungan tanggungan;
-	protected Penduduk penduduk;
+	public enum Type {
+		RAWAT_JALAN, RAWAT_INAP
+	}
+	
+	private Long id;
+	private String kode;
+	private Date tanggalMasuk;
+	private Long totalTagihan;
+	private Long cicilan;
+	private StatusPasien status;
+	private Tanggungan tanggungan;
+	private Penduduk penduduk;
+	private Type tipe;
+	private Date tanggalKeluar;
+	private KeadaanPasien keadaan;
+	private Kelas kelas;
+	private Unit ruangPerawatan;
 	
 	public Pasien() {
 		super();
@@ -122,6 +127,57 @@ public abstract class Pasien {
 		this.penduduk = penduduk;
 	}
 
+	@Column(name = "tipe")
+	public Type getTipe() {
+		return tipe;
+	}
+
+	public void setTipe(Type tipe) {
+		this.tipe = tipe;
+	}
+
+	@Column(name = "tanggal_keluar")
+	public Date getTanggalKeluar() {
+		return tanggalKeluar;
+	}
+
+	public void setTanggalKeluar(Date tanggalKeluar) {
+		this.tanggalKeluar = tanggalKeluar;
+	}
+
+	/**
+	 * Keadaan pasien saat keluar.
+	 * 
+	 * @return keadaan pasien
+	 */
+	@Column(name = "keadaan")
+	public KeadaanPasien getKeadaan() {
+		return keadaan;
+	}
+
+	public void setKeadaan(KeadaanPasien keadaan) {
+		this.keadaan = keadaan;
+	}
+
+	@Column(name = "kelas")
+	public Kelas getKelas() {
+		return kelas;
+	}
+
+	public void setKelas(Kelas kelas) {
+		this.kelas = kelas;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "ruang_perawatan")
+	public Unit getRuangPerawatan() {
+		return ruangPerawatan;
+	}
+
+	public void setRuangPerawatan(Unit ruangPerawatan) {
+		this.ruangPerawatan = ruangPerawatan;
+	}
+
 	@Transient
 	public Long getIdPenduduk() {
 		return penduduk.getId();
@@ -201,13 +257,6 @@ public abstract class Pasien {
 	
 	public void setKodePenduduk(String kode) {
 		penduduk.setKode(kode);
-	}
-	
-	@Transient
-	public abstract String getName();
-	
-	public void setName(String name) {
-		// Do Nothing
 	}
 
 	public void generateKode() {
