@@ -186,7 +186,7 @@ public abstract class Pasien {
 	}
 	
 	@Transient
-	public String kodePenduduk() {
+	public String getKodePenduduk() {
 		return penduduk.getKode();
 	}
 	
