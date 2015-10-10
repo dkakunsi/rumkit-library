@@ -80,7 +80,7 @@ CREATE TABLE pegawai (
 CREATE TABLE kategori_tindakan (
 	id int(10) auto_increment,
 	nama varchar(255) not null,
-	parent int(10) not null,
+	parent int(10),
 	primary key (id),
 	foreign key (parent) references kategori_tindakan(id)
 ) ENGINE = InnoDB;
