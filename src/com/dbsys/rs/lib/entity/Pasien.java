@@ -186,6 +186,15 @@ public abstract class Pasien {
 	}
 	
 	@Transient
+	public String kodePenduduk() {
+		return penduduk.getKode();
+	}
+	
+	public void setKodePenduduk(String kode) {
+		this.kode = kode;
+	}
+	
+	@Transient
 	public abstract String getName();
 	
 	public void setName(String name) {
