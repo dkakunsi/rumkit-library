@@ -186,6 +186,10 @@ public abstract class Pasien {
 	
 	@Transient
 	public abstract String getName();
+	
+	public void setName(String name) {
+		// Do Nothing
+	}
 
 	@Override
 	public int hashCode() {
