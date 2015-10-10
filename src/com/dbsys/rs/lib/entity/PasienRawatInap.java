@@ -32,6 +32,22 @@ public class PasienRawatInap extends Pasien {
 		super();
 	}
 
+	public PasienRawatInap(PasienRawatInap pasien) {
+		super();
+		setPenduduk(pasien.getPenduduk());
+		setCicilan(pasien.getCicilan());
+		setId(pasien.getId());
+		setKeadaan(pasien.getKeadaan());
+		setKelas(pasien.getKelas());
+		setKode(pasien.getKode());
+		setRuangPerawatan(pasien.getRuangPerawatan());
+		setStatus(pasien.getStatus());
+		setTanggalKeluar(pasien.getTanggalKeluar());
+		setTanggalMasuk(pasien.getTanggalMasuk());
+		setTanggungan(pasien.getTanggungan());
+		setTotalTagihan(pasien.getTotalTagihan());
+	}
+
 	@Column(name = "tanggal_keluar")
 	public Date getTanggalKeluar() {
 		return tanggalKeluar;
