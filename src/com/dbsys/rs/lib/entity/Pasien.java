@@ -2,6 +2,7 @@ package com.dbsys.rs.lib.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -111,7 +112,7 @@ public abstract class Pasien {
 	}
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;

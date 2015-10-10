@@ -59,7 +59,7 @@ CREATE TABLE pasien (
 	cicilan int(10),
 	keadaan int(1),
 	penduduk int(10) not null,
-	ruang_perawatan int(10) not null,
+	ruang_perawatan int(10),
 	unique(kode),
 	primary key (id),
 	foreign key (penduduk) references penduduk(id),
