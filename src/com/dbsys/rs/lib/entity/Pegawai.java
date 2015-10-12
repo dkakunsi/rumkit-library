@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pegawai")
@@ -56,7 +55,6 @@ public abstract class Pegawai {
 		this.nip = nip;
 	}
 
-	@JsonIgnore
 	@OneToOne(cascade = CascadeType.PERSIST, targetEntity = Penduduk.class)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
@@ -74,6 +72,7 @@ public abstract class Pegawai {
 		// do nothing
 	}
 	
+	@Transient
 	public Long getIdPenduduk() {
 		return penduduk.getId();
 	}

@@ -19,6 +19,11 @@ public class Dokter extends Pegawai {
 		super();
 	}
 
+	public Dokter(Spesialisasi spesialisasi) {
+		super();
+		setSpesialisasi(spesialisasi);
+	}
+
 	@Column(name = "spesialisasi")
 	public Spesialisasi getSpesialisasi() {
 		return spesialisasi;

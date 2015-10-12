@@ -15,7 +15,6 @@ import javax.persistence.Transient;
 import com.dbsys.rs.lib.Kelas;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pasien")
@@ -119,7 +118,6 @@ public class Pasien {
 		this.tanggungan = tanggungan;
 	}
 
-	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
