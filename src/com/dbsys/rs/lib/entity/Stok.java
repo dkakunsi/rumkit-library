@@ -88,6 +88,8 @@ public abstract class Stok {
 
 	@Transient
 	public abstract String getName();
+	
+	public void setName(String name) { }
 
 	@Override
 	public int hashCode() {
