@@ -11,6 +11,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.NumberException;
 import com.dbsys.rs.lib.Tanggungan;
 
 @Entity
@@ -69,6 +70,16 @@ public abstract class Barang {
 
 	public void setJumlah(Long jumlah) {
 		this.jumlah = jumlah;
+	}
+	
+	public void tambah(Long jumlah) {
+		this.jumlah += jumlah;
+	}
+	
+	public void kurang(Long jumlah) throws NumberException {
+		if (this.jumlah < jumlah)
+			throw new NumberException(String.format("Jumlah barang tidak cukup untuk dikurangi.\n Jumlah saat ini %d", this.jumlah));
+		this.jumlah -= jumlah;
 	}
 
 	@Column(name = "satuan")

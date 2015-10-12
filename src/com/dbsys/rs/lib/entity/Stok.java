@@ -11,8 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.dbsys.rs.lib.DateUtil;
 
 @Entity
 @Table(name = "stok")
@@ -27,9 +31,12 @@ public abstract class Stok {
 	protected Long jumlah;
 	protected Date tanggal;
 	protected Time jam;
+	protected Barang barang;
 	
 	protected Stok() {
 		super();
+		setTanggal(DateUtil.getDate());
+		setJam(DateUtil.getTime());
 	}
 
 	@Id
@@ -68,7 +75,17 @@ public abstract class Stok {
 	public void setJam(Time jam) {
 		this.jam = jam;
 	}
-	
+
+	@ManyToOne
+	@JoinColumn(name = "barang")
+	public Barang getBarang() {
+		return barang;
+	}
+
+	public void setBarang(Barang barang) {
+		this.barang = barang;
+	}
+
 	@Transient
 	public abstract String getName();
 

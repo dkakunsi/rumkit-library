@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 @DiscriminatorValue("MASUK")
 public class StokMasuk extends Stok {
 
+	public StokMasuk() {
+		super();
+	}
+	
 	@Override
 	public String getName() {
 		return "STOK MASUK";

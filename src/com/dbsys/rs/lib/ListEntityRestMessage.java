@@ -11,6 +11,7 @@ import com.dbsys.rs.lib.entity.Operator;
 import com.dbsys.rs.lib.entity.Pekerja;
 import com.dbsys.rs.lib.entity.Penduduk;
 import com.dbsys.rs.lib.entity.Perawat;
+import com.dbsys.rs.lib.entity.StokKeluar;
 import com.dbsys.rs.lib.entity.StokMasuk;
 import com.dbsys.rs.lib.entity.Tindakan;
 import com.dbsys.rs.lib.entity.Unit;
@@ -97,8 +98,11 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<KategoriTindakan>(list);
 	}
 
-	public static ListEntityRestMessage<StokMasuk> createListStokMasuk(List<StokMasuk> list2) {
-		// TODO Auto-generated method stub
-		return null;
+	public static ListEntityRestMessage<StokMasuk> createListStokMasuk(List<StokMasuk> list) {
+		return new ListEntityRestMessage<>(list);
+	}
+
+	public static ListEntityRestMessage<StokKeluar> createListStokKeluar(List<StokKeluar> list) {
+		return new ListEntityRestMessage<>(list);
 	}
 }
