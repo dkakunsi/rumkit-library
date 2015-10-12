@@ -1,6 +1,7 @@
 package com.dbsys.rs.lib.entity;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -132,7 +133,8 @@ public class Token {
 
 	@Transient
 	private void generateKode() {
-		String kode = String.format("%s-%s", operator.hashCode(), tanggalBuat.hashCode());
+		Time time = DateUtil.getTime();
+		String kode = String.format("%s-%s-%s", operator.hashCode(), tanggalBuat.hashCode(), time.hashCode());
 		setKode(kode);
 	}
 
