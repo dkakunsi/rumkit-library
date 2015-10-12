@@ -1,5 +1,6 @@
 package com.dbsys.rs.lib.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -110,7 +111,7 @@ public class Operator {
 		this.nama = nama;
 	}
 
-	@ManyToOne(targetEntity = Unit.class)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;

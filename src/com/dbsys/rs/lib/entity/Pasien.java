@@ -32,21 +32,24 @@ public class Pasien {
 	public enum Type {
 		RAWAT_JALAN, RAWAT_INAP
 	}
+
+	private Type tipe;
 	
 	private Long id;
 	private String kode;
 	private Date tanggalMasuk;
-	private Long totalTagihan;
-	private Long cicilan;
 	private StatusPasien status;
 	private Tanggungan tanggungan;
 	private Penduduk penduduk;
-	private Type tipe;
-	private Date tanggalKeluar;
-	private KeadaanPasien keadaan;
+	
 	private Kelas kelas;
 	private Unit ruangPerawatan;
-	
+	private Date tanggalKeluar;
+	private KeadaanPasien keadaan;
+
+	private Long totalTagihan;
+	private Long cicilan;
+
 	public Pasien() {
 		super();
 		this.penduduk = new Penduduk();
