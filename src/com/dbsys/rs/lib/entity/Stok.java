@@ -3,6 +3,7 @@ package com.dbsys.rs.lib.entity;
 import java.sql.Date;
 import java.sql.Time;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -76,7 +77,7 @@ public abstract class Stok {
 		this.jam = jam;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;

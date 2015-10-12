@@ -2,16 +2,14 @@ package com.dbsys.rs.lib.entity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("MASUK")
 public class StokMasuk extends Stok {
-
-	public StokMasuk() {
-		super();
-	}
 	
 	@Override
+	@Transient
 	public String getName() {
 		return "STOK MASUK";
 	}

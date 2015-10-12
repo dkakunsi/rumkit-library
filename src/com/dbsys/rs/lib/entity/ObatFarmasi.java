@@ -15,6 +15,11 @@ public class ObatFarmasi extends Barang {
 		super();
 	}
 	
+	public ObatFarmasi(String keterangan) {
+		super();
+		setKeterangan(keterangan);
+	}
+
 	@Column(name = "keterangan")
 	public String getKeterangan() {
 		return keterangan;
