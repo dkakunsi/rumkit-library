@@ -9,6 +9,8 @@ import com.dbsys.rs.lib.entity.KategoriTindakan;
 import com.dbsys.rs.lib.entity.ObatFarmasi;
 import com.dbsys.rs.lib.entity.Operator;
 import com.dbsys.rs.lib.entity.Pekerja;
+import com.dbsys.rs.lib.entity.PemakaianBhp;
+import com.dbsys.rs.lib.entity.PemakaianObat;
 import com.dbsys.rs.lib.entity.Penduduk;
 import com.dbsys.rs.lib.entity.Perawat;
 import com.dbsys.rs.lib.entity.StokKeluar;
@@ -104,5 +106,13 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	public static ListEntityRestMessage<StokKeluar> createListStokKeluar(List<StokKeluar> list) {
 		return new ListEntityRestMessage<>(list);
+	}
+
+	public static ListEntityRestMessage<PemakaianBhp> createListPemakaianBhp(List<PemakaianBhp> list) {
+		return new ListEntityRestMessage<PemakaianBhp>(list);
+	}
+
+	public static ListEntityRestMessage<PemakaianObat> createListPemakaianObat(List<PemakaianObat> list) {
+		return new ListEntityRestMessage<PemakaianObat>(list);
 	}
 }

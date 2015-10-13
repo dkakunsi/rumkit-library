@@ -5,6 +5,7 @@ import com.dbsys.rs.lib.entity.KategoriTindakan;
 import com.dbsys.rs.lib.entity.Operator;
 import com.dbsys.rs.lib.entity.Pasien;
 import com.dbsys.rs.lib.entity.Pegawai;
+import com.dbsys.rs.lib.entity.Pemakaian;
 import com.dbsys.rs.lib.entity.Penduduk;
 import com.dbsys.rs.lib.entity.Tindakan;
 import com.dbsys.rs.lib.entity.Token;
@@ -75,5 +76,9 @@ public class EntityRestMessage<T> extends RestMessage {
 
 	public static EntityRestMessage<KategoriTindakan> createKategori(KategoriTindakan kategori) {
 		return new EntityRestMessage<KategoriTindakan>(kategori);
+	}
+
+	public static EntityRestMessage<Pemakaian> createPemakaian(Pemakaian pemakaian) {
+		return new EntityRestMessage<Pemakaian>(pemakaian);
 	}
 }
