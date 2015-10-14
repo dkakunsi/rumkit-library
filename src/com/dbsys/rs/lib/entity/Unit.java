@@ -1,16 +1,10 @@
 package com.dbsys.rs.lib.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "unit")
@@ -24,8 +18,6 @@ public class Unit {
 	private String nama;
 	private Float bobot;
 	private Type tipe;
-	
-	private List<Operator> daftarOperator;
 
 	public Unit() {
 		super();
@@ -66,16 +58,6 @@ public class Unit {
 
 	public void setTipe(Type tipe) {
 		this.tipe = tipe;
-	}
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST)
-	public List<Operator> getDaftarOperator() {
-		return daftarOperator;
-	}
-
-	public void setDaftarOperator(List<Operator> daftarOperator) {
-		this.daftarOperator = daftarOperator;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.entity.Unit.Type;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Representasi tabel operator.
@@ -127,19 +128,17 @@ public class Operator {
 		return this.password.equals(password);
 	}
 
+	@JsonIgnore
 	@Transient
 	public Type getTipe() {
 		return unit.getTipe();
 	}
-	
-	public void setTipe(Type tip) { }
 
+	@JsonIgnore
 	@Transient
 	public String getNamaUnit() {
 		return unit.getNama();
 	}
-	
-	public void setNamaUnit(String nama) {}
 
 	@Override
 	public int hashCode() {
