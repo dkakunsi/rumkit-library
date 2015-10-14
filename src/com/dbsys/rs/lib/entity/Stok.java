@@ -77,7 +77,7 @@ public abstract class Stok {
 		this.jam = jam;
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;

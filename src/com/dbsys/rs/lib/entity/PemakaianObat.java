@@ -46,6 +46,15 @@ public class PemakaianObat extends Pemakaian {
 	}
 	
 	@Transient
+	public ObatFarmasi getObat() {
+		return (ObatFarmasi)barang;
+	}
+	
+	public void setObat(ObatFarmasi obat) {
+		this.barang = obat;
+	}
+	
+	@Transient
 	public String getNamaObat() {
 		if (asal.equals(AsalObat.FARMASI))
 			return barang.getNama();

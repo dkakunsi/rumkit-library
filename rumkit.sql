@@ -150,7 +150,7 @@ CREATE TABLE pemakaian (
 	tanggal date not null,
 	jumlah int(10) not null,
 	biaya_tambahan int(10),
-	keterangan int(10),
+	keterangan varchar(255),
 	tipe varchar(255) not null,
 	nomor_resep varchar(255), 
 	asal int(1),

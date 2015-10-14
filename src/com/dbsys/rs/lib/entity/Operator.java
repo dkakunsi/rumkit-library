@@ -111,7 +111,7 @@ public class Operator {
 		this.nama = nama;
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;

@@ -55,7 +55,7 @@ public abstract class Pegawai {
 		this.nip = nip;
 	}
 
-	@OneToOne(cascade = CascadeType.PERSIST, targetEntity = Penduduk.class)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;

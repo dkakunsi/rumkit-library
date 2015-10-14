@@ -9,6 +9,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pemakaian")
@@ -22,7 +25,8 @@ public abstract class Pemakaian extends Tagihan {
 	protected Barang barang;
 	protected Pasien pasien;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@JsonIgnore
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;
@@ -32,7 +36,7 @@ public abstract class Pemakaian extends Tagihan {
 		this.barang = barang;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;
@@ -40,6 +44,12 @@ public abstract class Pemakaian extends Tagihan {
 
 	public void setPasien(Pasien pasien) {
 		this.pasien = pasien;
+	}
+
+	@Override
+	@Transient
+	public Long getTagihan() {
+		return barang.getHarga() * jumlah + biayaTambahan;
 	}
 
 	@Override

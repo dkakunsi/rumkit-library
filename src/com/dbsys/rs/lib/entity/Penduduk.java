@@ -111,6 +111,11 @@ public class Penduduk {
 	public void setTelepon(String telepon) {
 		this.telepon = telepon;
 	}
+	
+	public void generateKode() {
+		Integer kode = Math.abs(hashCode());
+		setKode(kode.toString());
+	}
 
 	@Override
 	public int hashCode() {

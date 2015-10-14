@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class Tagihan {
@@ -61,6 +62,11 @@ public abstract class Tagihan {
 	public void setKeterangan(String keterangan) {
 		this.keterangan = keterangan;
 	}
+	
+	@Transient
+	public abstract Long getTagihan();
+
+	public void setTagihan(Long tagihan) { }
 	
 	@Override
 	public int hashCode() {

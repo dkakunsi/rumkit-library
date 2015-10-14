@@ -71,7 +71,7 @@ public class Tindakan {
 		this.tarif = tarif;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "kategori")
 	public KategoriTindakan getKategori() {
 		return kategori;

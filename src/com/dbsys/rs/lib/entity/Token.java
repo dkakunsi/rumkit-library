@@ -3,6 +3,7 @@ package com.dbsys.rs.lib.entity;
 import java.sql.Date;
 import java.sql.Time;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -62,7 +63,7 @@ public class Token {
 	 * 
 	 * @return operator
 	 */
-	@ManyToOne(targetEntity = Operator.class)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "operator")
 	public Operator getOperator() {
 		return operator;

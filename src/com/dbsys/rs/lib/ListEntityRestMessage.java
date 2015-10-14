@@ -8,6 +8,7 @@ import com.dbsys.rs.lib.entity.Dokter;
 import com.dbsys.rs.lib.entity.KategoriTindakan;
 import com.dbsys.rs.lib.entity.ObatFarmasi;
 import com.dbsys.rs.lib.entity.Operator;
+import com.dbsys.rs.lib.entity.Pasien;
 import com.dbsys.rs.lib.entity.Pekerja;
 import com.dbsys.rs.lib.entity.PemakaianBhp;
 import com.dbsys.rs.lib.entity.PemakaianObat;
@@ -114,5 +115,9 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	public static ListEntityRestMessage<PemakaianObat> createListPemakaianObat(List<PemakaianObat> list) {
 		return new ListEntityRestMessage<PemakaianObat>(list);
+	}
+
+	public static ListEntityRestMessage<Pasien> createListPasien(List<Pasien> list) {
+		return new ListEntityRestMessage<Pasien>(list);
 	}
 }
