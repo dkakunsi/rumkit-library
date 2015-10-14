@@ -15,10 +15,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "unit")
 public class Unit {
+	
+	public enum Type {
+		LOKET_PENDAFTARAN, LOKET_PEMBAYARAN, POLIKLINIK, RUANG_PERAWATAN, FARMASI, UNIT_LAIN
+	}
 
 	private Long id;
 	private String nama;
 	private Float bobot;
+	private Type tipe;
 	
 	private List<Operator> daftarOperator;
 
@@ -52,6 +57,15 @@ public class Unit {
 
 	public void setBobot(Float bobot) {
 		this.bobot = bobot;
+	}
+
+	@Column(name = "tipe")
+	public Type getTipe() {
+		return tipe;
+	}
+
+	public void setTipe(Type tipe) {
+		this.tipe = tipe;
 	}
 
 	@JsonIgnore

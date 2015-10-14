@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.entity.Unit.Type;
+
 /**
  * Representasi tabel operator.
  * 
@@ -121,10 +123,23 @@ public class Operator {
 		this.unit = unit;
 	}
 
-	@Transient
 	public boolean authenticate(String password) {
 		return this.password.equals(password);
 	}
+
+	@Transient
+	public Type getTipe() {
+		return unit.getTipe();
+	}
+	
+	public void setTipe(Type tip) { }
+
+	@Transient
+	public String getNamaUnit() {
+		return unit.getNama();
+	}
+	
+	public void setNamaUnit(String nama) {}
 
 	@Override
 	public int hashCode() {

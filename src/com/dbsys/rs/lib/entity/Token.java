@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
+import com.dbsys.rs.lib.entity.Operator.Role;
+import com.dbsys.rs.lib.entity.Unit.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -139,9 +141,12 @@ public class Token {
 		setKode(kode);
 	}
 
-	@Transient
-	private void activate() {
+	public void activate() {
 		setStatus(StatusToken.ACTIVE);
+	}
+	
+	public void lock() {
+		setStatus(StatusToken.LOCK);
 	}
 
 	@Transient
@@ -150,6 +155,34 @@ public class Token {
 		return status.equals(StatusToken.LOCK);
 	}
 	
+	@Transient
+	public Role getRole() {
+		return operator.getRole();
+	}
+	
+	public void setRole(Role role){ }
+
+	@Transient
+	public String getNama() {
+		return operator.getNama();
+	}
+	
+	public void setNama(String nama) { }
+
+	@Transient
+	public Type getTipe() {
+		return operator.getTipe();
+	}
+	
+	public void setTipe(Type tipe) { }
+
+	@Transient
+	public String getNamaUnit() {
+		return operator.getNamaUnit();
+	}
+	
+	public void setNamaUnit(String namaUnit) { }
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

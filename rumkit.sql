@@ -6,6 +6,7 @@ CREATE TABLE unit (
 	id int(10) auto_increment,
 	nama varchar(255) not null,
 	bobot float(10) not null,
+	tipe int(1) not null,
 	primary key (id)
 ) ENGINE = InnoDB;
 
