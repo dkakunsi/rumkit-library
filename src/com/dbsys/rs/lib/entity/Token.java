@@ -171,14 +171,14 @@ public class Token {
 
 	@Transient
 	public Type getTipe() {
-		return operator.getTipe();
+		return operator.getUnit().getTipe();
 	}
 	
 	public void setTipe(Type tipe) { }
 
 	@Transient
 	public String getNamaUnit() {
-		return operator.getNamaUnit();
+		return operator.getUnit().getNama();
 	}
 	
 	public void setNamaUnit(String namaUnit) { }

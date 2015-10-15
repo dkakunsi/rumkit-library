@@ -67,6 +67,7 @@ public class Unit {
 		result = prime * result + ((bobot == null) ? 0 : bobot.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nama == null) ? 0 : nama.hashCode());
+		result = prime * result + ((tipe == null) ? 0 : tipe.hashCode());
 		return result;
 	}
 
@@ -93,6 +94,8 @@ public class Unit {
 			if (other.nama != null)
 				return false;
 		} else if (!nama.equals(other.nama))
+			return false;
+		if (tipe != other.tipe)
 			return false;
 		return true;
 	}

@@ -8,9 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import com.dbsys.rs.lib.entity.Unit.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -124,20 +122,9 @@ public class Operator {
 		this.unit = unit;
 	}
 
+	@JsonIgnore
 	public boolean authenticate(String password) {
 		return this.password.equals(password);
-	}
-
-	@JsonIgnore
-	@Transient
-	public Type getTipe() {
-		return unit.getTipe();
-	}
-
-	@JsonIgnore
-	@Transient
-	public String getNamaUnit() {
-		return unit.getNama();
 	}
 
 	@Override

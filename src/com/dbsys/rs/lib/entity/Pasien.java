@@ -169,7 +169,7 @@ public class Pasien {
 		this.kelas = kelas;
 	}
 
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "ruang_perawatan")
 	public Unit getRuangPerawatan() {
 		return ruangPerawatan;
