@@ -154,6 +154,12 @@ public class Token {
 	public boolean isLock() {
 		return status.equals(StatusToken.LOCK);
 	}
+
+	@Transient
+	@JsonIgnore
+	public boolean isExtensible() {
+		return tanggalExpire.equals(DateUtil.getDate());
+	}
 	
 	@Transient
 	public Role getRole() {
