@@ -158,7 +158,9 @@ CREATE TABLE pemakaian (
 	nama varchar(255),
 	barang int(10) not null,
 	pasien int(10) not null,
+	unit int(10) not null,
 	primary key (id),
 	foreign key (pasien) references pasien(id),
-	foreign key (barang) references barang(id)
+	foreign key (barang) references barang(id),
+	foreign key (unit) references unit(id)
 ) ENGINE = InnoDB;

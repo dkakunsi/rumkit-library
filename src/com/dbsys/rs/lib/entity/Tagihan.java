@@ -21,7 +21,6 @@ public abstract class Tagihan {
 	protected String keterangan;
 
 	protected Pasien pasien;
-	protected Pegawai pelaksana;
 	protected Unit unit;
 
 	@Id
@@ -81,15 +80,6 @@ public abstract class Tagihan {
 	}
 
 	@ManyToOne(cascade = CascadeType.MERGE)
-	public Pegawai getPelaksana() {
-		return pelaksana;
-	}
-
-	public void setPelaksana(Pegawai pelaksana) {
-		this.pelaksana = pelaksana;
-	}
-
-	@ManyToOne(cascade = CascadeType.MERGE)
 	public Unit getUnit() {
 		return unit;
 	}
@@ -114,8 +104,6 @@ public abstract class Tagihan {
 		result = prime * result
 				+ ((keterangan == null) ? 0 : keterangan.hashCode());
 		result = prime * result + ((pasien == null) ? 0 : pasien.hashCode());
-		result = prime * result
-				+ ((pelaksana == null) ? 0 : pelaksana.hashCode());
 		result = prime * result + ((tanggal == null) ? 0 : tanggal.hashCode());
 		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
 		return result;
@@ -154,11 +142,6 @@ public abstract class Tagihan {
 			if (other.pasien != null)
 				return false;
 		} else if (!pasien.equals(other.pasien))
-			return false;
-		if (pelaksana == null) {
-			if (other.pelaksana != null)
-				return false;
-		} else if (!pelaksana.equals(other.pelaksana))
 			return false;
 		if (tanggal == null) {
 			if (other.tanggal != null)
