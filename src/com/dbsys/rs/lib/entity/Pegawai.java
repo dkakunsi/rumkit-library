@@ -25,7 +25,7 @@ import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
 	name = "tipe",
 	discriminatorType = DiscriminatorType.STRING
 )
-public abstract class Pegawai {
+public class Pegawai {
 
 	protected Long id;
 	protected String nip;
@@ -55,7 +55,7 @@ public abstract class Pegawai {
 		this.nip = nip;
 	}
 
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;
@@ -66,7 +66,9 @@ public abstract class Pegawai {
 	}
 	
 	@Transient
-	public abstract String getName();
+	public String getName() {
+		return "PEGAWAI";
+	}
 	
 	public void setName(String name) {
 		// do nothing

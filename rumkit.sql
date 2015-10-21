@@ -117,7 +117,7 @@ CREATE TABLE pelayanan (
 	primary key (id),
 	foreign key (pasien) references pasien(id),
 	foreign key (tindakan) references tindakan(id),
-	foreign key (pelaksana) references operator(id),
+	foreign key (pelaksana) references pegawai(id),
 	foreign key (unit) references unit(id)
 ) ENGINE = InnoDB;
 

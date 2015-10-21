@@ -80,6 +80,7 @@ public abstract class Tagihan {
 	}
 
 	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;
 	}

@@ -21,6 +21,7 @@ public class DateUtil {
 	public static final int EPOCH_DAY = 1;
 	
 	public static final long DAY_IN_MILIS = 86400000L;
+	public static final long HOUR_IN_MILIS = 3600000L;
 	
 	public static final String DEFAULT_DELIMETER = "-";
 
@@ -532,5 +533,21 @@ public class DateUtil {
 		long p = ChronoUnit.DAYS.between(epoch, created);
 
 		return p * DAY_IN_MILIS;
+	}
+
+	public static int calculate(Date awal, Date akhir) {
+		Long millis1 = awal.getTime();
+		Long millis2 = akhir.getTime();
+		Long hasil = (millis2 - millis1) / DAY_IN_MILIS;
+		
+		return hasil.intValue();
+	}
+
+	public static int calculate(Time awal, Time akhir) {
+		Long millis1 = awal.getTime();
+		Long millis2 = akhir.getTime();
+		Long hasil = (millis2 - millis1) / HOUR_IN_MILIS;
+
+		return hasil.intValue();
 	}
 }
