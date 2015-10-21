@@ -163,7 +163,7 @@ public class DateUtil {
 	 * Ubah java.lang.String menjadi java.sql.Date.<br />
 	 * Menggunakan "-" sebagai delimeter.
 	 * 
-	 * @param dateString format = mm/DD/yyyy
+	 * @param dateString format = yyyy/MM/dd
 	 * 
 	 * @return tanggal
 	 */
@@ -179,7 +179,7 @@ public class DateUtil {
 	/**
 	 * Ubah java.lang.String menjadi java.sql.Date.
 	 * 
-	 * @param dateString format = mm/DD/yyyy.
+	 * @param dateString format = yyyy/MM/dd
 	 * @param delim pemisah antar unit bulan, tanggal, dan tahun.
 	 * 
 	 * @return tanggal
@@ -358,7 +358,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * Format mm/DD/YYYY
+	 * Format yyyy/MM/dd
 	 * @param dateString
 	 * @return
 	 */
@@ -367,7 +367,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * Format mm/DD/YYYY
+	 * Format yyyy/MM/dd
 	 * @param dateString
 	 * @param delim
 	 * @return
@@ -376,10 +376,10 @@ public class DateUtil {
 		if (dateString == null || dateString.equals(""))
 			return null;
 		
-		// month-day-year
+		// year-month-date
 		String elStr[] = dateString.split(delim);
 
-		return getLocalDate(Integer.parseInt(elStr[1]), getMonthInt(elStr[0]), Integer.parseInt(elStr[2]));
+		return getLocalDate(Integer.parseInt(elStr[2]), getMonthInt(elStr[1]), Integer.parseInt(elStr[0]));
 	}
 	
 	public static LocalDate getLocalDate(int day, int month, int year) {
@@ -427,7 +427,12 @@ public class DateUtil {
 			return false;
 		return true;
 	}
-	
+
+	/**
+	 * Change date format from MM/dd/YYYY to yyyy/MM/dd
+	 * @param dateString
+	 * @return
+	 */
 	public static String formatDateString(String dateString) {
 		// bulan-tanggal-tahun
 		String arrStr[] = dateString.split(DEFAULT_DELIMETER);
