@@ -23,10 +23,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public abstract class Pemakaian extends Tagihan {
 
 	protected Barang barang;
-	protected Pasien pasien;
 
 	@JsonIgnore
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;
@@ -34,16 +33,6 @@ public abstract class Pemakaian extends Tagihan {
 
 	public void setBarang(Barang barang) {
 		this.barang = barang;
-	}
-
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "pasien")
-	public Pasien getPasien() {
-		return pasien;
-	}
-
-	public void setPasien(Pasien pasien) {
-		this.pasien = pasien;
 	}
 
 	@Override
@@ -57,7 +46,6 @@ public abstract class Pemakaian extends Tagihan {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((barang == null) ? 0 : barang.hashCode());
-		result = prime * result + ((pasien == null) ? 0 : pasien.hashCode());
 		return result;
 	}
 
@@ -74,11 +62,6 @@ public abstract class Pemakaian extends Tagihan {
 			if (other.barang != null)
 				return false;
 		} else if (!barang.equals(other.barang))
-			return false;
-		if (pasien == null) {
-			if (other.pasien != null)
-				return false;
-		} else if (!pasien.equals(other.pasien))
 			return false;
 		return true;
 	}
