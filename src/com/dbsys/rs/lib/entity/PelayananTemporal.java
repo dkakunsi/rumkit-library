@@ -71,6 +71,9 @@ public class PelayananTemporal extends Pelayanan {
 	@JsonIgnore
 	@Transient
 	public Long getTagihanHarian() {
+		if (tanggalSelesai == null)
+			return 0L;
+		
 		jumlah = DateUtil.calculate(tanggal, tanggalSelesai);
 
 		if (jumlah == 0)
@@ -82,6 +85,9 @@ public class PelayananTemporal extends Pelayanan {
 	@JsonIgnore
 	@Transient
 	public Long getTagihanJam() {
+		if (tanggalSelesai == null || jamKeluar == null)
+			return 0L;
+		
 		jumlah = getJumlahJam();
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
@@ -89,7 +95,7 @@ public class PelayananTemporal extends Pelayanan {
 	@JsonIgnore
 	@Transient
 	public Integer getJumlahJam() {
-		return getJumlahJam(tanggal, tanggalSelesai, jamMasuk, jamMasuk);
+		return getJumlahJam(tanggal, tanggalSelesai, jamMasuk, jamKeluar);
 	}
 	
 	@JsonIgnore

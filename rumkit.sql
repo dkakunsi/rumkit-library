@@ -60,10 +60,10 @@ CREATE TABLE pasien (
 	cicilan int(10),
 	keadaan int(1),
 	penduduk int(10) not null,
-	ruang_perawatan int(10),
+	perawatan int(10),
 	primary key (id),
 	foreign key (penduduk) references penduduk(id),
-	foreign key (ruang_perawatan) references unit(id)
+	foreign key (perawatan) references pelayanan(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE pegawai (
@@ -103,7 +103,7 @@ CREATE TABLE tindakan (
 CREATE TABLE pelayanan (
 	id int(10) auto_increment,
 	tanggal date not null,
-	jumlah int(10) not null,
+	jumlah int(10),
 	biaya_tambahan int(10),
 	keterangan varchar(255),
 	tipe varchar(255) not null,
@@ -112,7 +112,7 @@ CREATE TABLE pelayanan (
 	jam_keluar time(6),
 	pasien int(10) not null,
 	tindakan int(10) not null,
-	pelaksana int(10) not null,
+	pelaksana int(10),
 	unit int(10) not null,
 	primary key (id),
 	foreign key (pasien) references pasien(id),

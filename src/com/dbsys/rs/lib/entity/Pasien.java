@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 import com.dbsys.rs.lib.Kelas;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "pasien")
@@ -42,7 +43,7 @@ public class Pasien {
 	private Penduduk penduduk;
 	
 	private Kelas kelas;
-	private Unit ruangPerawatan;
+	private PelayananTemporal perawatan;
 	private Date tanggalKeluar;
 	private KeadaanPasien keadaan;
 
@@ -169,14 +170,15 @@ public class Pasien {
 		this.kelas = kelas;
 	}
 
+	@JsonBackReference
 	@ManyToOne(cascade = {CascadeType.MERGE})
-	@JoinColumn(name = "ruang_perawatan")
-	public Unit getRuangPerawatan() {
-		return ruangPerawatan;
+	@JoinColumn(name = "perawatan")
+	public PelayananTemporal getPerawatan() {
+		return perawatan;
 	}
 
-	public void setRuangPerawatan(Unit ruangPerawatan) {
-		this.ruangPerawatan = ruangPerawatan;
+	public void setPerawatan(PelayananTemporal perawatan) {
+		this.perawatan = perawatan;
 	}
 
 	@Transient
