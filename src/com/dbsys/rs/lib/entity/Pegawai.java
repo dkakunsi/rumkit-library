@@ -19,6 +19,8 @@ import javax.persistence.Transient;
 import com.dbsys.rs.lib.entity.Dokter.Spesialisasi;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Table(name = "pegawai")
@@ -27,11 +29,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	name = "tipe",
 	discriminatorType = DiscriminatorType.STRING
 )
+@JsonTypeInfo(
+	use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "name"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = Dokter.class, name = "DOKTER"),
+	@JsonSubTypes.Type(value = Perawat.class, name = "PERAWAT"),
+	@JsonSubTypes.Type(value = Apoteker.class, name = "APOTEKER"),
+	@JsonSubTypes.Type(value = Pekerja.class, name = "PEKERJA")
+})
 public class Pegawai {
 
 	protected Long id;
 	protected String nip;
 	protected Penduduk penduduk;
+	
+	// tidak termasuk dalam mapping entity
+	protected String name;
 
 	public Pegawai() {
 		super();
@@ -69,11 +85,11 @@ public class Pegawai {
 	
 	@Transient
 	public String getName() {
-		return "PEGAWAI";
+		return this.name;
 	}
 	
 	public void setName(String name) {
-		// do nothing
+		this.name = name;
 	}
 	
 	@Transient

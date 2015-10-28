@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @Entity
 @Table(name = "pelayanan")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -20,11 +23,25 @@ import javax.persistence.Transient;
 	discriminatorType = DiscriminatorType.STRING
 )
 @DiscriminatorValue("PELAYANAN")
+@JsonTypeInfo(
+	use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "name"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = Pelayanan.class, name = "PELAYANAN"),
+	@JsonSubTypes.Type(value = PelayananTemporal.class, name = "TEMPORAL")
+})
 public class Pelayanan extends Tagihan {
-
+	
 	protected Tindakan tindakan;
 	protected Pegawai pelaksana;
 
+	public Pelayanan() {
+		super();
+		setName(Name.PELAYANAN);
+	}
+	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "tindakan")
 	public Tindakan getTindakan() {

@@ -19,6 +19,11 @@ public class PelayananTemporal extends Pelayanan {
 	private Time jamMasuk;
 	private Time jamKeluar;
 
+	public PelayananTemporal() {
+		super();
+		setName(Name.TEMPORAL);
+	}
+	
 	@Column(name = "tanggal_selesai")
 	public Date getTanggalSelesai() {
 		return tanggalSelesai;

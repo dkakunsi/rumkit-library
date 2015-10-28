@@ -8,6 +8,11 @@ import javax.persistence.Transient;
 @DiscriminatorValue("BAHAN HABIS PAKAI")
 public class PemakaianBhp extends Pemakaian {
 	
+	public PemakaianBhp() {
+		super();
+		setName(Name.BHP);
+	}
+	
 	@Transient
 	public BahanHabisPakai getBahanHabisPakai() {
 		return (BahanHabisPakai)barang;

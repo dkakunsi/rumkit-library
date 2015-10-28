@@ -14,6 +14,28 @@ import javax.persistence.Transient;
 @MappedSuperclass
 public abstract class Tagihan {
 
+	public enum Name {
+		/*
+		 * Pelayanan
+		 */
+		PELAYANAN,
+		
+		/*
+		 * Pelayanan Temporal
+		 */
+		TEMPORAL,
+		
+		/*
+		 * Pemakaian Bahan Habis Pakai
+		 */
+		BHP,
+		
+		/*
+		 * Pemakaian Obat Farmasi
+		 */
+		OBAT
+	}
+
 	protected Long id;
 	protected Date tanggal;
 	protected Integer jumlah;
@@ -22,6 +44,12 @@ public abstract class Tagihan {
 
 	protected Pasien pasien;
 	protected Unit unit;
+	
+	/*
+	 * Tidak termasuk dalam mapping entity.
+	 * Digunakan oleh Pelayanan & Pemakaian untuk menentuka sub-class dalam JSON.
+	 */
+	protected Name name;
 
 	@Id
 	@GeneratedValue
@@ -93,6 +121,15 @@ public abstract class Tagihan {
 	public abstract Long getTagihan();
 
 	public void setTagihan(Long tagihan) { }
+	
+	@Transient
+	public Name getName() {
+		return this.name;
+	}
+	
+	public void setName(Name name) {
+		this.name = name;
+	}
 
 	@Override
 	public int hashCode() {

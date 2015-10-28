@@ -13,6 +13,8 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.NumberException;
 import com.dbsys.rs.lib.Tanggungan;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Table(name = "barang")
@@ -21,7 +23,16 @@ import com.dbsys.rs.lib.Tanggungan;
 	name = "tipe",
 	discriminatorType = DiscriminatorType.STRING
 )
-public abstract class Barang {
+@JsonTypeInfo(
+	use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "name"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = BahanHabisPakai.class, name = "BHP"),
+	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT")
+})
+public class Barang {
 
 	protected Long id;
 	protected String kode;
@@ -30,6 +41,9 @@ public abstract class Barang {
 	protected String satuan;
 	protected Long harga;
 	protected Tanggungan tanggungan;
+
+	// tidak termasuk dalam mapping entity
+	protected String name;
 	
 	public Barang() {
 		super();
@@ -110,10 +124,26 @@ public abstract class Barang {
 	}
 	
 	@Transient
-	public abstract String getName();
+	public String getName() {
+		return this.name;
+	}
 
 	public void setName(String name) {
-		// do nothing
+		this.name = name;
+	}
+	
+	public Long add(Integer jumlah) {
+		this.jumlah += jumlah;
+		
+		return this.jumlah;
+	}
+	
+	public Long substract(Integer jumlah) throws NumberException {
+		if (this.jumlah < jumlah)
+			throw new NumberException("Maaf, jumlah tidak mencukupi.");
+		this.jumlah -= jumlah;
+		
+		return this.jumlah;
 	}
 	
 	@Override

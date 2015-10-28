@@ -6,6 +6,8 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @DiscriminatorValue("OBAT")
 public class PemakaianObat extends Pemakaian {
@@ -17,6 +19,11 @@ public class PemakaianObat extends Pemakaian {
 	private String nomorResep;
 	private ObatLuar obatLuar;
 	private AsalObat asal;
+	
+	public PemakaianObat() {
+		super();
+		setName(Name.OBAT);
+	}
 
 	@Column(name = "nomor_resep")
 	public String getNomorResep() {
@@ -53,7 +60,8 @@ public class PemakaianObat extends Pemakaian {
 	public void setObat(ObatFarmasi obat) {
 		this.barang = obat;
 	}
-	
+
+	@JsonIgnore
 	@Transient
 	public String getNamaObat() {
 		if (asal.equals(AsalObat.FARMASI))

@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Table(name = "pemakaian")
@@ -20,10 +22,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 	name = "tipe",
 	discriminatorType = DiscriminatorType.STRING
 )
-public abstract class Pemakaian extends Tagihan {
+@JsonTypeInfo(
+	use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "name"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = PemakaianBhp.class, name = "BHP"),
+	@JsonSubTypes.Type(value = PemakaianObat.class, name = "OBAT")
+})
+public class Pemakaian extends Tagihan {
 
 	protected Barang barang;
-
+	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "barang")
