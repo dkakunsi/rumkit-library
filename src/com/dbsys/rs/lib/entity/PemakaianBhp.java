@@ -19,6 +19,6 @@ public class PemakaianBhp extends Pemakaian {
 	}
 	
 	public void setBahanHabisPakai(BahanHabisPakai bhp) {
-		this.barang = bhp;
+		setBarang(bhp);
 	}
 }

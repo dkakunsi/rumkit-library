@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.Penanggung;
+import com.dbsys.rs.lib.Tanggungan;
+
 @MappedSuperclass
 public abstract class Tagihan {
 
@@ -44,6 +47,8 @@ public abstract class Tagihan {
 
 	protected Pasien pasien;
 	protected Unit unit;
+
+	protected Penanggung penanggung;
 	
 	/*
 	 * Tidak termasuk dalam mapping entity.
@@ -116,12 +121,28 @@ public abstract class Tagihan {
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
+
+	@Transient
+	public Tanggungan getTanggungan() {
+		return penanggung.getTanggungan();
+	}
 	
+	public void setTanggungan(Tanggungan tanggungan) { }
+
 	@Transient
 	public abstract Long getTagihan();
 
 	public void setTagihan(Long tagihan) { }
+
+	public Long hitungTagihan() {
+		if (Tanggungan.BPJS.equals(pasien.getTanggungan()) && Tanggungan.BPJS.equals(penanggung.getTanggungan()))
+			return 0L;
+		return getTagihan();
+	}
 	
+	/*
+	 * Dipakai oleh sub-class untuk JSON mapping (serialization/deserialization).
+	 */
 	@Transient
 	public Name getName() {
 		return this.name;

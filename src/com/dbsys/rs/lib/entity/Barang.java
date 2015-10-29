@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.NumberException;
+import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -32,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	@JsonSubTypes.Type(value = BahanHabisPakai.class, name = "BHP"),
 	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT")
 })
-public class Barang {
+public class Barang implements Penanggung {
 
 	protected Long id;
 	protected String kode;
@@ -114,6 +115,7 @@ public class Barang {
 		this.harga = harga;
 	}
 
+	@Override
 	@Column(name = "tanggungan")
 	public Tanggungan getTanggungan() {
 		return tanggungan;

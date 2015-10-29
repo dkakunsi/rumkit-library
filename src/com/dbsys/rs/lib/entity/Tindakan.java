@@ -10,11 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.dbsys.rs.lib.Kelas;
+import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
 
 @Entity
 @Table(name = "tindakan")
-public class Tindakan {
+public class Tindakan implements Penanggung {
 	
 	public enum Satuan {
 		TINDAKAN, HARI, JAM
@@ -90,6 +91,7 @@ public class Tindakan {
 		this.kelas = kelas;
 	}
 
+	@Override
 	@Column(name = "tanggungan")
 	public Tanggungan getTanggungan() {
 		return tanggungan;

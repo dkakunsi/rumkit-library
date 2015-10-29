@@ -44,6 +44,7 @@ public class Pemakaian extends Tagihan {
 
 	public void setBarang(Barang barang) {
 		this.barang = barang;
+		this.penanggung = barang;
 	}
 
 	@Override

@@ -13,13 +13,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.Kelas;
+import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "pasien")
-public class Pasien {
+public class Pasien implements Penanggung {
 
 	public enum StatusPasien {
 		OPEN, PAID, UNPAID
@@ -110,6 +111,7 @@ public class Pasien {
 		this.status = status;
 	}
 
+	@Override
 	@Column(name = "tanggungan")
 	public Tanggungan getTanggungan() {
 		return tanggungan;

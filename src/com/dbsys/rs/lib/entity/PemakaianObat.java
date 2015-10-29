@@ -58,7 +58,7 @@ public class PemakaianObat extends Pemakaian {
 	}
 	
 	public void setObat(ObatFarmasi obat) {
-		this.barang = obat;
+		setBarang(obat);
 	}
 
 	@JsonIgnore
