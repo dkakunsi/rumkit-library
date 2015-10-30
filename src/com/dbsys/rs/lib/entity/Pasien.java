@@ -271,6 +271,13 @@ public class Pasien implements Penanggung {
 		this.kode = String.format("%s-%s", i, t);
 	}
 
+	public void bayar(Long jumlah) {
+		if (this.cicilan == null)
+			this.cicilan = 0L;
+
+		this.cicilan += jumlah;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
