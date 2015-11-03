@@ -52,6 +52,12 @@ public class Pemakaian extends Tagihan {
 	public Long getTagihan() {
 		return barang.getHarga() * jumlah + biayaTambahan;
 	}
+	
+	@Override
+	@Transient
+	public String getNama() {
+		return barang.getNama();
+	}
 
 	@Override
 	public int hashCode() {

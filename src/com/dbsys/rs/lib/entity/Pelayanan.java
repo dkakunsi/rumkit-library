@@ -68,6 +68,12 @@ public class Pelayanan extends Tagihan {
 	public Long getTagihan() {
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
+	
+	@Override
+	@Transient
+	public String getNama() {
+		return tindakan.getNama();
+	}
 
 	@Override
 	public int hashCode() {

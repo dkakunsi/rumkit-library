@@ -123,6 +123,18 @@ public abstract class Tagihan {
 	}
 
 	@Transient
+	public abstract String getNama();
+	
+	public void setNama(String nama) { }
+
+	@Transient
+	public String getNamaUnit() {
+		return unit.getNama();
+	}
+	
+	public void setNamaUnit(String namaUnit) { }
+
+	@Transient
 	public Tanggungan getTanggungan() {
 		return penanggung.getTanggungan();
 	}
