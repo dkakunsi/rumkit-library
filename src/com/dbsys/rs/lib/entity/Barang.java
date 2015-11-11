@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	@JsonSubTypes.Type(value = BahanHabisPakai.class, name = "BHP"),
 	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT")
 })
-public class Barang implements Tanggungan {
+public abstract class Barang implements Tanggungan {
 
 	protected Long id;
 	protected String kode;
@@ -46,8 +46,13 @@ public class Barang implements Tanggungan {
 	// tidak termasuk dalam mapping entity
 	protected String name;
 	
-	public Barang() {
+	protected Barang() {
 		super();
+	}
+	
+	protected Barang(String name) {
+		super();
+		setName(name);
 	}
 
 	@Id

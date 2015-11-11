@@ -40,7 +40,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	@JsonSubTypes.Type(value = Apoteker.class, name = "APOTEKER"),
 	@JsonSubTypes.Type(value = Pekerja.class, name = "PEKERJA")
 })
-public class Pegawai {
+public abstract class Pegawai {
 
 	protected Long id;
 	protected String nip;
@@ -49,9 +49,14 @@ public class Pegawai {
 	// tidak termasuk dalam mapping entity
 	protected String name;
 
-	public Pegawai() {
+	protected Pegawai() {
 		super();
 		this.penduduk = new Penduduk();
+	}
+	
+	protected Pegawai(String name) {
+		this();
+		setName(name);
 	}
 
 	@Id

@@ -59,6 +59,11 @@ public abstract class Stok {
 		setTanggal(DateUtil.getDate());
 		setJam(DateUtil.getTime());
 	}
+	
+	protected Stok(String name) {
+		this();
+		setName(name);
+	}
 
 	@Id
 	@GeneratedValue
