@@ -10,6 +10,11 @@ import javax.persistence.ManyToOne;
 public class StokKembali extends Stok {
 	
 	private Pasien pasien;
+	
+	public StokKembali() {
+		super();
+		setJenis(JenisStok.MASUK);
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "pasien")
@@ -20,6 +25,16 @@ public class StokKembali extends Stok {
 	public void setPasien(Pasien pasien) {
 		this.pasien = pasien;
 	}
+	
+	public Long hitungPengembalian() {
+		return barang.getHarga() * jumlah;
+	}
+	
+	@Override
+	public void setJenis(JenisStok jenis) {
+		jenis = JenisStok.MASUK;
+		super.setJenis(jenis);
+	};
 
 	@Override
 	public int hashCode() {

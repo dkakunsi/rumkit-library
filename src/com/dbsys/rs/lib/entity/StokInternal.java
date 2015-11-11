@@ -10,6 +10,11 @@ import javax.persistence.ManyToOne;
 public class StokInternal extends Stok {
 	
 	private Unit unit;
+	
+	public StokInternal() {
+		super();
+		setJenis(JenisStok.KELUAR);
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "unit")
@@ -20,6 +25,12 @@ public class StokInternal extends Stok {
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
+	
+	@Override
+	public void setJenis(JenisStok jenis) {
+		jenis = JenisStok.KELUAR;
+		super.setJenis(jenis);
+	};
 
 	@Override
 	public int hashCode() {

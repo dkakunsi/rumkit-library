@@ -112,8 +112,8 @@ public abstract class Stok {
 		return jenis;
 	}
 
-	public void setJenis(JenisStok tipe) {
-		this.jenis = tipe;
+	public void setJenis(JenisStok jenis) {
+		this.jenis = jenis;
 	}
 
 	@Transient
