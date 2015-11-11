@@ -2,7 +2,6 @@ package com.dbsys.rs.lib.entity;
 
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,6 +25,7 @@ public abstract class Tagihan {
 
 	protected Pasien pasien;
 	protected Unit unit;
+	protected Pembayaran pembayaran;
 
 	protected Tanggungan tanggungan;
 
@@ -75,7 +75,7 @@ public abstract class Tagihan {
 		this.keterangan = keterangan;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;
@@ -85,10 +85,20 @@ public abstract class Tagihan {
 		this.pasien = pasien;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "pembayaran")
+	public Pembayaran getPembayaran() {
+		return pembayaran;
+	}
+
+	public void setPembayaran(Pembayaran pembayaran) {
+		this.pembayaran = pembayaran;
 	}
 
 	public void setUnit(Unit unit) {
@@ -112,7 +122,7 @@ public abstract class Tagihan {
 		return tanggungan.getTanggungan();
 	}
 	
-	public void setTanggungan(Penanggung penanggung) { }
+	public void setTanggungan(Tanggungan tanggungan) { }
 
 	@Transient
 	public abstract Long getTagihan();
@@ -141,7 +151,11 @@ public abstract class Tagihan {
 		result = prime * result
 				+ ((keterangan == null) ? 0 : keterangan.hashCode());
 		result = prime * result + ((pasien == null) ? 0 : pasien.hashCode());
+		result = prime * result
+				+ ((pembayaran == null) ? 0 : pembayaran.hashCode());
 		result = prime * result + ((tanggal == null) ? 0 : tanggal.hashCode());
+		result = prime * result
+				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
 		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
 		return result;
 	}
@@ -180,10 +194,20 @@ public abstract class Tagihan {
 				return false;
 		} else if (!pasien.equals(other.pasien))
 			return false;
+		if (pembayaran == null) {
+			if (other.pembayaran != null)
+				return false;
+		} else if (!pembayaran.equals(other.pembayaran))
+			return false;
 		if (tanggal == null) {
 			if (other.tanggal != null)
 				return false;
 		} else if (!tanggal.equals(other.tanggal))
+			return false;
+		if (tanggungan == null) {
+			if (other.tanggungan != null)
+				return false;
+		} else if (!tanggungan.equals(other.tanggungan))
 			return false;
 		if (unit == null) {
 			if (other.unit != null)
