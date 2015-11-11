@@ -1,39 +1,19 @@
 package com.dbsys.rs.lib.entity;
 
 import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Table(name = "pemakaian")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-	name = "tipe",
-	discriminatorType = DiscriminatorType.STRING
-)
-@JsonTypeInfo(
-	use = JsonTypeInfo.Id.NAME,
-	include = JsonTypeInfo.As.PROPERTY,
-	property = "name"
-)
-@JsonSubTypes({
-	@JsonSubTypes.Type(value = PemakaianBhp.class, name = "BHP"),
-	@JsonSubTypes.Type(value = PemakaianObat.class, name = "OBAT")
-})
 public class Pemakaian extends Tagihan {
 
-	protected Barang barang;
+	private Barang barang;
 	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.MERGE)
