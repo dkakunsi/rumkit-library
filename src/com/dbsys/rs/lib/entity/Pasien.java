@@ -23,33 +23,36 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Pasien implements Penanggung {
 
 	public enum StatusPasien {
-		OPEN, PAID, UNPAID
+		PERAWATAN, LUNAS, MENUNGGAK
 	}
 
 	public enum KeadaanPasien {
 		SEMBUH, RUJUK, SAKIT, MATI, LARI
 	}
 	
-	public enum Type {
-		RAWAT_JALAN, RAWAT_INAP
+	public enum Perawatan {
+		RAWAT_JALAN, RAWAT_INAP, UGD
 	}
 
-	private Type tipe;
+	private Perawatan tipePerawatan;
 	
 	private Long id;
 	private String kode;
 	private Date tanggalMasuk;
-	private StatusPasien status;
-	private Tanggungan tanggungan;
-	private Penduduk penduduk;
-	
-	private Kelas kelas;
-	private PelayananTemporal perawatan;
+	private Date tanggalRawatInap;
 	private Date tanggalKeluar;
-	private KeadaanPasien keadaan;
 
 	private Long totalTagihan;
 	private Long cicilan;
+
+	private StatusPasien status;
+	private Tanggungan tanggungan;
+	private Kelas kelas;
+	private KeadaanPasien keadaan;
+
+	private Penduduk penduduk;
+	private Unit tujuan;
+	private PelayananTemporal perawatan;
 
 	public Pasien() {
 		super();
@@ -82,6 +85,15 @@ public class Pasien implements Penanggung {
 
 	public void setTanggalMasuk(Date tanggalMasuk) {
 		this.tanggalMasuk = tanggalMasuk;
+	}
+
+	@Column(name = "tanggal_rawat_inap")
+	public Date getTanggalRawatInap() {
+		return tanggalRawatInap;
+	}
+
+	public void setTanggalRawatInap(Date tanggalRawatInap) {
+		this.tanggalRawatInap = tanggalRawatInap;
 	}
 
 	@Column(name = "total_tagihan")
@@ -132,12 +144,12 @@ public class Pasien implements Penanggung {
 	}
 
 	@Column(name = "tipe")
-	public Type getTipe() {
-		return tipe;
+	public Perawatan getTipePerawatan() {
+		return tipePerawatan;
 	}
 
-	public void setTipe(Type tipe) {
-		this.tipe = tipe;
+	public void setTipePerawatan(Perawatan tipePerawatan) {
+		this.tipePerawatan = tipePerawatan;
 	}
 
 	@Column(name = "tanggal_keluar")
@@ -173,7 +185,7 @@ public class Pasien implements Penanggung {
 	}
 
 	@JsonBackReference
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne
 	@JoinColumn(name = "perawatan")
 	public PelayananTemporal getPerawatan() {
 		return perawatan;
@@ -181,6 +193,16 @@ public class Pasien implements Penanggung {
 
 	public void setPerawatan(PelayananTemporal perawatan) {
 		this.perawatan = perawatan;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "tujuan")
+	public Unit getTujuan() {
+		return tujuan;
+	}
+
+	public void setTujuan(Unit tujuan) {
+		this.tujuan = tujuan;
 	}
 
 	@Transient
@@ -284,16 +306,28 @@ public class Pasien implements Penanggung {
 		int result = 1;
 		result = prime * result + ((cicilan == null) ? 0 : cicilan.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((keadaan == null) ? 0 : keadaan.hashCode());
+		result = prime * result + ((kelas == null) ? 0 : kelas.hashCode());
 		result = prime * result + ((kode == null) ? 0 : kode.hashCode());
 		result = prime * result
 				+ ((penduduk == null) ? 0 : penduduk.hashCode());
+		result = prime * result
+				+ ((perawatan == null) ? 0 : perawatan.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result
+				+ ((tanggalKeluar == null) ? 0 : tanggalKeluar.hashCode());
+		result = prime * result
 				+ ((tanggalMasuk == null) ? 0 : tanggalMasuk.hashCode());
+		result = prime
+				* result
+				+ ((tanggalRawatInap == null) ? 0 : tanggalRawatInap.hashCode());
 		result = prime * result
 				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
 		result = prime * result
+				+ ((tipePerawatan == null) ? 0 : tipePerawatan.hashCode());
+		result = prime * result
 				+ ((totalTagihan == null) ? 0 : totalTagihan.hashCode());
+		result = prime * result + ((tujuan == null) ? 0 : tujuan.hashCode());
 		return result;
 	}
 
@@ -316,6 +350,10 @@ public class Pasien implements Penanggung {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (keadaan != other.keadaan)
+			return false;
+		if (kelas != other.kelas)
+			return false;
 		if (kode == null) {
 			if (other.kode != null)
 				return false;
@@ -326,19 +364,41 @@ public class Pasien implements Penanggung {
 				return false;
 		} else if (!penduduk.equals(other.penduduk))
 			return false;
+		if (perawatan == null) {
+			if (other.perawatan != null)
+				return false;
+		} else if (!perawatan.equals(other.perawatan))
+			return false;
 		if (status != other.status)
+			return false;
+		if (tanggalKeluar == null) {
+			if (other.tanggalKeluar != null)
+				return false;
+		} else if (!tanggalKeluar.equals(other.tanggalKeluar))
 			return false;
 		if (tanggalMasuk == null) {
 			if (other.tanggalMasuk != null)
 				return false;
 		} else if (!tanggalMasuk.equals(other.tanggalMasuk))
 			return false;
+		if (tanggalRawatInap == null) {
+			if (other.tanggalRawatInap != null)
+				return false;
+		} else if (!tanggalRawatInap.equals(other.tanggalRawatInap))
+			return false;
 		if (tanggungan != other.tanggungan)
+			return false;
+		if (tipePerawatan != other.tipePerawatan)
 			return false;
 		if (totalTagihan == null) {
 			if (other.totalTagihan != null)
 				return false;
 		} else if (!totalTagihan.equals(other.totalTagihan))
+			return false;
+		if (tujuan == null) {
+			if (other.tujuan != null)
+				return false;
+		} else if (!tujuan.equals(other.tujuan))
 			return false;
 		return true;
 	}
