@@ -2,20 +2,16 @@ package com.dbsys.rs.lib;
 
 import java.util.List;
 
-import com.dbsys.rs.lib.entity.Apoteker;
 import com.dbsys.rs.lib.entity.BahanHabisPakai;
-import com.dbsys.rs.lib.entity.Dokter;
 import com.dbsys.rs.lib.entity.KategoriTindakan;
 import com.dbsys.rs.lib.entity.ObatFarmasi;
 import com.dbsys.rs.lib.entity.Operator;
 import com.dbsys.rs.lib.entity.Pasien;
-import com.dbsys.rs.lib.entity.Pekerja;
+import com.dbsys.rs.lib.entity.Pegawai;
 import com.dbsys.rs.lib.entity.Pelayanan;
 import com.dbsys.rs.lib.entity.Pemakaian;
 import com.dbsys.rs.lib.entity.Penduduk;
-import com.dbsys.rs.lib.entity.Perawat;
-import com.dbsys.rs.lib.entity.StokKeluar;
-import com.dbsys.rs.lib.entity.StokMasuk;
+import com.dbsys.rs.lib.entity.Stok;
 import com.dbsys.rs.lib.entity.Tindakan;
 import com.dbsys.rs.lib.entity.Unit;
 
@@ -81,31 +77,15 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<BahanHabisPakai>(list);
 	}
 
-	public static ListEntityRestMessage<Dokter> createListDokter(List<Dokter> list) {
-		return new ListEntityRestMessage<Dokter>(list);
-	}
-
-	public static ListEntityRestMessage<Perawat> createListPerawat(List<Perawat> list) {
-		return new ListEntityRestMessage<Perawat>(list);
-	}
-
-	public static ListEntityRestMessage<Apoteker> createListApoteker(List<Apoteker> list) {
-		return new ListEntityRestMessage<Apoteker>(list);
-	}
-
-	public static ListEntityRestMessage<Pekerja> createListPekerja(List<Pekerja> list) {
-		return new ListEntityRestMessage<Pekerja>(list);
+	public static ListEntityRestMessage<Pegawai> createListDokter(List<Pegawai> list) {
+		return new ListEntityRestMessage<Pegawai>(list);
 	}
 
 	public static ListEntityRestMessage<KategoriTindakan> createListKategori(List<KategoriTindakan> list) {
 		return new ListEntityRestMessage<KategoriTindakan>(list);
 	}
 
-	public static ListEntityRestMessage<StokMasuk> createListStokMasuk(List<StokMasuk> list) {
-		return new ListEntityRestMessage<>(list);
-	}
-
-	public static ListEntityRestMessage<StokKeluar> createListStokKeluar(List<StokKeluar> list) {
+	public static ListEntityRestMessage<Stok> createListStokMasuk(List<Stok> list) {
 		return new ListEntityRestMessage<>(list);
 	}
 

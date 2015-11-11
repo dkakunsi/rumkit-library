@@ -3,7 +3,6 @@ package com.dbsys.rs.lib.entity;
 import java.sql.Date;
 import java.sql.Time;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -18,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Table(name = "stok")
@@ -26,13 +27,32 @@ import com.dbsys.rs.lib.DateUtil;
 	name = "tipe",
 	discriminatorType = DiscriminatorType.STRING
 )
+@JsonTypeInfo(
+		use = JsonTypeInfo.Id.NAME,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "name"
+	)
+	@JsonSubTypes({
+		@JsonSubTypes.Type(value = StokInternal.class, name = "INTERNAL"),
+		@JsonSubTypes.Type(value = StokEksternal.class, name = "EKSTERNAL"),
+		@JsonSubTypes.Type(value = StokKembali.class, name = "KEMBALI")
+	})
 public abstract class Stok {
+	
+	public enum JenisStok {
+		MASUK,
+		KELUAR
+	}
 
 	protected Long id;
 	protected Long jumlah;
 	protected Date tanggal;
 	protected Time jam;
 	protected Barang barang;
+	protected JenisStok jenis;
+	
+	// Tidak untuk persistent, hanya untuk JSON
+	protected String name;
 	
 	protected Stok() {
 		super();
@@ -77,7 +97,7 @@ public abstract class Stok {
 		this.jam = jam;
 	}
 
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;
@@ -87,10 +107,23 @@ public abstract class Stok {
 		this.barang = barang;
 	}
 
+	@Column(name = "jenis")
+	public JenisStok getJenis() {
+		return jenis;
+	}
+
+	public void setJenis(JenisStok tipe) {
+		this.jenis = tipe;
+	}
+
 	@Transient
-	public abstract String getName();
-	
-	public void setName(String name) { }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public int hashCode() {
