@@ -10,23 +10,22 @@ import javax.persistence.Table;
 @Table(name = "unit")
 public class Unit {
 	
-	public enum Type {
+	public enum TipeUnit {
 		LOKET_PENDAFTARAN, 
 		LOKET_PEMBAYARAN, 
 		POLIKLINIK, 
 		RUANG_PERAWATAN, 
-		FARMASI,
-		LABORATORIUM,
-		RADIOLOGI,
-		TRANSFUSI_DARAH,
-		UGD,
-		UNIT_LAIN
+		APOTEK_FARMASI,
+		GUDANG_FARMASI,
+		PENUNJANG_MEDIK,
+		PENUNJANG_NON_MEDIK,
+		ICU
 	}
 
 	private Long id;
 	private String nama;
 	private Float bobot;
-	private Type tipe;
+	private TipeUnit tipe;
 
 	public Unit() {
 		super();
@@ -61,11 +60,11 @@ public class Unit {
 	}
 
 	@Column(name = "tipe")
-	public Type getTipe() {
+	public TipeUnit getTipe() {
 		return tipe;
 	}
 
-	public void setTipe(Type tipe) {
+	public void setTipe(TipeUnit tipe) {
 		this.tipe = tipe;
 	}
 

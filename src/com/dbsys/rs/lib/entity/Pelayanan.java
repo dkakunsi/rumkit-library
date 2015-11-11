@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -36,10 +37,13 @@ public class Pelayanan extends Tagihan {
 	
 	protected Tindakan tindakan;
 	protected Pegawai pelaksana;
+	
+	// tidak masuk dalam persistent
+	protected String name;
 
 	public Pelayanan() {
 		super();
-		setName(Name.PELAYANAN);
+		setName("PELAYANAN");
 	}
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
@@ -68,11 +72,28 @@ public class Pelayanan extends Tagihan {
 	public Long getTagihan() {
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
+
+	@Override
+	@Transient
+	public Long getCustomTagihan() {
+		if (TipeUnit.ICU.equals(unit.getTipe()))
+			return (tindakan.getTarif() * 2) * jumlah + biayaTambahan;
+		return 0L;
+	}
 	
 	@Override
 	@Transient
 	public String getNama() {
 		return tindakan.getNama();
+	}
+
+	@Transient
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

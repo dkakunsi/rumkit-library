@@ -13,31 +13,10 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 
 @MappedSuperclass
 public abstract class Tagihan {
-
-	public enum Name {
-		/*
-		 * Pelayanan
-		 */
-		PELAYANAN,
-		
-		/*
-		 * Pelayanan Temporal
-		 */
-		TEMPORAL,
-		
-		/*
-		 * Pemakaian Bahan Habis Pakai
-		 */
-		BHP,
-		
-		/*
-		 * Pemakaian Obat Farmasi
-		 */
-		OBAT
-	}
 
 	protected Long id;
 	protected Date tanggal;
@@ -49,12 +28,6 @@ public abstract class Tagihan {
 	protected Unit unit;
 
 	protected Penanggung penanggung;
-	
-	/*
-	 * Tidak termasuk dalam mapping entity.
-	 * Digunakan oleh Pelayanan & Pemakaian untuk menentuka sub-class dalam JSON.
-	 */
-	protected Name name;
 
 	@Id
 	@GeneratedValue
@@ -145,23 +118,16 @@ public abstract class Tagihan {
 	public abstract Long getTagihan();
 
 	public void setTagihan(Long tagihan) { }
+	
+	@Transient
+	public abstract Long getCustomTagihan();
 
 	public Long hitungTagihan() {
 		if (Tanggungan.BPJS.equals(pasien.getTanggungan()) && Tanggungan.BPJS.equals(penanggung.getTanggungan()))
 			return 0L;
+		if (TipeUnit.ICU.equals(unit.getTipe()))
+			getCustomTagihan();
 		return getTagihan();
-	}
-	
-	/*
-	 * Dipakai oleh sub-class untuk JSON mapping (serialization/deserialization).
-	 */
-	@Transient
-	public Name getName() {
-		return this.name;
-	}
-	
-	public void setName(Name name) {
-		this.name = name;
 	}
 
 	@Override

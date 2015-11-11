@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.entity.Operator.Role;
-import com.dbsys.rs.lib.entity.Unit.Type;
+import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -176,11 +176,11 @@ public class Token {
 	public void setNama(String nama) { }
 
 	@Transient
-	public Type getTipe() {
+	public TipeUnit getTipe() {
 		return operator.getUnit().getTipe();
 	}
 	
-	public void setTipe(Type tipe) { }
+	public void setTipe(TipeUnit tipe) { }
 
 	@Transient
 	public String getNamaUnit() {

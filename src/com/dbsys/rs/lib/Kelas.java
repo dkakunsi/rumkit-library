@@ -6,6 +6,5 @@ public enum Kelas {
 	VIP,
 	I,
 	II,
-	III,
-	ICU
+	III
 }
