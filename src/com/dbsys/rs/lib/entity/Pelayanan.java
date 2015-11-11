@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.entity.Unit.TipeUnit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -68,12 +69,14 @@ public class Pelayanan extends Tagihan {
 	}
 
 	@Override
+	@JsonIgnore
 	@Transient
 	public Long getTagihan() {
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
 
 	@Override
+	@JsonIgnore
 	@Transient
 	public Long getCustomTagihan() {
 		if (TipeUnit.ICU.equals(unit.getTipe()))

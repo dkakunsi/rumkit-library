@@ -40,12 +40,14 @@ public class Pemakaian extends Tagihan {
 	}
 
 	@Override
+	@JsonIgnore
 	@Transient
 	public Long getTagihan() {
 		return barang.getHarga() * jumlah + biayaTambahan;
 	}
 	
 	@Override
+	@JsonIgnore
 	@Transient
 	public Long getCustomTagihan() {
 		if (TipeUnit.ICU.equals(unit.getTipe()))

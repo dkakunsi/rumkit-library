@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.entity.Unit.TipeUnit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 public abstract class Tagihan {
@@ -34,6 +35,9 @@ public abstract class Tagihan {
 
 	protected Tanggungan tanggungan;
 	protected StatusTagihan status;
+	
+	// tidak termasuk persistent
+	protected boolean bayar;
 
 	@Id
 	@GeneratedValue
@@ -121,6 +125,15 @@ public abstract class Tagihan {
 	}
 
 	@Transient
+	public boolean isBayar() {
+		return bayar;
+	}
+
+	public void setBayar(boolean bayar) {
+		this.bayar = bayar;
+	}
+
+	@Transient
 	public abstract String getNama();
 	
 	public void setNama(String nama) { }
@@ -139,11 +152,13 @@ public abstract class Tagihan {
 	
 	public void setTanggungan(Tanggungan tanggungan) { }
 
+	@JsonIgnore
 	@Transient
 	public abstract Long getTagihan();
 
 	public void setTagihan(Long tagihan) { }
 	
+	@JsonIgnore
 	@Transient
 	public abstract Long getCustomTagihan();
 
