@@ -68,7 +68,7 @@ public class PelayananTemporal extends Pelayanan {
 	@Override
 	@Transient
 	public Long getTagihan() {
-		if (tindakan.getSatuan().equals(Tindakan.Satuan.HARI))
+		if (tindakan.getSatuan().equals(Tindakan.SatuanTindakan.HARI))
 			return getTagihanHarian();
 		return getTagihanJam();
 	}

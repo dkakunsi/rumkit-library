@@ -1,6 +1,7 @@
 package com.dbsys.rs.lib.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Pemakaian extends Tagihan {
 
 	private Barang barang;
+	private String nomorResep;
 	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.MERGE)
@@ -26,6 +28,15 @@ public class Pemakaian extends Tagihan {
 	public void setBarang(Barang barang) {
 		this.barang = barang;
 		this.tanggungan = barang;
+	}
+
+	@Column(name = "nomor_resep")
+	public String getNomorResep() {
+		return nomorResep;
+	}
+
+	public void setNomorResep(String nomorResep) {
+		this.nomorResep = nomorResep;
 	}
 
 	@Override

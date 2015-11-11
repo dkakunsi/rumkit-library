@@ -16,6 +16,11 @@ import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 
 @MappedSuperclass
 public abstract class Tagihan {
+	
+	public enum StatusTagihan {
+		MENUNGGAK,
+		LUNAS
+	}
 
 	protected Long id;
 	protected Date tanggal;
@@ -28,6 +33,7 @@ public abstract class Tagihan {
 	protected Pembayaran pembayaran;
 
 	protected Tanggungan tanggungan;
+	protected StatusTagihan status;
 
 	@Id
 	@GeneratedValue
@@ -91,6 +97,10 @@ public abstract class Tagihan {
 		return unit;
 	}
 
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "pembayaran")
 	public Pembayaran getPembayaran() {
@@ -101,8 +111,13 @@ public abstract class Tagihan {
 		this.pembayaran = pembayaran;
 	}
 
-	public void setUnit(Unit unit) {
-		this.unit = unit;
+	@Column(name = "status")
+	public StatusTagihan getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusTagihan status) {
+		this.status = status;
 	}
 
 	@Transient

@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Token {
 
 	public enum StatusToken {
-		ACTIVE, LOCK
+		AKTIF, KUNCI
 	}
 
 	protected String kode;
@@ -142,17 +142,17 @@ public class Token {
 	}
 
 	public void activate() {
-		setStatus(StatusToken.ACTIVE);
+		setStatus(StatusToken.AKTIF);
 	}
 	
 	public void lock() {
-		setStatus(StatusToken.LOCK);
+		setStatus(StatusToken.KUNCI);
 	}
 
 	@Transient
 	@JsonIgnore
 	public boolean isLock() {
-		return status.equals(StatusToken.LOCK);
+		return status.equals(StatusToken.KUNCI);
 	}
 
 	@Transient

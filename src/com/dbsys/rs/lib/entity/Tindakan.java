@@ -17,7 +17,7 @@ import com.dbsys.rs.lib.Penanggung;
 @Table(name = "tindakan")
 public class Tindakan implements Tanggungan {
 	
-	public enum Satuan {
+	public enum SatuanTindakan {
 		TINDAKAN, HARI, JAM
 	}
 
@@ -28,7 +28,7 @@ public class Tindakan implements Tanggungan {
 	protected KategoriTindakan kategori;
 	protected Kelas kelas;
 	protected Penanggung penanggung;
-	protected Satuan satuan;
+	protected SatuanTindakan satuan;
 	protected String keterangan;
 	
 	public Tindakan() {
@@ -102,11 +102,11 @@ public class Tindakan implements Tanggungan {
 	}
 
 	@Column(name = "satuan")
-	public Satuan getSatuan() {
+	public SatuanTindakan getSatuan() {
 		return satuan;
 	}
 
-	public void setSatuan(Satuan satuan) {
+	public void setSatuan(SatuanTindakan satuan) {
 		this.satuan = satuan;
 	}
 
