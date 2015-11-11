@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 
 @MappedSuperclass
@@ -27,7 +27,7 @@ public abstract class Tagihan {
 	protected Pasien pasien;
 	protected Unit unit;
 
-	protected Penanggung penanggung;
+	protected Tanggungan tanggungan;
 
 	@Id
 	@GeneratedValue
@@ -108,11 +108,11 @@ public abstract class Tagihan {
 	public void setNamaUnit(String namaUnit) { }
 
 	@Transient
-	public Tanggungan getTanggungan() {
-		return penanggung.getTanggungan();
+	public Penanggung getTanggungan() {
+		return tanggungan.getTanggungan();
 	}
 	
-	public void setTanggungan(Tanggungan tanggungan) { }
+	public void setTanggungan(Penanggung penanggung) { }
 
 	@Transient
 	public abstract Long getTagihan();
@@ -123,7 +123,7 @@ public abstract class Tagihan {
 	public abstract Long getCustomTagihan();
 
 	public Long hitungTagihan() {
-		if (Tanggungan.BPJS.equals(pasien.getTanggungan()) && Tanggungan.BPJS.equals(penanggung.getTanggungan()))
+		if (Penanggung.BPJS.equals(pasien.getTanggungan()) && Penanggung.BPJS.equals(tanggungan.getTanggungan()))
 			return 0L;
 		if (TipeUnit.ICU.equals(unit.getTipe()))
 			getCustomTagihan();

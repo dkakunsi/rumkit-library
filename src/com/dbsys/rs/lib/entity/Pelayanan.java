@@ -54,7 +54,7 @@ public class Pelayanan extends Tagihan {
 
 	public void setTindakan(Tindakan tindakan) {
 		this.tindakan = tindakan;
-		this.penanggung = tindakan;
+		this.tanggungan = tindakan;
 	}
 
 	@ManyToOne(cascade = CascadeType.MERGE)

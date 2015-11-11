@@ -10,12 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.dbsys.rs.lib.Kelas;
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
 
 @Entity
 @Table(name = "tindakan")
-public class Tindakan implements Penanggung {
+public class Tindakan implements Tanggungan {
 	
 	public enum Satuan {
 		TINDAKAN, HARI, JAM
@@ -27,7 +27,7 @@ public class Tindakan implements Penanggung {
 	protected Long tarif;
 	protected KategoriTindakan kategori;
 	protected Kelas kelas;
-	protected Tanggungan tanggungan;
+	protected Penanggung penanggung;
 	protected Satuan satuan;
 	protected String keterangan;
 	
@@ -92,13 +92,13 @@ public class Tindakan implements Penanggung {
 	}
 
 	@Override
-	@Column(name = "tanggungan")
-	public Tanggungan getTanggungan() {
-		return tanggungan;
+	@Column(name = "penanggung")
+	public Penanggung getTanggungan() {
+		return penanggung;
 	}
 
-	public void setTanggungan(Tanggungan tanggungan) {
-		this.tanggungan = tanggungan;
+	public void setTanggungan(Penanggung penanggung) {
+		this.penanggung = penanggung;
 	}
 
 	@Column(name = "satuan")
@@ -133,7 +133,7 @@ public class Tindakan implements Penanggung {
 		result = prime * result + ((nama == null) ? 0 : nama.hashCode());
 		result = prime * result + ((satuan == null) ? 0 : satuan.hashCode());
 		result = prime * result
-				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
+				+ ((penanggung == null) ? 0 : penanggung.hashCode());
 		result = prime * result + ((tarif == null) ? 0 : tarif.hashCode());
 		return result;
 	}
@@ -176,7 +176,7 @@ public class Tindakan implements Penanggung {
 			return false;
 		if (satuan != other.satuan)
 			return false;
-		if (tanggungan != other.tanggungan)
+		if (penanggung != other.penanggung)
 			return false;
 		if (tarif == null) {
 			if (other.tarif != null)

@@ -13,14 +13,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.Kelas;
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "pasien")
-public class Pasien implements Penanggung {
+public class Pasien implements Tanggungan {
 
 	public enum StatusPasien {
 		PERAWATAN, LUNAS, MENUNGGAK
@@ -46,7 +46,7 @@ public class Pasien implements Penanggung {
 	private Long cicilan;
 
 	private StatusPasien status;
-	private Tanggungan tanggungan;
+	private Penanggung penanggung;
 	private Kelas kelas;
 	private KeadaanPasien keadaan;
 
@@ -124,13 +124,13 @@ public class Pasien implements Penanggung {
 	}
 
 	@Override
-	@Column(name = "tanggungan")
-	public Tanggungan getTanggungan() {
-		return tanggungan;
+	@Column(name = "penanggung")
+	public Penanggung getTanggungan() {
+		return penanggung;
 	}
 
-	public void setTanggungan(Tanggungan tanggungan) {
-		this.tanggungan = tanggungan;
+	public void setTanggungan(Penanggung penanggung) {
+		this.penanggung = penanggung;
 	}
 
 	@ManyToOne(cascade = CascadeType.MERGE)
@@ -322,7 +322,7 @@ public class Pasien implements Penanggung {
 				* result
 				+ ((tanggalRawatInap == null) ? 0 : tanggalRawatInap.hashCode());
 		result = prime * result
-				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
+				+ ((penanggung == null) ? 0 : penanggung.hashCode());
 		result = prime * result
 				+ ((tipePerawatan == null) ? 0 : tipePerawatan.hashCode());
 		result = prime * result
@@ -386,7 +386,7 @@ public class Pasien implements Penanggung {
 				return false;
 		} else if (!tanggalRawatInap.equals(other.tanggalRawatInap))
 			return false;
-		if (tanggungan != other.tanggungan)
+		if (penanggung != other.penanggung)
 			return false;
 		if (tipePerawatan != other.tipePerawatan)
 			return false;

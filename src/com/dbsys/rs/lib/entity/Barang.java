@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.NumberException;
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	@JsonSubTypes.Type(value = BahanHabisPakai.class, name = "BHP"),
 	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT")
 })
-public class Barang implements Penanggung {
+public class Barang implements Tanggungan {
 
 	protected Long id;
 	protected String kode;
@@ -41,7 +41,7 @@ public class Barang implements Penanggung {
 	protected Long jumlah;
 	protected String satuan;
 	protected Long harga;
-	protected Tanggungan tanggungan;
+	protected Penanggung penanggung;
 
 	// tidak termasuk dalam mapping entity
 	protected String name;
@@ -116,13 +116,13 @@ public class Barang implements Penanggung {
 	}
 
 	@Override
-	@Column(name = "tanggungan")
-	public Tanggungan getTanggungan() {
-		return tanggungan;
+	@Column(name = "penanggung")
+	public Penanggung getTanggungan() {
+		return penanggung;
 	}
 
-	public void setTanggungan(Tanggungan tanggungan) {
-		this.tanggungan = tanggungan;
+	public void setTanggungan(Penanggung penanggung) {
+		this.penanggung = penanggung;
 	}
 	
 	@Transient
@@ -159,7 +159,7 @@ public class Barang implements Penanggung {
 		result = prime * result + ((nama == null) ? 0 : nama.hashCode());
 		result = prime * result + ((satuan == null) ? 0 : satuan.hashCode());
 		result = prime * result
-				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
+				+ ((penanggung == null) ? 0 : penanggung.hashCode());
 		return result;
 	}
 
@@ -202,7 +202,7 @@ public class Barang implements Penanggung {
 				return false;
 		} else if (!satuan.equals(other.satuan))
 			return false;
-		if (tanggungan != other.tanggungan)
+		if (penanggung != other.penanggung)
 			return false;
 		return true;
 	}
