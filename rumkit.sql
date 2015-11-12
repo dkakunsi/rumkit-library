@@ -52,18 +52,22 @@ CREATE TABLE pasien (
 	tipe int(1) not null,
 	kode varchar(255) not null,
 	status int(1) not null,
-	tanggungan int(1) not null,
+	penanggung int(1) not null,
 	kelas int(1),
 	tanggal_masuk date not null,
+	tanggal_rawat_inap date,
 	tanggal_keluar date,
 	total_tagihan int(10),
 	cicilan int(10),
 	keadaan int(1),
 	penduduk int(10) not null,
 	perawatan int(10),
+	tujuan int(10),
 	primary key (id),
+	unique (kode),
 	foreign key (penduduk) references penduduk(id),
-	foreign key (perawatan) references pelayanan(id)
+	foreign key (perawatan) references pelayanan(id),
+	foreign key (tujuan) references unit(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE pegawai (
@@ -93,17 +97,27 @@ CREATE TABLE tindakan (
 	keterangan varchar(255),
 	satuan int(1) not null,
 	kelas int(1) not null,
-	tanggungan int(1) not null,
+	penanggung int(1) not null,
 	kategori int(10) not null,
 	unique(kode),
 	primary key (id),
 	foreign key (kategori) references kategori_tindakan(id)
 ) ENGINE = InnoDB;
 
+CREATE TABLE pembayaran (
+	kode varchar(255),
+	pasien int(10) not null,
+	tanggal date not null,
+	jam time not null,
+	jumlah int(10) not null,
+	primary key (kode),
+	foreign key (pasien) references pasien (id)
+) ENGINE = InnoDB;
+
 CREATE TABLE pelayanan (
 	id int(10) auto_increment,
 	tanggal date not null,
-	jumlah int(10),
+	jumlah int(10) not null,
 	biaya_tambahan int(10),
 	keterangan varchar(255),
 	tipe varchar(255) not null,
@@ -114,11 +128,13 @@ CREATE TABLE pelayanan (
 	tindakan int(10) not null,
 	pelaksana int(10),
 	unit int(10) not null,
+	pembayaran varchar(255),
 	primary key (id),
 	foreign key (pasien) references pasien(id),
 	foreign key (tindakan) references tindakan(id),
 	foreign key (pelaksana) references pegawai(id),
-	foreign key (unit) references unit(id)
+	foreign key (unit) references unit(id),
+	foreign key (pembayaran) references pembayaran(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE barang (
@@ -128,7 +144,7 @@ CREATE TABLE barang (
 	jumlah int(10) not null,
 	satuan varchar(255) not null,
 	harga int(10) not null,
-	tanggungan int(1) not null,
+	penanggung int(1) not null,
 	tipe varchar(255) not null,
 	keterangan varchar(255),
 	unique(kode),
@@ -142,25 +158,30 @@ CREATE TABLE stok (
 	jam time(6) not null,
 	tipe varchar(255) not null,
 	barang int(10) not null,
+	jenis int(1) not null,
+	unit int(10),
+	pasien int(10),
 	primary key (id),
-	foreign key (barang) references barang(id)
+	foreign key (barang) references barang(id),
+	foreign key (unit) references unit(id),
+	foreign key (pasien) references pasien(id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE pemakaian (
 	id int(10) auto_increment,
 	tanggal date not null,
 	jumlah int(10) not null,
+	nomor_resep varchar(255), 
 	biaya_tambahan int(10),
 	keterangan varchar(255),
-	tipe varchar(255) not null,
-	nomor_resep varchar(255), 
-	asal int(1),
-	nama varchar(255),
+	status_tagihan int(1) default 0,
 	barang int(10) not null,
 	pasien int(10) not null,
-	unit int(10) not null,
+	unit int(10),
+	pembayaran int(10),
 	primary key (id),
 	foreign key (pasien) references pasien(id),
 	foreign key (barang) references barang(id),
-	foreign key (unit) references unit(id)
+	foreign key (unit) references unit(id),
+	foreign key (pembayaran) references pembayaran(id)
 ) ENGINE = InnoDB;
