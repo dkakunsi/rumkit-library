@@ -93,11 +93,11 @@ public class Tindakan implements Tanggungan {
 
 	@Override
 	@Column(name = "penanggung")
-	public Penanggung getTanggungan() {
+	public Penanggung getPenanggung() {
 		return penanggung;
 	}
 
-	public void setTanggungan(Penanggung penanggung) {
+	public void setPenanggung(Penanggung penanggung) {
 		this.penanggung = penanggung;
 	}
 

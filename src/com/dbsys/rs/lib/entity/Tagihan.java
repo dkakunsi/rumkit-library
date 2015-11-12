@@ -146,11 +146,11 @@ public abstract class Tagihan {
 	public void setNamaUnit(String namaUnit) { }
 
 	@Transient
-	public Penanggung getTanggungan() {
-		return tanggungan.getTanggungan();
+	public Penanggung getPenanggung() {
+		return tanggungan.getPenanggung();
 	}
 	
-	public void setTanggungan(Tanggungan tanggungan) { }
+	public void setPenanggung(Penanggung penanggung) { }
 
 	@JsonIgnore
 	@Transient
@@ -163,7 +163,7 @@ public abstract class Tagihan {
 	public abstract Long getCustomTagihan();
 
 	public Long hitungTagihan() {
-		if (Penanggung.BPJS.equals(pasien.getTanggungan()) && Penanggung.BPJS.equals(tanggungan.getTanggungan()))
+		if (Penanggung.BPJS.equals(pasien.getPenanggung()) && Penanggung.BPJS.equals(tanggungan.getPenanggung()))
 			return 0L;
 		if (TipeUnit.ICU.equals(unit.getTipe()))
 			getCustomTagihan();

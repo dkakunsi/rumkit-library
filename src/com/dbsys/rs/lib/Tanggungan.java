@@ -2,6 +2,6 @@ package com.dbsys.rs.lib;
 
 public interface Tanggungan {
 
-	Penanggung getTanggungan();
+	Penanggung getPenanggung();
 	
 }
