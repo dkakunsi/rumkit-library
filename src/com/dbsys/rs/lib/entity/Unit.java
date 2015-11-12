@@ -19,7 +19,8 @@ public class Unit {
 		GUDANG_FARMASI,
 		PENUNJANG_MEDIK,
 		PENUNJANG_NON_MEDIK,
-		ICU
+		ICU,
+		UGD
 	}
 
 	private Long id;
