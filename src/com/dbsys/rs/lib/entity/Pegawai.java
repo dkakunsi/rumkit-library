@@ -45,18 +45,10 @@ public abstract class Pegawai {
 	protected Long id;
 	protected String nip;
 	protected Penduduk penduduk;
-	
-	// tidak termasuk dalam mapping entity
-	protected String name;
 
 	protected Pegawai() {
 		super();
 		this.penduduk = new Penduduk();
-	}
-	
-	protected Pegawai(String name) {
-		this();
-		setName(name);
 	}
 
 	@Id
@@ -78,7 +70,7 @@ public abstract class Pegawai {
 		this.nip = nip;
 	}
 
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;
@@ -86,15 +78,6 @@ public abstract class Pegawai {
 
 	public void setPenduduk(Penduduk penduduk) {
 		this.penduduk = penduduk;
-	}
-	
-	@Transient
-	public String getName() {
-		return this.name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	@Transient

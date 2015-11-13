@@ -1,5 +1,6 @@
 package com.dbsys.rs.lib.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,11 +13,11 @@ public class StokKembali extends Stok {
 	private Pasien pasien;
 	
 	public StokKembali() {
-		super("KEMBALI");
+		super();
 		setJenis(JenisStok.MASUK);
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;

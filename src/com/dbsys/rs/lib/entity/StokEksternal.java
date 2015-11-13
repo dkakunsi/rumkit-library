@@ -6,8 +6,5 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("EKSTERNAL")
 public class StokEksternal extends Stok {
-	
-	public StokEksternal() {
-		super("EKSTERNAL");
-	}
+
 }

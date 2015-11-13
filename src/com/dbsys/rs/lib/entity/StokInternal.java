@@ -1,5 +1,6 @@
 package com.dbsys.rs.lib.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,11 +13,11 @@ public class StokInternal extends Stok {
 	private Unit unit;
 	
 	public StokInternal() {
-		super("INTERNAL");
+		super();
 		setJenis(JenisStok.KELUAR);
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;

@@ -18,8 +18,7 @@ public class Pemakaian extends Tagihan {
 	private Barang barang;
 	private String nomorResep;
 	
-	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;
@@ -40,7 +39,6 @@ public class Pemakaian extends Tagihan {
 	}
 
 	@Override
-	@JsonIgnore
 	@Transient
 	public Long getTagihan() {
 		return barang.getHarga() * jumlah + biayaTambahan;

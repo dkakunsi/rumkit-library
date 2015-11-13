@@ -15,7 +15,7 @@ public class Dokter extends Pegawai {
 	private Spesialisasi spesialisasi;
 
 	public Dokter() {
-		super("DOKTER");
+		super();
 	}
 
 	public Dokter(Spesialisasi spesialisasi) {

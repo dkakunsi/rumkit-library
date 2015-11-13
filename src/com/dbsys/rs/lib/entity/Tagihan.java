@@ -2,6 +2,7 @@ package com.dbsys.rs.lib.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -85,7 +86,7 @@ public abstract class Tagihan {
 		this.keterangan = keterangan;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;
@@ -95,7 +96,7 @@ public abstract class Tagihan {
 		this.pasien = pasien;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;
@@ -115,7 +116,7 @@ public abstract class Tagihan {
 		this.pembayaran = pembayaran;
 	}
 
-	@Column(name = "status")
+	@Column(name = "status_tagihan")
 	public StatusTagihan getStatus() {
 		return status;
 	}
@@ -152,7 +153,6 @@ public abstract class Tagihan {
 	
 	public void setPenanggung(Penanggung penanggung) { }
 
-	@JsonIgnore
 	@Transient
 	public abstract Long getTagihan();
 

@@ -2,9 +2,8 @@ package com.dbsys.rs.lib;
 
 import java.util.List;
 
-import com.dbsys.rs.lib.entity.BahanHabisPakai;
+import com.dbsys.rs.lib.entity.Barang;
 import com.dbsys.rs.lib.entity.KategoriTindakan;
-import com.dbsys.rs.lib.entity.ObatFarmasi;
 import com.dbsys.rs.lib.entity.Operator;
 import com.dbsys.rs.lib.entity.Pasien;
 import com.dbsys.rs.lib.entity.Pegawai;
@@ -69,15 +68,11 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<Tindakan>(list);
 	}
 
-	public static ListEntityRestMessage<ObatFarmasi> createListObat(List<ObatFarmasi> list) {
-		return new ListEntityRestMessage<ObatFarmasi>(list);
+	public static ListEntityRestMessage<Barang> createListBarang(List<Barang> list) {
+		return new ListEntityRestMessage<Barang>(list);
 	}
 
-	public static ListEntityRestMessage<BahanHabisPakai> createListBhp(List<BahanHabisPakai> list) {
-		return new ListEntityRestMessage<BahanHabisPakai>(list);
-	}
-
-	public static ListEntityRestMessage<Pegawai> createListDokter(List<Pegawai> list) {
+	public static ListEntityRestMessage<Pegawai> createListPegawai(List<Pegawai> list) {
 		return new ListEntityRestMessage<Pegawai>(list);
 	}
 
@@ -85,11 +80,11 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<KategoriTindakan>(list);
 	}
 
-	public static ListEntityRestMessage<Stok> createListStokMasuk(List<Stok> list) {
+	public static ListEntityRestMessage<Stok> createListStok(List<Stok> list) {
 		return new ListEntityRestMessage<>(list);
 	}
 
-	public static ListEntityRestMessage<Pemakaian> createListPemakaianBhp(List<Pemakaian> list) {
+	public static ListEntityRestMessage<Pemakaian> createListPemakaian(List<Pemakaian> list) {
 		return new ListEntityRestMessage<Pemakaian>(list);
 	}
 

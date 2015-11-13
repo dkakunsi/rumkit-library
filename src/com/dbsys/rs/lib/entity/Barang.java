@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.NumberException;
 import com.dbsys.rs.lib.Tanggungan;
@@ -42,17 +41,9 @@ public abstract class Barang implements Tanggungan {
 	protected String satuan;
 	protected Long harga;
 	protected Penanggung penanggung;
-
-	// tidak termasuk dalam mapping entity
-	protected String name;
 	
 	protected Barang() {
 		super();
-	}
-	
-	protected Barang(String name) {
-		super();
-		setName(name);
 	}
 
 	@Id
@@ -128,15 +119,6 @@ public abstract class Barang implements Tanggungan {
 
 	public void setPenanggung(Penanggung penanggung) {
 		this.penanggung = penanggung;
-	}
-	
-	@Transient
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	public Long add(Integer jumlah) {

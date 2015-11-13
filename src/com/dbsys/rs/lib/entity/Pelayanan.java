@@ -38,16 +38,12 @@ public class Pelayanan extends Tagihan {
 	
 	protected Tindakan tindakan;
 	protected Pegawai pelaksana;
-	
-	// tidak masuk dalam persistent
-	protected String name;
 
 	public Pelayanan() {
 		super();
-		setName("PELAYANAN");
 	}
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "tindakan")
 	public Tindakan getTindakan() {
 		return tindakan;
@@ -58,7 +54,7 @@ public class Pelayanan extends Tagihan {
 		this.tanggungan = tindakan;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "pelaksana")
 	public Pegawai getPelaksana() {
 		return pelaksana;
@@ -69,7 +65,6 @@ public class Pelayanan extends Tagihan {
 	}
 
 	@Override
-	@JsonIgnore
 	@Transient
 	public Long getTagihan() {
 		return tindakan.getTarif() * jumlah + biayaTambahan;
@@ -88,15 +83,6 @@ public class Pelayanan extends Tagihan {
 	@Transient
 	public String getNama() {
 		return tindakan.getNama();
-	}
-
-	@Transient
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public class ObatFarmasi extends Barang {
 	private String keterangan;
 	
 	public ObatFarmasi() {
-		super("OBAT");
+		super();
 	}
 	
 	public ObatFarmasi(String keterangan) {

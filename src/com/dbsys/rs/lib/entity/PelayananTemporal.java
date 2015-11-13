@@ -21,7 +21,6 @@ public class PelayananTemporal extends Pelayanan {
 
 	public PelayananTemporal() {
 		super();
-		setName("TEMPORAL");
 	}
 	
 	@Column(name = "tanggal_selesai")

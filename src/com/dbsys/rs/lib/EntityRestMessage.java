@@ -80,7 +80,7 @@ public class EntityRestMessage<T> extends RestMessage {
 		return new EntityRestMessage<KategoriTindakan>(kategori);
 	}
 
-	public static EntityRestMessage<Pemakaian> createPemakaianBhp(Pemakaian pemakaian) {
+	public static EntityRestMessage<Pemakaian> createPemakaian(Pemakaian pemakaian) {
 		return new EntityRestMessage<Pemakaian>(pemakaian);
 	}
 

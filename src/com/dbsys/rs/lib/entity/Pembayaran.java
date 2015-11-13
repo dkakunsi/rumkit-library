@@ -25,7 +25,8 @@ public class Pembayaran {
 	
 	private Pasien pasien;
 	
-	private List<Tagihan> listTagihan;
+	private List<Pelayanan> listPelayanan;
+	private List<Pemakaian> listPemakaian;
 
 	@Id
 	@Column(name = "kode")
@@ -75,12 +76,21 @@ public class Pembayaran {
 	}
 
 	@OneToMany(mappedBy = "pembayaran", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	public List<Tagihan> getListTagihan() {
-		return listTagihan;
+	public List<Pelayanan> getListPelayanan() {
+		return listPelayanan;
 	}
 
-	public void setListTagihan(List<Tagihan> listTagihan) {
-		this.listTagihan = listTagihan;
+	public void setListPelayanan(List<Pelayanan> listPelayanan) {
+		this.listPelayanan = listPelayanan;
+	}
+
+	@OneToMany(mappedBy = "pembayaran", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	public List<Pemakaian> getListPemakaian() {
+		return listPemakaian;
+	}
+
+	public void setListPemakaian(List<Pemakaian> listPemakaian) {
+		this.listPemakaian = listPemakaian;
 	}
 	
 	public String generateKode() {

@@ -33,8 +33,6 @@ public class Pasien implements Tanggungan {
 	public enum Perawatan {
 		RAWAT_JALAN, RAWAT_INAP, UGD
 	}
-
-	private Perawatan tipePerawatan;
 	
 	private Long id;
 	private String kode;
@@ -49,6 +47,7 @@ public class Pasien implements Tanggungan {
 	private Penanggung penanggung;
 	private Kelas kelas;
 	private KeadaanPasien keadaan;
+	private Perawatan tipePerawatan;
 
 	private Penduduk penduduk;
 	private Unit tujuan;
@@ -133,7 +132,7 @@ public class Pasien implements Tanggungan {
 		this.penanggung = penanggung;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;

@@ -18,8 +18,7 @@ CREATE TABLE operator (
 	role int(1) not null,
 	unit int(10) not null,
 	unique (username),
-	primary key (id),
-	foreign key (unit) references unit (id)
+	primary key (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE token (
@@ -28,8 +27,7 @@ CREATE TABLE token (
 	tanggal_expire date not null,
 	status int(1) not null,
 	operator int(10) not null,
-	primary key (kode),
-	foreign key (operator) references operator (id)
+	primary key (kode)
 ) ENGINE = InnoDB;
 
 CREATE TABLE penduduk (
@@ -64,10 +62,7 @@ CREATE TABLE pasien (
 	perawatan int(10),
 	tujuan int(10),
 	primary key (id),
-	unique (kode),
-	foreign key (penduduk) references penduduk(id),
-	foreign key (perawatan) references pelayanan(id),
-	foreign key (tujuan) references unit(id)
+	unique (kode)
 ) ENGINE = InnoDB;
 
 CREATE TABLE pegawai (
@@ -77,16 +72,14 @@ CREATE TABLE pegawai (
 	tipe varchar(255) not null,
 	penduduk int(10) not null,
 	unique(nip),
-	primary key (id),
-	foreign key (penduduk) references penduduk(id)
+	primary key (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE kategori_tindakan (
 	id int(10) auto_increment,
 	nama varchar(255) not null,
 	parent int(10),
-	primary key (id),
-	foreign key (parent) references kategori_tindakan(id)
+	primary key (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE tindakan (
@@ -100,8 +93,7 @@ CREATE TABLE tindakan (
 	penanggung int(1) not null,
 	kategori int(10) not null,
 	unique(kode),
-	primary key (id),
-	foreign key (kategori) references kategori_tindakan(id)
+	primary key (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE pembayaran (
@@ -110,8 +102,7 @@ CREATE TABLE pembayaran (
 	tanggal date not null,
 	jam time not null,
 	jumlah int(10) not null,
-	primary key (kode),
-	foreign key (pasien) references pasien (id)
+	primary key (kode)
 ) ENGINE = InnoDB;
 
 CREATE TABLE pelayanan (
@@ -120,6 +111,7 @@ CREATE TABLE pelayanan (
 	jumlah int(10) not null,
 	biaya_tambahan int(10),
 	keterangan varchar(255),
+	status_tagihan int(1) not null,
 	tipe varchar(255) not null,
 	tanggal_selesai date,
 	jam_masuk time(6),
@@ -129,12 +121,7 @@ CREATE TABLE pelayanan (
 	pelaksana int(10),
 	unit int(10) not null,
 	pembayaran varchar(255),
-	primary key (id),
-	foreign key (pasien) references pasien(id),
-	foreign key (tindakan) references tindakan(id),
-	foreign key (pelaksana) references pegawai(id),
-	foreign key (unit) references unit(id),
-	foreign key (pembayaran) references pembayaran(id)
+	primary key (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE barang (
@@ -161,10 +148,7 @@ CREATE TABLE stok (
 	jenis int(1) not null,
 	unit int(10),
 	pasien int(10),
-	primary key (id),
-	foreign key (barang) references barang(id),
-	foreign key (unit) references unit(id),
-	foreign key (pasien) references pasien(id)
+	primary key (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE pemakaian (
@@ -178,10 +162,37 @@ CREATE TABLE pemakaian (
 	barang int(10) not null,
 	pasien int(10) not null,
 	unit int(10),
-	pembayaran int(10),
-	primary key (id),
-	foreign key (pasien) references pasien(id),
-	foreign key (barang) references barang(id),
-	foreign key (unit) references unit(id),
-	foreign key (pembayaran) references pembayaran(id)
+	pembayaran varchar(255),
+	primary key (id)
 ) ENGINE = InnoDB;
+
+ALTER TABLE operator ADD CONSTRAINT fk_operator_unit FOREIGN KEY (unit) REFERENCES unit (id);
+
+ALTER TABLE token ADD CONSTRAINT fk_token_operator FOREIGN KEY (operator) REFERENCES operator (id);
+
+ALTER TABLE pasien ADD CONSTRAINT fk_pasien_penduduk FOREIGN KEY (penduduk) REFERENCES penduduk (id);
+ALTER TABLE pasien ADD CONSTRAINT fk_pasien_pelayanan FOREIGN KEY (perawatan) REFERENCES pelayanan (id);
+ALTER TABLE pasien ADD CONSTRAINT fk_pasien_unit FOREIGN KEY (tujuan) REFERENCES unit (id);
+
+ALTER TABLE pegawai ADD CONSTRAINT fk_pegawai_penduduk FOREIGN KEY (penduduk) REFERENCES penduduk (id);
+
+ALTER TABLE kategori_tindakan ADD CONSTRAINT fk_kategori_kategori FOREIGN KEY (parent) REFERENCES kategori_tindakan (id);
+
+ALTER TABLE tindakan ADD CONSTRAINT fk_tindakan_kategori FOREIGN KEY (kategori) REFERENCES kategori_tindakan (id);
+
+ALTER TABLE pembayaran ADD CONSTRAINT fk_pembayaran_pasien FOREIGN KEY (pasien) REFERENCES pasien (id);
+
+ALTER TABLE pelayanan ADD CONSTRAINT fk_pelayanan_pasien FOREIGN KEY (pasien) REFERENCES pasien (id);
+ALTER TABLE pelayanan ADD CONSTRAINT fk_pelayanan_tindakan FOREIGN KEY (tindakan) REFERENCES tindakan (id);
+ALTER TABLE pelayanan ADD CONSTRAINT fk_pelayanan_pegawai FOREIGN KEY (pelaksana) REFERENCES pegawai (id);
+ALTER TABLE pelayanan ADD CONSTRAINT fk_pelayanan_unit FOREIGN KEY (unit) REFERENCES unit (id);
+ALTER TABLE pelayanan ADD CONSTRAINT fk_pelayanan_pembayaran FOREIGN KEY (pembayaran) REFERENCES pembayaran (kode);
+
+ALTER TABLE stok ADD CONSTRAINT fk_stok_barang FOREIGN KEY (barang) REFERENCES barang (id);
+ALTER TABLE stok ADD CONSTRAINT fk_stok_unit FOREIGN KEY (unit) REFERENCES unit (id);
+ALTER TABLE stok ADD CONSTRAINT fk_stok_pasien FOREIGN KEY (pasien) REFERENCES pasien (id);
+
+ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_pasien FOREIGN KEY (pasien) REFERENCES pasien (id);
+ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_barang FOREIGN KEY (barang) REFERENCES barang (id);
+ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_unit FOREIGN KEY (unit) REFERENCES unit (id);
+ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_pembayaran FOREIGN KEY (pembayaran) REFERENCES pembayaran (kode);

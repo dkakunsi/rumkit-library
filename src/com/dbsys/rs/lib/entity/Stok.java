@@ -14,7 +14,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -28,15 +27,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	discriminatorType = DiscriminatorType.STRING
 )
 @JsonTypeInfo(
-		use = JsonTypeInfo.Id.NAME,
-		include = JsonTypeInfo.As.PROPERTY,
-		property = "name"
-	)
-	@JsonSubTypes({
-		@JsonSubTypes.Type(value = StokInternal.class, name = "INTERNAL"),
-		@JsonSubTypes.Type(value = StokEksternal.class, name = "EKSTERNAL"),
-		@JsonSubTypes.Type(value = StokKembali.class, name = "KEMBALI")
-	})
+	use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "name"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = StokInternal.class, name = "INTERNAL"),
+	@JsonSubTypes.Type(value = StokEksternal.class, name = "EKSTERNAL"),
+	@JsonSubTypes.Type(value = StokKembali.class, name = "KEMBALI")
+})
 public abstract class Stok {
 	
 	public enum JenisStok {
@@ -51,18 +50,10 @@ public abstract class Stok {
 	protected Barang barang;
 	protected JenisStok jenis;
 	
-	// Tidak untuk persistent, hanya untuk JSON
-	protected String name;
-	
 	protected Stok() {
 		super();
 		setTanggal(DateUtil.getDate());
 		setJam(DateUtil.getTime());
-	}
-	
-	protected Stok(String name) {
-		this();
-		setName(name);
 	}
 
 	@Id
@@ -119,15 +110,6 @@ public abstract class Stok {
 
 	public void setJenis(JenisStok jenis) {
 		this.jenis = jenis;
-	}
-
-	@Transient
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Override
