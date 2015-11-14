@@ -91,7 +91,7 @@ CREATE TABLE tindakan (
 	satuan int(1) not null,
 	kelas int(1) not null,
 	penanggung int(1) not null,
-	kategori int(10) not null,
+	kategori int(10),
 	unique(kode),
 	primary key (id)
 ) ENGINE = InnoDB;

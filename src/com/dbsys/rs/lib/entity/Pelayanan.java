@@ -38,6 +38,10 @@ public class Pelayanan extends Tagihan {
 	
 	protected Tindakan tindakan;
 	protected Pegawai pelaksana;
+	
+	// Untuk JSON bukan JPA
+	@SuppressWarnings("unused")
+	private String name;
 
 	public Pelayanan() {
 		super();

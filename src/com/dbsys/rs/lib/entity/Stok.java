@@ -50,6 +50,10 @@ public abstract class Stok {
 	protected Barang barang;
 	protected JenisStok jenis;
 	
+	// Untuk JSON bukan JPA
+	@SuppressWarnings("unused")
+	private String name;
+	
 	protected Stok() {
 		super();
 		setTanggal(DateUtil.getDate());

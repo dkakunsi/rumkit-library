@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.NumberException;
 import com.dbsys.rs.lib.Tanggungan;
@@ -44,19 +43,11 @@ public abstract class Barang implements Tanggungan {
 	protected Penanggung penanggung;
 	
 	// Untuk JSON bukan JPA
+	@SuppressWarnings("unused")
 	private String name;
 	
 	protected Barang() {
 		super();
-	}
-
-	@Transient
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Id

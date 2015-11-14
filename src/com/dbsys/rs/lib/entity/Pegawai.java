@@ -47,20 +47,12 @@ public abstract class Pegawai {
 	protected Penduduk penduduk;
 	
 	// Untuk JSON buka JPA
+	@SuppressWarnings("unused")
 	private String name;
 
 	protected Pegawai() {
 		super();
 		this.penduduk = new Penduduk();
-	}
-
-	@Transient
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Id
