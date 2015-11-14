@@ -7,4 +7,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("BHP")
 public class BahanHabisPakai extends Barang {
 
+	public BahanHabisPakai() {
+		super("BHP");
+	}
 }

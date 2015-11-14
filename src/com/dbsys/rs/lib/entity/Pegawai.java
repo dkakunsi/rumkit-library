@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.entity.Dokter.Spesialisasi;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -38,7 +39,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	@JsonSubTypes.Type(value = Dokter.class, name = "DOKTER"),
 	@JsonSubTypes.Type(value = Perawat.class, name = "PERAWAT"),
 	@JsonSubTypes.Type(value = Apoteker.class, name = "APOTEKER"),
-	@JsonSubTypes.Type(value = Pekerja.class, name = "PEKERJA")
+	@JsonSubTypes.Type(value = Pekerja.class, name = "PEKERJA"),
+	@JsonSubTypes.Type(value = Pekerja.class, name = "PEGAWAI")
 })
 public abstract class Pegawai {
 
@@ -47,12 +49,17 @@ public abstract class Pegawai {
 	protected Penduduk penduduk;
 	
 	// Untuk JSON buka JPA
-	@SuppressWarnings("unused")
-	private String name;
+	protected String name;
 
 	protected Pegawai() {
 		super();
+		this.name = "PEGAWAI";
 		this.penduduk = new Penduduk();
+	}
+	
+	protected Pegawai(String name) {
+		this();
+		this.name = name;
 	}
 
 	@Id
@@ -173,6 +180,12 @@ public abstract class Pegawai {
 
 	public void setSpesialisasi(Spesialisasi spesialisasi) { }
 
+	@JsonIgnore
+	@Transient
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

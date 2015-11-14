@@ -9,10 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.NumberException;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -30,7 +32,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 )
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = BahanHabisPakai.class, name = "BHP"),
-	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT")
+	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT"),
+	@JsonSubTypes.Type(value = Barang.class, name = "BARANG")
 })
 public abstract class Barang implements Tanggungan {
 
@@ -43,11 +46,16 @@ public abstract class Barang implements Tanggungan {
 	protected Penanggung penanggung;
 	
 	// Untuk JSON bukan JPA
-	@SuppressWarnings("unused")
-	private String name;
+	protected String name;
 	
 	protected Barang() {
 		super();
+		this.name = "BARANG";
+	}
+	
+	protected Barang(String name) {
+		super();
+		this.name = name;
 	}
 
 	@Id
@@ -137,6 +145,12 @@ public abstract class Barang implements Tanggungan {
 		this.jumlah -= jumlah;
 		
 		return this.jumlah;
+	}
+	
+	@JsonIgnore
+	@Transient
+	public String getName() {
+		return name;
 	}
 	
 	@Override

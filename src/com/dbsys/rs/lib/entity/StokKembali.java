@@ -13,7 +13,7 @@ public class StokKembali extends Stok {
 	private Pasien pasien;
 	
 	public StokKembali() {
-		super();
+		super("KEMBALI");
 		setJenis(JenisStok.MASUK);
 	}
 

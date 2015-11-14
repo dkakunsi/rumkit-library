@@ -20,7 +20,7 @@ public class PelayananTemporal extends Pelayanan {
 	private Time jamKeluar;
 
 	public PelayananTemporal() {
-		super();
+		super("TEMPORAL");
 	}
 	
 	@Column(name = "tanggal_selesai")

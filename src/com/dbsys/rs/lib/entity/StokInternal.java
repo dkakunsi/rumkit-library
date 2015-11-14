@@ -13,7 +13,7 @@ public class StokInternal extends Stok {
 	private Unit unit;
 	
 	public StokInternal() {
-		super();
+		super("INTERNAL");
 		setJenis(JenisStok.KELUAR);
 	}
 

@@ -14,8 +14,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -34,7 +36,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = StokInternal.class, name = "INTERNAL"),
 	@JsonSubTypes.Type(value = StokEksternal.class, name = "EKSTERNAL"),
-	@JsonSubTypes.Type(value = StokKembali.class, name = "KEMBALI")
+	@JsonSubTypes.Type(value = StokKembali.class, name = "KEMBALI"),
+	@JsonSubTypes.Type(value = StokKembali.class, name = "STOK")
 })
 public abstract class Stok {
 	
@@ -51,13 +54,18 @@ public abstract class Stok {
 	protected JenisStok jenis;
 	
 	// Untuk JSON bukan JPA
-	@SuppressWarnings("unused")
-	private String name;
+	protected String name;
 	
 	protected Stok() {
 		super();
+		this.name = "STOK";
 		setTanggal(DateUtil.getDate());
 		setJam(DateUtil.getTime());
+	}
+	
+	protected Stok(String name) {
+		this();
+		this.name = name;
 	}
 
 	@Id
@@ -114,6 +122,12 @@ public abstract class Stok {
 
 	public void setJenis(JenisStok jenis) {
 		this.jenis = jenis;
+	}
+	
+	@JsonIgnore
+	@Transient
+	public String getName() {
+		return name;
 	}
 
 	@Override

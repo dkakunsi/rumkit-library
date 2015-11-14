@@ -11,11 +11,11 @@ public class ObatFarmasi extends Barang {
 	private String keterangan;
 	
 	public ObatFarmasi() {
-		super();
+		super("OBAT");
 	}
 	
 	public ObatFarmasi(String keterangan) {
-		super();
+		this();
 		setKeterangan(keterangan);
 	}
 

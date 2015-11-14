@@ -40,11 +40,16 @@ public class Pelayanan extends Tagihan {
 	protected Pegawai pelaksana;
 	
 	// Untuk JSON bukan JPA
-	@SuppressWarnings("unused")
-	private String name;
+	protected String name;
 
 	public Pelayanan() {
 		super();
+		this.name = "PELAYANAN";
+	}
+	
+	public Pelayanan(String name) {
+		super();
+		this.name = name;
 	}
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
@@ -87,6 +92,12 @@ public class Pelayanan extends Tagihan {
 	@Transient
 	public String getNama() {
 		return tindakan.getNama();
+	}
+	
+	@JsonIgnore
+	@Transient
+	public String getName() {
+		return name;
 	}
 
 	@Override
