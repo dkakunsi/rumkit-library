@@ -1,6 +1,5 @@
 package com.dbsys.rs.lib.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -72,7 +71,7 @@ public class Tindakan implements Tanggungan {
 		this.tarif = tarif;
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "kategori")
 	public KategoriTindakan getKategori() {
 		return kategori;
