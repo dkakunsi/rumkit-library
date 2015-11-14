@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,
 	include = JsonTypeInfo.As.PROPERTY,
-	property = "name"
+	property = "tipePelayanan"
 )
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = Pelayanan.class, name = "PELAYANAN"),
@@ -40,22 +40,40 @@ public class Pelayanan extends Tagihan {
 	protected Pegawai pelaksana;
 	
 	// Untuk JSON bukan JPA
-	protected String name;
+	private String tipePelayanan;
 
 	public Pelayanan() {
 		super();
-		this.name = "PELAYANAN";
+		this.tipePelayanan = "PELAYANAN";
 	}
 	
 	public Pelayanan(String name) {
 		super();
-		this.name = name;
+		this.tipePelayanan = name;
 	}
-	
+
+	@Transient
+	public String getTipe() {
+		return tipePelayanan;
+	}
+
+	public void setTipe(String tipePelayanan) {
+		this.tipePelayanan = tipePelayanan;
+	}
+
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "tindakan")
 	public Tindakan getTindakan() {
 		return tindakan;
+	}
+
+	@Transient
+	public String getName() {
+		return tipePelayanan;
+	}
+
+	public void setName(String name) {
+		this.tipePelayanan = name;
 	}
 
 	public void setTindakan(Tindakan tindakan) {
@@ -92,12 +110,6 @@ public class Pelayanan extends Tagihan {
 	@Transient
 	public String getNama() {
 		return tindakan.getNama();
-	}
-	
-	@JsonIgnore
-	@Transient
-	public String getName() {
-		return name;
 	}
 
 	@Override

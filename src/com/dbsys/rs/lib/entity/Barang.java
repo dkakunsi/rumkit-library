@@ -14,7 +14,6 @@ import javax.persistence.Transient;
 import com.dbsys.rs.lib.NumberException;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -28,14 +27,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,
 	include = JsonTypeInfo.As.PROPERTY,
-	property = "name"
+	property = "tipeBarang"
 )
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = BahanHabisPakai.class, name = "BHP"),
 	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT"),
 	@JsonSubTypes.Type(value = Barang.class, name = "BARANG")
 })
-public abstract class Barang implements Tanggungan {
+public class Barang implements Tanggungan {
 
 	protected Long id;
 	protected String kode;
@@ -46,16 +45,25 @@ public abstract class Barang implements Tanggungan {
 	protected Penanggung penanggung;
 	
 	// Untuk JSON bukan JPA
-	protected String name;
+	private String tipeBarang;
 	
-	protected Barang() {
+	public Barang() {
 		super();
-		this.name = "BARANG";
+		this.tipeBarang = "BARANG";
 	}
 	
-	protected Barang(String name) {
+	public Barang(String name) {
 		super();
-		this.name = name;
+		this.tipeBarang = name;
+	}
+
+	@Transient
+	public String getTipe() {
+		return tipeBarang;
+	}
+
+	public void setTipe(String tipeBarang) {
+		this.tipeBarang = tipeBarang;
 	}
 
 	@Id
@@ -145,12 +153,6 @@ public abstract class Barang implements Tanggungan {
 		this.jumlah -= jumlah;
 		
 		return this.jumlah;
-	}
-	
-	@JsonIgnore
-	@Transient
-	public String getName() {
-		return name;
 	}
 	
 	@Override

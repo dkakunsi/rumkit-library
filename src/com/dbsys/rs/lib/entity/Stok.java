@@ -17,7 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -31,15 +30,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,
 	include = JsonTypeInfo.As.PROPERTY,
-	property = "name"
+	property = "tipeStok"
 )
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = StokInternal.class, name = "INTERNAL"),
 	@JsonSubTypes.Type(value = StokEksternal.class, name = "EKSTERNAL"),
 	@JsonSubTypes.Type(value = StokKembali.class, name = "KEMBALI"),
-	@JsonSubTypes.Type(value = StokKembali.class, name = "STOK")
+	@JsonSubTypes.Type(value = Stok.class, name = "STOK")
 })
-public abstract class Stok {
+public class Stok {
 	
 	public enum JenisStok {
 		MASUK,
@@ -54,18 +53,27 @@ public abstract class Stok {
 	protected JenisStok jenis;
 	
 	// Untuk JSON bukan JPA
-	protected String name;
+	private String tipeStok;
 	
-	protected Stok() {
+	public Stok() {
 		super();
-		this.name = "STOK";
+		this.tipeStok = "STOK";
 		setTanggal(DateUtil.getDate());
 		setJam(DateUtil.getTime());
 	}
 	
-	protected Stok(String name) {
+	public Stok(String name) {
 		this();
-		this.name = name;
+		this.tipeStok = name;
+	}
+
+	@Transient
+	public String getTipe() {
+		return tipeStok;
+	}
+
+	public void setTipe(String tipeStok) {
+		this.tipeStok = tipeStok;
 	}
 
 	@Id
@@ -122,12 +130,6 @@ public abstract class Stok {
 
 	public void setJenis(JenisStok jenis) {
 		this.jenis = jenis;
-	}
-	
-	@JsonIgnore
-	@Transient
-	public String getName() {
-		return name;
 	}
 
 	@Override
