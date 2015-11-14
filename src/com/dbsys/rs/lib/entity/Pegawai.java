@@ -16,9 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.dbsys.rs.lib.entity.Dokter.Spesialisasi;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -89,7 +87,7 @@ public class Pegawai {
 		this.nip = nip;
 	}
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;
@@ -179,14 +177,6 @@ public class Pegawai {
 	public void setTelepon(String telepon) {
 		penduduk.setTelepon(telepon);
 	}
-
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	@Transient
-	public Spesialisasi getSpesialisasi() {
-		return null;
-	}
-
-	public void setSpesialisasi(Spesialisasi spesialisasi) { }
 	
 	@Override
 	public int hashCode() {
