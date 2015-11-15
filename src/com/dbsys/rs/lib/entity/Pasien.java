@@ -34,6 +34,10 @@ public class Pasien implements Tanggungan {
 		RAWAT_JALAN, RAWAT_INAP, UGD
 	}
 	
+	public enum Pendaftaran {
+		LOKET, UGD
+	}
+	
 	private Long id;
 	private String kode;
 	private Date tanggalMasuk;
@@ -48,6 +52,7 @@ public class Pasien implements Tanggungan {
 	private Kelas kelas;
 	private KeadaanPasien keadaan;
 	private Perawatan tipePerawatan;
+	private Pendaftaran pendaftaran;
 
 	private Penduduk penduduk;
 	private Unit tujuan;
@@ -149,6 +154,15 @@ public class Pasien implements Tanggungan {
 
 	public void setTipePerawatan(Perawatan tipePerawatan) {
 		this.tipePerawatan = tipePerawatan;
+	}
+
+	@Column(name = "pendaftaran")
+	public Pendaftaran getPendaftaran() {
+		return pendaftaran;
+	}
+
+	public void setPendaftaran(Pendaftaran pendaftaran) {
+		this.pendaftaran = pendaftaran;
 	}
 
 	@Column(name = "tanggal_keluar")

@@ -55,6 +55,7 @@ CREATE TABLE pasien (
 	tanggal_masuk date not null,
 	tanggal_rawat_inap date,
 	tanggal_keluar date,
+	pendaftaran int(1) not null,
 	total_tagihan int(10),
 	cicilan int(10),
 	keadaan int(1),
