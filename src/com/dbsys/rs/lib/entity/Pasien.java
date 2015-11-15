@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Pasien implements Tanggungan {
 
 	public enum StatusPasien {
-		PERAWATAN, LUNAS, MENUNGGAK
+		PERAWATAN, KELUAR
 	}
 
 	public enum KeadaanPasien {
