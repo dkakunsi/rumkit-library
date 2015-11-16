@@ -61,19 +61,10 @@ public class Pelayanan extends Tagihan {
 		this.tipePelayanan = tipePelayanan;
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "tindakan")
 	public Tindakan getTindakan() {
 		return tindakan;
-	}
-
-	@Transient
-	public String getName() {
-		return tipePelayanan;
-	}
-
-	public void setName(String name) {
-		this.tipePelayanan = name;
 	}
 
 	public void setTindakan(Tindakan tindakan) {
@@ -81,7 +72,7 @@ public class Pelayanan extends Tagihan {
 		this.tanggungan = tindakan;
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "pelaksana")
 	public Pegawai getPelaksana() {
 		return pelaksana;

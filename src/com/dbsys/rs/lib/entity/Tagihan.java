@@ -34,11 +34,11 @@ public abstract class Tagihan {
 	protected Unit unit;
 	protected Pembayaran pembayaran;
 
-	protected Tanggungan tanggungan;
 	protected StatusTagihan status;
 	
 	// tidak termasuk persistent
 	protected boolean bayar;
+	protected Tanggungan tanggungan;
 
 	@Id
 	@GeneratedValue
@@ -86,7 +86,7 @@ public abstract class Tagihan {
 		this.keterangan = keterangan;
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;
@@ -96,7 +96,7 @@ public abstract class Tagihan {
 		this.pasien = pasien;
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;

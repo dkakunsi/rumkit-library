@@ -83,6 +83,10 @@ public class Pembayaran {
 	public void setListPelayanan(List<Pelayanan> listPelayanan) {
 		this.listPelayanan = listPelayanan;
 	}
+	
+	public void addPelayanan(Pelayanan pelayanan) {
+		listPelayanan.add(pelayanan);
+	}
 
 	@OneToMany(mappedBy = "pembayaran", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	public List<Pemakaian> getListPemakaian() {
@@ -91,6 +95,10 @@ public class Pembayaran {
 
 	public void setListPemakaian(List<Pemakaian> listPemakaian) {
 		this.listPemakaian = listPemakaian;
+	}
+	
+	public void addPemakaian(Pemakaian pemakaian) {
+		listPemakaian.add(pemakaian);
 	}
 	
 	public String generateKode() {
