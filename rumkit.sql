@@ -147,6 +147,7 @@ CREATE TABLE stok (
 	tipe varchar(255) not null,
 	barang int(10) not null,
 	jenis int(1) not null,
+	nomor_kembali varchar(255),
 	unit int(10),
 	pasien int(10),
 	primary key (id)

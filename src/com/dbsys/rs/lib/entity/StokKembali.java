@@ -1,6 +1,7 @@
 package com.dbsys.rs.lib.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,6 +12,7 @@ import javax.persistence.ManyToOne;
 public class StokKembali extends Stok {
 	
 	private Pasien pasien;
+	private String nomor;
 	
 	public StokKembali() {
 		super("KEMBALI");
@@ -26,7 +28,16 @@ public class StokKembali extends Stok {
 	public void setPasien(Pasien pasien) {
 		this.pasien = pasien;
 	}
-	
+
+	@Column(name = "nomor_kembali")
+	public String getNomor() {
+		return nomor;
+	}
+
+	public void setNomor(String nomor) {
+		this.nomor = nomor;
+	}
+
 	public Long hitungPengembalian() {
 		return barang.getHarga() * jumlah;
 	}

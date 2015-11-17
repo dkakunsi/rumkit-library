@@ -18,7 +18,7 @@ public class Pemakaian extends Tagihan {
 	private Barang barang;
 	private String nomorResep;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;
