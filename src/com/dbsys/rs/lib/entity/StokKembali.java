@@ -17,7 +17,7 @@ public class StokKembali extends Stok {
 		setJenis(JenisStok.MASUK);
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;

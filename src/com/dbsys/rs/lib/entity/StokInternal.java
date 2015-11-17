@@ -17,7 +17,7 @@ public class StokInternal extends Stok {
 		setJenis(JenisStok.KELUAR);
 	}
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "unit")
 	public Unit getUnit() {
 		return unit;
