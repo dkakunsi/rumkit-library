@@ -2,6 +2,7 @@ package com.dbsys.rs.lib.entity;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pembayaran")
@@ -28,6 +32,12 @@ public class Pembayaran {
 	private List<Pelayanan> listPelayanan;
 	private List<Pemakaian> listPemakaian;
 
+	public Pembayaran() {
+		super();
+		listPelayanan = new ArrayList<>();
+		listPemakaian = new ArrayList<>();
+	}
+	
 	@Id
 	@Column(name = "kode")
 	public String getKode() {
@@ -65,7 +75,7 @@ public class Pembayaran {
 		this.jumlah = jumlah;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;
@@ -75,7 +85,7 @@ public class Pembayaran {
 		this.pasien = pasien;
 	}
 
-	@OneToMany(mappedBy = "pembayaran", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pembayaran", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	public List<Pelayanan> getListPelayanan() {
 		return listPelayanan;
 	}
@@ -86,9 +96,10 @@ public class Pembayaran {
 	
 	public void addPelayanan(Pelayanan pelayanan) {
 		listPelayanan.add(pelayanan);
+		pelayanan.setPembayaran(this);
 	}
 
-	@OneToMany(mappedBy = "pembayaran", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pembayaran", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	public List<Pemakaian> getListPemakaian() {
 		return listPemakaian;
 	}
@@ -99,6 +110,21 @@ public class Pembayaran {
 	
 	public void addPemakaian(Pemakaian pemakaian) {
 		listPemakaian.add(pemakaian);
+		pemakaian.setPembayaran(this);
+	}
+
+	@JsonIgnore
+	@Transient
+	public List<Tagihan> getListTagihan() {
+		List<Tagihan> list = new ArrayList<>();
+
+		for (Tagihan tagihan : listPelayanan)
+			list.add(tagihan);
+		
+		for (Tagihan tagihan : listPemakaian)
+			list.add(tagihan);
+		
+		return list;
 	}
 	
 	public String generateKode() {

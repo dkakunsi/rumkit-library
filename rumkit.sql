@@ -112,7 +112,7 @@ CREATE TABLE pelayanan (
 	jumlah int(10) not null,
 	biaya_tambahan int(10),
 	keterangan varchar(255),
-	status_tagihan int(1) not null,
+	status_tagihan int(1) default 0,
 	tipe varchar(255) not null,
 	tanggal_selesai date,
 	jam_masuk time(6),

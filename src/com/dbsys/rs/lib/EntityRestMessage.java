@@ -7,6 +7,7 @@ import com.dbsys.rs.lib.entity.Pasien;
 import com.dbsys.rs.lib.entity.Pegawai;
 import com.dbsys.rs.lib.entity.Pelayanan;
 import com.dbsys.rs.lib.entity.Pemakaian;
+import com.dbsys.rs.lib.entity.Pembayaran;
 import com.dbsys.rs.lib.entity.Penduduk;
 import com.dbsys.rs.lib.entity.Stok;
 import com.dbsys.rs.lib.entity.Tindakan;
@@ -90,5 +91,9 @@ public class EntityRestMessage<T> extends RestMessage {
 	
 	public static EntityRestMessage<Stok> createStok(Stok stok) {
 		return new EntityRestMessage<Stok>(stok);
+	}
+
+	public static EntityRestMessage<Pembayaran> createPembayaran(Pembayaran pembayaran) {
+		return new EntityRestMessage<Pembayaran>(pembayaran);
 	}
 }

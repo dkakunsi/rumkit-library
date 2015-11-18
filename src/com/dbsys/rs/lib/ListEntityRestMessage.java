@@ -9,6 +9,7 @@ import com.dbsys.rs.lib.entity.Pasien;
 import com.dbsys.rs.lib.entity.Pegawai;
 import com.dbsys.rs.lib.entity.Pelayanan;
 import com.dbsys.rs.lib.entity.Pemakaian;
+import com.dbsys.rs.lib.entity.Pembayaran;
 import com.dbsys.rs.lib.entity.Penduduk;
 import com.dbsys.rs.lib.entity.Stok;
 import com.dbsys.rs.lib.entity.Tindakan;
@@ -94,5 +95,9 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	public static ListEntityRestMessage<Pelayanan> createListPelayanan(List<Pelayanan> list) {
 		return new ListEntityRestMessage<Pelayanan>(list);
+	}
+
+	public static ListEntityRestMessage<Pembayaran> createListPembayaran(List<Pembayaran> list) {
+		return new ListEntityRestMessage<Pembayaran>(list);
 	}
 }

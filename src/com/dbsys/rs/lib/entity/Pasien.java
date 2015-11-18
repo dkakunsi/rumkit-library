@@ -57,7 +57,7 @@ public class Pasien implements Tanggungan {
 	private Penduduk penduduk;
 	private Unit tujuan;
 	private PelayananTemporal perawatan;
-
+	
 	public Pasien() {
 		super();
 		this.penduduk = new Penduduk();
@@ -116,6 +116,12 @@ public class Pasien implements Tanggungan {
 
 	public void setCicilan(Long cicilan) {
 		this.cicilan = cicilan;
+	}
+
+	public void addCicilan(Long jumlah) {
+		if (cicilan == null)
+			cicilan = 0L;
+		cicilan += jumlah;
 	}
 
 	@Column(name = "status")

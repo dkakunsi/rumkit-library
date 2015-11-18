@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.entity.Unit.TipeUnit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
@@ -35,11 +36,13 @@ public abstract class Tagihan {
 	protected Pembayaran pembayaran;
 
 	protected StatusTagihan status;
-	
-	// tidak termasuk persistent
-	protected boolean bayar;
 	protected Tanggungan tanggungan;
 
+	protected Tagihan() {
+		super();
+		this.status = StatusTagihan.MENUNGGAK;
+	}
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -106,6 +109,7 @@ public abstract class Tagihan {
 		this.unit = unit;
 	}
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "pembayaran")
 	public Pembayaran getPembayaran() {
@@ -123,15 +127,6 @@ public abstract class Tagihan {
 
 	public void setStatus(StatusTagihan status) {
 		this.status = status;
-	}
-
-	@Transient
-	public boolean isBayar() {
-		return bayar;
-	}
-
-	public void setBayar(boolean bayar) {
-		this.bayar = bayar;
 	}
 
 	@Transient
