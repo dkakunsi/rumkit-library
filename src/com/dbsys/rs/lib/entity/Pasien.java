@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.Kelas;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
@@ -20,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "pasien")
-public class Pasien implements Tanggungan {
+public class Pasien implements Tanggungan, CodedEntity {
 
 	public enum StatusPasien {
 		PERAWATAN, KELUAR
@@ -305,11 +307,11 @@ public class Pasien implements Tanggungan {
 		penduduk.setKode(kode);
 	}
 
-	public void generateKode() {
-		Integer i = Math.abs(hashCode());
-		Integer t = Math.abs(tanggalMasuk.hashCode());
+	public String generateKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
 		
-		this.kode = String.format("%s-%s", i, t);
+		return String.format("10%s00%s", d, t);
 	}
 
 	public void bayar(Long jumlah) {

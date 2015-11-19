@@ -8,13 +8,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.Kelas;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
 
 @Entity
 @Table(name = "tindakan")
-public class Tindakan implements Tanggungan {
+public class Tindakan implements Tanggungan, CodedEntity {
 	
 	public enum SatuanTindakan {
 		TINDAKAN, HARI, JAM
@@ -53,6 +55,14 @@ public class Tindakan implements Tanggungan {
 		this.kode = kode;
 	}
 
+	@Override
+	public String generateKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("70%s00%s", d, t);
+	}
+	
 	@Column(name = "nama")
 	public String getNama() {
 		return nama;

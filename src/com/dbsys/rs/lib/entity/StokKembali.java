@@ -6,10 +6,15 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @DiscriminatorValue("KEMBALI")
-public class StokKembali extends Stok {
+public class StokKembali extends Stok implements CodedEntity {
 	
 	private Pasien pasien;
 	private String nomor;
@@ -47,6 +52,26 @@ public class StokKembali extends Stok {
 		jenis = JenisStok.MASUK;
 		super.setJenis(jenis);
 	};
+	
+	@Override
+	public String generateKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("30%s00%s", d, t);
+	}
+
+	@Override
+	@JsonIgnore
+	@Transient
+	public String getKode() {
+		return getNomor();
+	}
+
+	@Override
+	public void setKode(String kode) {
+		setNomor(kode);
+	}
 
 	@Override
 	public int hashCode() {

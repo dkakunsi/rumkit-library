@@ -11,6 +11,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.NumberException;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
@@ -34,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT"),
 	@JsonSubTypes.Type(value = Barang.class, name = "BARANG")
 })
-public class Barang implements Tanggungan {
+public class Barang implements Tanggungan, CodedEntity {
 
 	protected Long id;
 	protected String kode;
@@ -85,6 +87,14 @@ public class Barang implements Tanggungan {
 		this.kode = kode;
 	}
 
+	@Override
+	public String generateKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("50%s00%s", d, t);
+	}
+	
 	@Column(name = "nama")
 	public String getNama() {
 		return nama;

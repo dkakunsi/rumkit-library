@@ -16,11 +16,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pembayaran")
-public class Pembayaran {
+public class Pembayaran implements CodedEntity {
 
 	private String kode;
 	private Date tanggal;
@@ -128,9 +130,7 @@ public class Pembayaran {
 	}
 	
 	public String generateKode() {
-		kode = String.format("%s-%s-%s", pasien.hashCode(), tanggal.hashCode(), jam.hashCode());
-		
-		return kode;
+		return String.format("40%s00%s", DateUtil.getDate().hashCode(), DateUtil.getTime().hashCode());
 	}
 
 	@Override

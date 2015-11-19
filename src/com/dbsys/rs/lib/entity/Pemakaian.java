@@ -8,12 +8,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pemakaian")
-public class Pemakaian extends Tagihan {
+public class Pemakaian extends Tagihan implements CodedEntity {
 
 	private Barang barang;
 	private String nomorResep;
@@ -59,6 +61,26 @@ public class Pemakaian extends Tagihan {
 		return barang.getNama();
 	}
 
+	@Override
+	public String generateKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("20%s00%s", d, t);
+	}
+
+	@Override
+	@JsonIgnore
+	@Transient
+	public String getKode() {
+		return getNomorResep();
+	}
+
+	@Override
+	public void setKode(String kode) {
+		setNomorResep(kode);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
