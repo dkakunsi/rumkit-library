@@ -53,13 +53,17 @@ public class Penduduk implements CodedEntity {
 	}
 	
 	public String generateKode() {
-		Integer d = Math.abs(DateUtil.getDate().hashCode());
-		Integer t = Math.abs(DateUtil.getTime().hashCode());
-
-		String kode = String.format("60%s00%s", d, t);
+		String kode = createKode();
 		setKode(kode);
 		
 		return kode;
+	}
+	
+	public static String createKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+
+		return String.format("60%s00%s", d, t);
 	}
 	
 	@Column(name = "nik")

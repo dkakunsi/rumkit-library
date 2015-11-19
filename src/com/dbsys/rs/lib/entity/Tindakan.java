@@ -57,6 +57,10 @@ public class Tindakan implements Tanggungan, CodedEntity {
 
 	@Override
 	public String generateKode() {
+		return createKode();
+	}
+	
+	public static String createKode() {
 		Integer d = Math.abs(DateUtil.getDate().hashCode());
 		Integer t = Math.abs(DateUtil.getTime().hashCode());
 		

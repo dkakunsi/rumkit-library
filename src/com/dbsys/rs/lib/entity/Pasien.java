@@ -308,6 +308,10 @@ public class Pasien implements Tanggungan, CodedEntity {
 	}
 
 	public String generateKode() {
+		return createKode();
+	}
+	
+	public static String createKode() {
 		Integer d = Math.abs(DateUtil.getDate().hashCode());
 		Integer t = Math.abs(DateUtil.getTime().hashCode());
 		

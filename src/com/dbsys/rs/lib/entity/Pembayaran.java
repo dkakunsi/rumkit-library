@@ -130,7 +130,14 @@ public class Pembayaran implements CodedEntity {
 	}
 	
 	public String generateKode() {
-		return String.format("40%s00%s", DateUtil.getDate().hashCode(), DateUtil.getTime().hashCode());
+		return createKode();
+	}
+	
+	public static String createKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("40%s00%s", d, t);
 	}
 
 	@Override
