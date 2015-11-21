@@ -110,6 +110,20 @@ public class Pasien implements Tanggungan, CodedEntity {
 	public void setTotalTagihan(Long totalTagihan) {
 		this.totalTagihan = totalTagihan;
 	}
+	
+	public void addTotalTagihan(Long tagihan) {
+		if (totalTagihan == null)
+			totalTagihan = 0L;
+		totalTagihan += tagihan;
+	}
+	
+	public void substractTotalTagihan(Long tagihan) {
+		if (totalTagihan == null) {
+			totalTagihan = 0L;
+		} else {
+			totalTagihan -= tagihan;
+		}
+	}
 
 	@Column(name = "cicilan")
 	public Long getCicilan() {
@@ -124,6 +138,14 @@ public class Pasien implements Tanggungan, CodedEntity {
 		if (cicilan == null)
 			cicilan = 0L;
 		cicilan += jumlah;
+	}
+	
+	public void substractCicilan(Long jumlah) {
+		if (cicilan == null) {
+			cicilan = 0L;
+		} else {
+			cicilan -= jumlah;
+		}
 	}
 
 	@Column(name = "status")
@@ -145,7 +167,7 @@ public class Pasien implements Tanggungan, CodedEntity {
 		this.penanggung = penanggung;
 	}
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;

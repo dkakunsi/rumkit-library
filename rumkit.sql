@@ -198,3 +198,7 @@ ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_pasien FOREIGN KEY (pasien) RE
 ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_barang FOREIGN KEY (barang) REFERENCES barang (id);
 ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_unit FOREIGN KEY (unit) REFERENCES unit (id);
 ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_pembayaran FOREIGN KEY (pembayaran) REFERENCES pembayaran (kode);
+
+USE mysql;
+CREATE USER 'rumkit_user'@'localhost' IDENTIFIED BY 'liun';
+GRANT ALL PRIVILEGES ON rumkit.* TO 'rumkit_user'@'localhost' WITH GRANT OPTION;
