@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS rumkit;
 CREATE DATABASE rumkit;
 USE rumkit;
 
