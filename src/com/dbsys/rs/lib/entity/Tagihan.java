@@ -161,6 +161,12 @@ public abstract class Tagihan {
 	}
 	
 	public void setTagihanCounted(Long tagihanCounted) { }
+	
+	@JsonIgnore
+	@Transient
+	public boolean isPersisted() {
+		return !((id == null) || id.equals(0L));
+	}
 
 	@Override
 	public int hashCode() {
