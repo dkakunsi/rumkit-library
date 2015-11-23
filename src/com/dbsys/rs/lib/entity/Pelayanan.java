@@ -12,9 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.dbsys.rs.lib.Kelas;
 import com.dbsys.rs.lib.entity.Unit.TipeUnit;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -86,22 +84,14 @@ public class Pelayanan extends Tagihan {
 	@Override
 	@Transient
 	public Long getTagihan() {
+		/**
+		 * Jika tindakan dilakukan di ICU, maka biaya tindakan dikali 2.
+		 */
+		if (TipeUnit.ICU.equals(unit.getTipe()))
+			return (tindakan.getTarif() * 2) * jumlah + biayaTambahan;
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
 
-	@Override
-	@JsonIgnore
-	@Transient
-	public Long getCustomTagihan() {
-		/**
-		 * Kelas.ICU.equals(tindakan.getKelas()), untuk menghindari akumulasi pada Rawat Inap ICU.
-		 * Semua tindakan selain Rawat Inap ICU, dihitung tarif kelas * 2.
-		 */
-		if (TipeUnit.ICU.equals(unit.getTipe()) && !(Kelas.ICU.equals(tindakan.getKelas())))
-			return (tindakan.getTarif() * 2) * jumlah + biayaTambahan;
-		return 0L;
-	}
-	
 	@Override
 	@Transient
 	public String getNama() {

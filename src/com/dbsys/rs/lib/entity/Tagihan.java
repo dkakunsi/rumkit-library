@@ -13,9 +13,7 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
-import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 public abstract class Tagihan {
@@ -150,20 +148,19 @@ public abstract class Tagihan {
 
 	@Transient
 	public abstract Long getTagihan();
-
 	public void setTagihan(Long tagihan) { }
-	
-	@JsonIgnore
-	@Transient
-	public abstract Long getCustomTagihan();
 
-	public Long hitungTagihan() {
+	@Transient
+	public Long getTagihanCounted() {
+		/**
+		 * Untuk pasien BPJS yang mendapatkan tagihan yang ditanggung BPJS, dihitung 0.
+		 */
 		if (Penanggung.BPJS.equals(pasien.getPenanggung()) && Penanggung.BPJS.equals(tanggungan.getPenanggung()))
 			return 0L;
-		if (TipeUnit.ICU.equals(unit.getTipe()))
-			getCustomTagihan();
 		return getTagihan();
 	}
+	
+	public void setTagihanCounted(Long tagihanCounted) { }
 
 	@Override
 	public int hashCode() {

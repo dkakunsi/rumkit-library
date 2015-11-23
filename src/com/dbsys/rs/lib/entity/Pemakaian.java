@@ -10,7 +10,6 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.CodedEntity;
 import com.dbsys.rs.lib.DateUtil;
-import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -44,15 +43,6 @@ public class Pemakaian extends Tagihan implements CodedEntity {
 	@Transient
 	public Long getTagihan() {
 		return barang.getHarga() * jumlah + biayaTambahan;
-	}
-	
-	@Override
-	@JsonIgnore
-	@Transient
-	public Long getCustomTagihan() {
-		if (TipeUnit.ICU.equals(unit.getTipe()))
-			return (barang.getHarga() * 2) * jumlah + biayaTambahan;
-		return 0L;
 	}
 	
 	@Override
