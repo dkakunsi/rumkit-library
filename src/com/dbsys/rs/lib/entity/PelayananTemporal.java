@@ -77,8 +77,9 @@ public class PelayananTemporal extends Pelayanan {
 	public Long getTagihanHarian() {
 		if (tanggalSelesai == null)
 			return 0L;
-		
-		jumlah = DateUtil.calculate(tanggal, tanggalSelesai);
+
+		if (jumlah == 0)
+			jumlah = DateUtil.calculate(tanggal, tanggalSelesai);
 
 		if (jumlah == 0)
 			jumlah = 1;
@@ -91,8 +92,10 @@ public class PelayananTemporal extends Pelayanan {
 	public Long getTagihanJam() {
 		if (tanggalSelesai == null || jamKeluar == null)
 			return 0L;
-		
-		jumlah = getJumlahJam();
+
+		if (jumlah == 0)
+			jumlah = getJumlahJam();
+
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
 	
