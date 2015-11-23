@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import com.dbsys.rs.lib.Tanggungan;
 import com.dbsys.rs.lib.Penanggung;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 public abstract class Tagihan {
