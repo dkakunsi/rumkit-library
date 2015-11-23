@@ -78,7 +78,7 @@ public class PelayananTemporal extends Pelayanan {
 		if (tanggalSelesai == null)
 			return 0L;
 
-		if (jumlah == 0)
+		if (jumlah == null || jumlah == 0)
 			jumlah = DateUtil.calculate(tanggal, tanggalSelesai);
 
 		if (jumlah == 0)
@@ -93,7 +93,7 @@ public class PelayananTemporal extends Pelayanan {
 		if (tanggalSelesai == null || jamKeluar == null)
 			return 0L;
 
-		if (jumlah == 0)
+		if (jumlah == null || jumlah == 0)
 			jumlah = getJumlahJam();
 
 		return tindakan.getTarif() * jumlah + biayaTambahan;
