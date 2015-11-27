@@ -60,6 +60,11 @@ public class Pasien implements Tanggungan, CodedEntity {
 	private Unit tujuan;
 	private PelayananTemporal perawatan;
 	
+	/*
+	 * Digunakan untuk JSON mapping
+	 */
+	private Unit ruangPerawatan;
+	
 	public Pasien() {
 		super();
 		this.penduduk = new Penduduk();
@@ -236,6 +241,7 @@ public class Pasien implements Tanggungan, CodedEntity {
 
 	public void setPerawatan(PelayananTemporal perawatan) {
 		this.perawatan = perawatan;
+		this.ruangPerawatan = perawatan.getUnit();
 	}
 
 	@ManyToOne
@@ -331,10 +337,12 @@ public class Pasien implements Tanggungan, CodedEntity {
 	
 	@Transient
 	public Unit getRuangPerawatan() {
-		if (perawatan == null)
-			return null;
-		return perawatan.getUnit();
+		return ruangPerawatan;
 	}
+		
+	public void setRuangPerawatan(Unit ruangPerawatan) {
+		this.ruangPerawatan = ruangPerawatan;
+	}	
 
 	public String generateKode() {
 		return createKode();
