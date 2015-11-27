@@ -241,7 +241,8 @@ public class Pasien implements Tanggungan, CodedEntity {
 
 	public void setPerawatan(PelayananTemporal perawatan) {
 		this.perawatan = perawatan;
-		this.ruangPerawatan = perawatan.getUnit();
+		if (perawatan != null)
+			this.ruangPerawatan = perawatan.getUnit();
 	}
 
 	@ManyToOne

@@ -77,7 +77,7 @@ public class Pembayaran implements CodedEntity {
 		this.jumlah = jumlah;
 	}
 
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "pasien")
 	public Pasien getPasien() {
 		return pasien;

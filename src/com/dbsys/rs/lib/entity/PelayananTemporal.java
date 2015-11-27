@@ -67,36 +67,41 @@ public class PelayananTemporal extends Pelayanan {
 	@Override
 	@Transient
 	public Long getTagihan() {
-		if (tindakan.getSatuan().equals(Tindakan.SatuanTindakan.HARI))
-			return getTagihanHarian();
-		return getTagihanJam();
+		if (tindakan.getSatuan().equals(Tindakan.SatuanTindakan.HARI)) {
+			hitungJumlahHari();
+		} else if(tindakan.getSatuan().equals(Tindakan.SatuanTindakan.JAM)) {
+			hitungJumlahJam();
+		}
+		
+		return super.getTagihan();
 	}
 
-	@JsonIgnore
-	@Transient
-	public Long getTagihanHarian() {
-		if (tanggalSelesai == null)
-			return 0L;
-
-		if (jumlah == null || jumlah == 0)
+	private Integer hitungJumlahHari() {
+		if (jumlah == null || jumlah == 0) {
+			if (tanggalSelesai == null)
+				return 0;
+			
 			jumlah = DateUtil.calculate(tanggal, tanggalSelesai);
+		}
 
 		if (jumlah == 0)
 			jumlah = 1;
-		
-		return tindakan.getTarif() * jumlah + biayaTambahan;
+
+		return jumlah;
 	}
 	
-	@JsonIgnore
-	@Transient
-	public Long getTagihanJam() {
-		if (tanggalSelesai == null || jamKeluar == null)
-			return 0L;
+	public Integer hitungJumlahJam() {
+		if (jumlah == null || jumlah == 0) {
+			if (tanggalSelesai == null || jamKeluar == null)
+				return 0;
 
-		if (jumlah == null || jumlah == 0)
 			jumlah = getJumlahJam();
+		}
 
-		return tindakan.getTarif() * jumlah + biayaTambahan;
+		if (jumlah == 0)
+			jumlah = 1;
+
+		return jumlah;
 	}
 	
 	@JsonIgnore
