@@ -328,6 +328,11 @@ public class Pasien implements Tanggungan, CodedEntity {
 	public void setKodePenduduk(String kode) {
 		penduduk.setKode(kode);
 	}
+	
+	@Transient
+	public Unit getRuangPerawatan() {
+		return perawatan.getUnit();
+	}
 
 	public String generateKode() {
 		return createKode();
