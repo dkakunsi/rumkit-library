@@ -331,6 +331,8 @@ public class Pasien implements Tanggungan, CodedEntity {
 	
 	@Transient
 	public Unit getRuangPerawatan() {
+		if (perawatan == null)
+			return null;
 		return perawatan.getUnit();
 	}
 
