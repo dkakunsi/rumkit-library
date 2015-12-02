@@ -35,11 +35,15 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	protected ListEntityRestMessage(List<T> list) {
 		super("Berhasil", Type.LIST);
-		this.list = list;
+		setList(list);
 	}
 	
 	public List<T> getList() {
 		return list;
+	}
+	
+	public void setList(List<T> list) {
+		this.list = list;
 	}
 
 	/**
