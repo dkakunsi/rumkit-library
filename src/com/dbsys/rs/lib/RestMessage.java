@@ -39,12 +39,24 @@ public class RestMessage {
 		return message;
 	}
 	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
 	public Type getTipe() {
 		return tipe;
 	}
 	
+	public void setTipe(Type tipe) {
+		this.tipe = tipe;
+	}
+	
 	public Object getObject() {
 		return object;
+	}
+	
+	public void setObject(Object object) {
+		this.object = object;
 	}
 	
 	public enum Type {
