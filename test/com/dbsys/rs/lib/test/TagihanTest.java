@@ -31,4 +31,12 @@ public class TagihanTest {
 		
 		assertFalse(tagihan.isPersisted());
 	}
+	
+	@Test
+	public void test() {
+		Long l = 200000l;
+		Long l2 = (l * 25 / 100);
+		
+		assertEquals(new Long(50000), l2);
+	}
 }

@@ -93,8 +93,10 @@ public class Pelayanan extends Tagihan {
 		/**
 		 * Jika tindakan dilakukan di UGD, maka biaya tindakan ditambah 25%.
 		 */
-		if (TipeUnit.UGD.equals(unit.getTipe()))
-			return (tindakan.getTarif() + (tindakan.getTarif() * (25/100))) * jumlah + biayaTambahan;
+		if (TipeUnit.UGD.equals(unit.getTipe())) {
+			Long tambahanUgd = tindakan.getTarif() * 25 / 100;
+			return (tindakan.getTarif() + tambahanUgd) * jumlah + biayaTambahan;
+		}
 		
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
