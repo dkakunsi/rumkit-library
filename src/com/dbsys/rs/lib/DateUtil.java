@@ -544,9 +544,11 @@ public class DateUtil {
 	}
 
 	public static int calculate(Time awal, Time akhir) {
-		Long millis1 = awal.getTime();
-		Long millis2 = akhir.getTime();
-		Long hasil = (millis2 - millis1) / HOUR_IN_MILIS;
+		Long millis3 = (akhir.getTime() - awal.getTime());
+		Long hasil = millis3 / HOUR_IN_MILIS;
+		
+		if (millis3 % HOUR_IN_MILIS > 0)
+			hasil++;
 
 		return hasil.intValue();
 	}

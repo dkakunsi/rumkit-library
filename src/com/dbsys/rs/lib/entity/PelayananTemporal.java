@@ -76,30 +76,28 @@ public class PelayananTemporal extends Pelayanan {
 		return super.getTagihan();
 	}
 
-	private Integer hitungJumlahHari() {
-		if (jumlah == null || jumlah == 0) {
-			if (tanggalSelesai == null)
-				return 0;
-			
-			jumlah = DateUtil.calculate(tanggal, tanggalSelesai);
-		}
-
-		if (jumlah == 0)
-			jumlah = 1;
-
-		return jumlah;
+	public Integer hitungJumlahHari() {
+		long jumlahJam = hitungJumlahJam();
+		long hasil = jumlahJam / 24;
+		
+		if (jumlahJam % 24 > 0)
+			hasil++;
+		
+		return (int) hasil;
 	}
 	
 	public Integer hitungJumlahJam() {
 		if (jumlah == null || jumlah == 0) {
-			if (tanggalSelesai == null || jamKeluar == null)
-				return 0;
+			Date tanggalHitung = tanggalSelesai;
+			Time jamHitung = jamKeluar;
+			
+			if (tanggalHitung == null)
+				tanggalHitung = DateUtil.getDate();
+			if (jamHitung == null)
+				jamHitung = DateUtil.getTime();
 
-			jumlah = getJumlahJam();
+			jumlah = getJumlahJam(tanggal, tanggalHitung, jamMasuk, jamHitung);
 		}
-
-		if (jumlah == 0)
-			jumlah = 1;
 
 		return jumlah;
 	}
