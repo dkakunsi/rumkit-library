@@ -83,7 +83,9 @@ public class PelayananTemporal extends Pelayanan {
 		if (jumlahJam % 24 > 0)
 			hasil++;
 		
-		return (int) hasil;
+		jumlah = (int)hasil;
+		
+		return jumlah;
 	}
 	
 	public Integer hitungJumlahJam() {
