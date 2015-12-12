@@ -77,13 +77,15 @@ public class PelayananTemporal extends Pelayanan {
 	}
 
 	public Integer hitungJumlahHari() {
-		long jumlahJam = hitungJumlahJam();
-		long hasil = jumlahJam / 24;
-		
-		if (jumlahJam % 24 > 0)
-			hasil++;
-		
-		jumlah = (int)hasil;
+		if (jumlah == null || jumlah == 0) {
+			long jumlahJam = hitungJumlahJam();
+			long hasil = jumlahJam / 24;
+			
+			if (jumlahJam % 24 > 0)
+				hasil++;
+			
+			jumlah = (int)hasil;
+		}
 		
 		return jumlah;
 	}
