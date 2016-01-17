@@ -3,7 +3,6 @@ package com.dbsys.rs.lib.entity;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("DOKTER")
@@ -16,11 +15,11 @@ public class Dokter extends Pegawai {
 	private Spesialisasi spesialisasi;
 
 	public Dokter() {
-		super();
+		super("DOKTER");
 	}
 
 	public Dokter(Spesialisasi spesialisasi) {
-		super();
+		this();
 		setSpesialisasi(spesialisasi);
 	}
 
@@ -31,11 +30,5 @@ public class Dokter extends Pegawai {
 
 	public void setSpesialisasi(Spesialisasi spesialisasi) {
 		this.spesialisasi = spesialisasi;
-	}
-
-	@Override
-	@Transient
-	public String getName() {
-		return "DOKTER";
 	}
 }

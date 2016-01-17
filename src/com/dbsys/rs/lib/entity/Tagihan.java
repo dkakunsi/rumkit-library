@@ -11,32 +11,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 public abstract class Tagihan {
-
-	public enum Name {
-		/*
-		 * Pelayanan
-		 */
-		PELAYANAN,
-		
-		/*
-		 * Pelayanan Temporal
-		 */
-		TEMPORAL,
-		
-		/*
-		 * Pemakaian Bahan Habis Pakai
-		 */
-		BHP,
-		
-		/*
-		 * Pemakaian Obat Farmasi
-		 */
-		OBAT
+	
+	public enum StatusTagihan {
+		MENUNGGAK,
+		LUNAS
 	}
 
 	protected Long id;
@@ -47,15 +32,16 @@ public abstract class Tagihan {
 
 	protected Pasien pasien;
 	protected Unit unit;
+	protected Pembayaran pembayaran;
 
-	protected Penanggung penanggung;
+	protected StatusTagihan status;
+	protected Tanggungan tanggungan;
+
+	protected Tagihan() {
+		super();
+		this.status = StatusTagihan.MENUNGGAK;
+	}
 	
-	/*
-	 * Tidak termasuk dalam mapping entity.
-	 * Digunakan oleh Pelayanan & Pemakaian untuk menentuka sub-class dalam JSON.
-	 */
-	protected Name name;
-
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -122,6 +108,26 @@ public abstract class Tagihan {
 		this.unit = unit;
 	}
 
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "pembayaran")
+	public Pembayaran getPembayaran() {
+		return pembayaran;
+	}
+
+	public void setPembayaran(Pembayaran pembayaran) {
+		this.pembayaran = pembayaran;
+	}
+
+	@Column(name = "status_tagihan")
+	public StatusTagihan getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusTagihan status) {
+		this.status = status;
+	}
+
 	@Transient
 	public abstract String getNama();
 	
@@ -135,33 +141,32 @@ public abstract class Tagihan {
 	public void setNamaUnit(String namaUnit) { }
 
 	@Transient
-	public Tanggungan getTanggungan() {
-		return penanggung.getTanggungan();
+	public Penanggung getPenanggung() {
+		return tanggungan.getPenanggung();
 	}
 	
-	public void setTanggungan(Tanggungan tanggungan) { }
+	public void setPenanggung(Penanggung penanggung) { }
 
 	@Transient
 	public abstract Long getTagihan();
-
 	public void setTagihan(Long tagihan) { }
 
-	public Long hitungTagihan() {
-		if (Tanggungan.BPJS.equals(pasien.getTanggungan()) && Tanggungan.BPJS.equals(penanggung.getTanggungan()))
+	@Transient
+	public Long getTagihanCounted() {
+		/**
+		 * Untuk pasien BPJS yang mendapatkan tagihan yang ditanggung BPJS, dihitung 0.
+		 */
+		if (Penanggung.BPJS.equals(pasien.getPenanggung()) && Penanggung.BPJS.equals(tanggungan.getPenanggung()))
 			return 0L;
 		return getTagihan();
 	}
 	
-	/*
-	 * Dipakai oleh sub-class untuk JSON mapping (serialization/deserialization).
-	 */
-	@Transient
-	public Name getName() {
-		return this.name;
-	}
+	public void setTagihanCounted(Long tagihanCounted) { }
 	
-	public void setName(Name name) {
-		this.name = name;
+	@JsonIgnore
+	@Transient
+	public boolean isPersisted() {
+		return !((id == null) || id.equals(0L));
 	}
 
 	@Override
@@ -175,7 +180,11 @@ public abstract class Tagihan {
 		result = prime * result
 				+ ((keterangan == null) ? 0 : keterangan.hashCode());
 		result = prime * result + ((pasien == null) ? 0 : pasien.hashCode());
+		result = prime * result
+				+ ((pembayaran == null) ? 0 : pembayaran.hashCode());
 		result = prime * result + ((tanggal == null) ? 0 : tanggal.hashCode());
+		result = prime * result
+				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
 		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
 		return result;
 	}
@@ -214,10 +223,20 @@ public abstract class Tagihan {
 				return false;
 		} else if (!pasien.equals(other.pasien))
 			return false;
+		if (pembayaran == null) {
+			if (other.pembayaran != null)
+				return false;
+		} else if (!pembayaran.equals(other.pembayaran))
+			return false;
 		if (tanggal == null) {
 			if (other.tanggal != null)
 				return false;
 		} else if (!tanggal.equals(other.tanggal))
+			return false;
+		if (tanggungan == null) {
+			if (other.tanggungan != null)
+				return false;
+		} else if (!tanggungan.equals(other.tanggungan))
 			return false;
 		if (unit == null) {
 			if (other.unit != null)

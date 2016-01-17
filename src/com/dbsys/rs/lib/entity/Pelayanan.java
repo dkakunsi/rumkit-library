@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -26,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,
 	include = JsonTypeInfo.As.PROPERTY,
-	property = "name"
+	property = "tipePelayanan"
 )
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = Pelayanan.class, name = "PELAYANAN"),
@@ -36,12 +37,29 @@ public class Pelayanan extends Tagihan {
 	
 	protected Tindakan tindakan;
 	protected Pegawai pelaksana;
+	
+	// Untuk JSON bukan JPA
+	private String tipePelayanan;
 
 	public Pelayanan() {
 		super();
-		setName(Name.PELAYANAN);
+		this.tipePelayanan = "PELAYANAN";
 	}
 	
+	public Pelayanan(String name) {
+		super();
+		this.tipePelayanan = name;
+	}
+
+	@Transient
+	public String getTipe() {
+		return tipePelayanan;
+	}
+
+	public void setTipe(String tipePelayanan) {
+		this.tipePelayanan = tipePelayanan;
+	}
+
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "tindakan")
 	public Tindakan getTindakan() {
@@ -50,7 +68,7 @@ public class Pelayanan extends Tagihan {
 
 	public void setTindakan(Tindakan tindakan) {
 		this.tindakan = tindakan;
-		this.penanggung = tindakan;
+		this.tanggungan = tindakan;
 	}
 
 	@ManyToOne(cascade = CascadeType.MERGE)
@@ -66,9 +84,23 @@ public class Pelayanan extends Tagihan {
 	@Override
 	@Transient
 	public Long getTagihan() {
+		/**
+		 * Jika tindakan dilakukan di ICU, maka biaya tindakan dikali 2.
+		 */
+		if (TipeUnit.ICU.equals(unit.getTipe()))
+			return (tindakan.getTarif() * 2) * jumlah + biayaTambahan;
+
+		/**
+		 * Jika tindakan dilakukan di UGD, maka biaya tindakan ditambah 25%.
+		 */
+		if (TipeUnit.UGD.equals(unit.getTipe())) {
+			Long tambahanUgd = tindakan.getTarif() * 25 / 100;
+			return (tindakan.getTarif() + tambahanUgd) * jumlah + biayaTambahan;
+		}
+		
 		return tindakan.getTarif() * jumlah + biayaTambahan;
 	}
-	
+
 	@Override
 	@Transient
 	public String getNama() {

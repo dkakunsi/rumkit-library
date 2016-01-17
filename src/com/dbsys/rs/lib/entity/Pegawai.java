@@ -16,9 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.dbsys.rs.lib.entity.Dokter.Spesialisasi;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -32,13 +30,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,
 	include = JsonTypeInfo.As.PROPERTY,
-	property = "name"
+	property = "tipePegawai"
 )
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = Dokter.class, name = "DOKTER"),
 	@JsonSubTypes.Type(value = Perawat.class, name = "PERAWAT"),
 	@JsonSubTypes.Type(value = Apoteker.class, name = "APOTEKER"),
-	@JsonSubTypes.Type(value = Pekerja.class, name = "PEKERJA")
+	@JsonSubTypes.Type(value = Pekerja.class, name = "PEKERJA"),
+	@JsonSubTypes.Type(value = Pegawai.class, name = "PEGAWAI")
 })
 public class Pegawai {
 
@@ -46,12 +45,27 @@ public class Pegawai {
 	protected String nip;
 	protected Penduduk penduduk;
 	
-	// tidak termasuk dalam mapping entity
-	protected String name;
+	// Untuk JSON buka JPA
+	private String tipePegawai;
 
 	public Pegawai() {
 		super();
+		this.tipePegawai = "PEGAWAI";
 		this.penduduk = new Penduduk();
+	}
+	
+	public Pegawai(String name) {
+		this();
+		this.tipePegawai = name;
+	}
+
+	@Transient
+	public String getTipe() {
+		return tipePegawai;
+	}
+
+	public void setTipe(String tipePegawai) {
+		this.tipePegawai = tipePegawai;
 	}
 
 	@Id
@@ -73,7 +87,7 @@ public class Pegawai {
 		this.nip = nip;
 	}
 
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "penduduk")
 	public Penduduk getPenduduk() {
 		return penduduk;
@@ -81,15 +95,6 @@ public class Pegawai {
 
 	public void setPenduduk(Penduduk penduduk) {
 		this.penduduk = penduduk;
-	}
-	
-	@Transient
-	public String getName() {
-		return this.name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	@Transient
@@ -172,15 +177,7 @@ public class Pegawai {
 	public void setTelepon(String telepon) {
 		penduduk.setTelepon(telepon);
 	}
-
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	@Transient
-	public Spesialisasi getSpesialisasi() {
-		return null;
-	}
-
-	public void setSpesialisasi(Spesialisasi spesialisasi) { }
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

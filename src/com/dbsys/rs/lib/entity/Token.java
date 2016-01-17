@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.entity.Operator.Role;
-import com.dbsys.rs.lib.entity.Unit.Type;
+import com.dbsys.rs.lib.entity.Unit.TipeUnit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Token {
 
 	public enum StatusToken {
-		ACTIVE, LOCK
+		AKTIF, KUNCI
 	}
 
 	protected String kode;
@@ -142,17 +142,17 @@ public class Token {
 	}
 
 	public void activate() {
-		setStatus(StatusToken.ACTIVE);
+		setStatus(StatusToken.AKTIF);
 	}
 	
 	public void lock() {
-		setStatus(StatusToken.LOCK);
+		setStatus(StatusToken.KUNCI);
 	}
 
 	@Transient
 	@JsonIgnore
 	public boolean isLock() {
-		return status.equals(StatusToken.LOCK);
+		return status.equals(StatusToken.KUNCI);
 	}
 
 	@Transient
@@ -176,11 +176,11 @@ public class Token {
 	public void setNama(String nama) { }
 
 	@Transient
-	public Type getTipe() {
+	public TipeUnit getTipe() {
 		return operator.getUnit().getTipe();
 	}
 	
-	public void setTipe(Type tipe) { }
+	public void setTipe(TipeUnit tipe) { }
 
 	@Transient
 	public String getNamaUnit() {

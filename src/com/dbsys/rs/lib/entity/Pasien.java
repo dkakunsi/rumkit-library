@@ -12,45 +12,59 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.Kelas;
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.entity.Penduduk.Kelamin;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "pasien")
-public class Pasien implements Penanggung {
+public class Pasien implements Tanggungan, CodedEntity {
 
 	public enum StatusPasien {
-		OPEN, PAID, UNPAID
+		PERAWATAN, KELUAR
 	}
 
 	public enum KeadaanPasien {
 		SEMBUH, RUJUK, SAKIT, MATI, LARI
 	}
 	
-	public enum Type {
-		RAWAT_JALAN, RAWAT_INAP
+	public enum Perawatan {
+		RAWAT_JALAN, RAWAT_INAP, UGD
 	}
-
-	private Type tipe;
+	
+	public enum Pendaftaran {
+		LOKET, UGD
+	}
 	
 	private Long id;
 	private String kode;
 	private Date tanggalMasuk;
-	private StatusPasien status;
-	private Tanggungan tanggungan;
-	private Penduduk penduduk;
-	
-	private Kelas kelas;
-	private PelayananTemporal perawatan;
+	private Date tanggalRawatInap;
 	private Date tanggalKeluar;
-	private KeadaanPasien keadaan;
 
 	private Long totalTagihan;
 	private Long cicilan;
 
+	private StatusPasien status;
+	private Penanggung penanggung;
+	private Kelas kelas;
+	private KeadaanPasien keadaan;
+	private Perawatan tipePerawatan;
+	private Pendaftaran pendaftaran;
+
+	private Penduduk penduduk;
+	private Unit tujuan;
+	private PelayananTemporal perawatan;
+	
+	/*
+	 * Digunakan untuk JSON mapping
+	 */
+	private Unit ruangPerawatan;
+	
 	public Pasien() {
 		super();
 		this.penduduk = new Penduduk();
@@ -84,6 +98,15 @@ public class Pasien implements Penanggung {
 		this.tanggalMasuk = tanggalMasuk;
 	}
 
+	@Column(name = "tanggal_rawat_inap")
+	public Date getTanggalRawatInap() {
+		return tanggalRawatInap;
+	}
+
+	public void setTanggalRawatInap(Date tanggalRawatInap) {
+		this.tanggalRawatInap = tanggalRawatInap;
+	}
+
 	@Column(name = "total_tagihan")
 	public Long getTotalTagihan() {
 		return totalTagihan;
@@ -91,6 +114,20 @@ public class Pasien implements Penanggung {
 
 	public void setTotalTagihan(Long totalTagihan) {
 		this.totalTagihan = totalTagihan;
+	}
+	
+	public void addTotalTagihan(Long tagihan) {
+		if (totalTagihan == null)
+			totalTagihan = 0L;
+		totalTagihan += tagihan;
+	}
+	
+	public void substractTotalTagihan(Long tagihan) {
+		if (totalTagihan == null) {
+			totalTagihan = 0L;
+		} else {
+			totalTagihan -= tagihan;
+		}
 	}
 
 	@Column(name = "cicilan")
@@ -100,6 +137,20 @@ public class Pasien implements Penanggung {
 
 	public void setCicilan(Long cicilan) {
 		this.cicilan = cicilan;
+	}
+
+	public void addCicilan(Long jumlah) {
+		if (cicilan == null)
+			cicilan = 0L;
+		cicilan += jumlah;
+	}
+	
+	public void substractCicilan(Long jumlah) {
+		if (cicilan == null) {
+			cicilan = 0L;
+		} else {
+			cicilan -= jumlah;
+		}
 	}
 
 	@Column(name = "status")
@@ -112,13 +163,13 @@ public class Pasien implements Penanggung {
 	}
 
 	@Override
-	@Column(name = "tanggungan")
-	public Tanggungan getTanggungan() {
-		return tanggungan;
+	@Column(name = "penanggung")
+	public Penanggung getPenanggung() {
+		return penanggung;
 	}
 
-	public void setTanggungan(Tanggungan tanggungan) {
-		this.tanggungan = tanggungan;
+	public void setPenanggung(Penanggung penanggung) {
+		this.penanggung = penanggung;
 	}
 
 	@ManyToOne(cascade = CascadeType.MERGE)
@@ -132,12 +183,21 @@ public class Pasien implements Penanggung {
 	}
 
 	@Column(name = "tipe")
-	public Type getTipe() {
-		return tipe;
+	public Perawatan getTipePerawatan() {
+		return tipePerawatan;
 	}
 
-	public void setTipe(Type tipe) {
-		this.tipe = tipe;
+	public void setTipePerawatan(Perawatan tipePerawatan) {
+		this.tipePerawatan = tipePerawatan;
+	}
+
+	@Column(name = "pendaftaran")
+	public Pendaftaran getPendaftaran() {
+		return pendaftaran;
+	}
+
+	public void setPendaftaran(Pendaftaran pendaftaran) {
+		this.pendaftaran = pendaftaran;
 	}
 
 	@Column(name = "tanggal_keluar")
@@ -173,7 +233,7 @@ public class Pasien implements Penanggung {
 	}
 
 	@JsonBackReference
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne
 	@JoinColumn(name = "perawatan")
 	public PelayananTemporal getPerawatan() {
 		return perawatan;
@@ -181,6 +241,18 @@ public class Pasien implements Penanggung {
 
 	public void setPerawatan(PelayananTemporal perawatan) {
 		this.perawatan = perawatan;
+		if (perawatan != null)
+			this.ruangPerawatan = perawatan.getUnit();
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "tujuan")
+	public Unit getTujuan() {
+		return tujuan;
+	}
+
+	public void setTujuan(Unit tujuan) {
+		this.tujuan = tujuan;
 	}
 
 	@Transient
@@ -263,12 +335,25 @@ public class Pasien implements Penanggung {
 	public void setKodePenduduk(String kode) {
 		penduduk.setKode(kode);
 	}
-
-	public void generateKode() {
-		Integer i = Math.abs(hashCode());
-		Integer t = Math.abs(tanggalMasuk.hashCode());
+	
+	@Transient
+	public Unit getRuangPerawatan() {
+		return ruangPerawatan;
+	}
 		
-		this.kode = String.format("%s-%s", i, t);
+	public void setRuangPerawatan(Unit ruangPerawatan) {
+		this.ruangPerawatan = ruangPerawatan;
+	}	
+
+	public String generateKode() {
+		return createKode();
+	}
+	
+	public static String createKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("10%s00%s", d, t);
 	}
 
 	public void bayar(Long jumlah) {
@@ -284,16 +369,28 @@ public class Pasien implements Penanggung {
 		int result = 1;
 		result = prime * result + ((cicilan == null) ? 0 : cicilan.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((keadaan == null) ? 0 : keadaan.hashCode());
+		result = prime * result + ((kelas == null) ? 0 : kelas.hashCode());
 		result = prime * result + ((kode == null) ? 0 : kode.hashCode());
 		result = prime * result
 				+ ((penduduk == null) ? 0 : penduduk.hashCode());
+		result = prime * result
+				+ ((perawatan == null) ? 0 : perawatan.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result
-				+ ((tanggalMasuk == null) ? 0 : tanggalMasuk.hashCode());
+				+ ((tanggalKeluar == null) ? 0 : tanggalKeluar.hashCode());
 		result = prime * result
-				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
+				+ ((tanggalMasuk == null) ? 0 : tanggalMasuk.hashCode());
+		result = prime
+				* result
+				+ ((tanggalRawatInap == null) ? 0 : tanggalRawatInap.hashCode());
+		result = prime * result
+				+ ((penanggung == null) ? 0 : penanggung.hashCode());
+		result = prime * result
+				+ ((tipePerawatan == null) ? 0 : tipePerawatan.hashCode());
 		result = prime * result
 				+ ((totalTagihan == null) ? 0 : totalTagihan.hashCode());
+		result = prime * result + ((tujuan == null) ? 0 : tujuan.hashCode());
 		return result;
 	}
 
@@ -316,6 +413,10 @@ public class Pasien implements Penanggung {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (keadaan != other.keadaan)
+			return false;
+		if (kelas != other.kelas)
+			return false;
 		if (kode == null) {
 			if (other.kode != null)
 				return false;
@@ -326,19 +427,41 @@ public class Pasien implements Penanggung {
 				return false;
 		} else if (!penduduk.equals(other.penduduk))
 			return false;
+		if (perawatan == null) {
+			if (other.perawatan != null)
+				return false;
+		} else if (!perawatan.equals(other.perawatan))
+			return false;
 		if (status != other.status)
+			return false;
+		if (tanggalKeluar == null) {
+			if (other.tanggalKeluar != null)
+				return false;
+		} else if (!tanggalKeluar.equals(other.tanggalKeluar))
 			return false;
 		if (tanggalMasuk == null) {
 			if (other.tanggalMasuk != null)
 				return false;
 		} else if (!tanggalMasuk.equals(other.tanggalMasuk))
 			return false;
-		if (tanggungan != other.tanggungan)
+		if (tanggalRawatInap == null) {
+			if (other.tanggalRawatInap != null)
+				return false;
+		} else if (!tanggalRawatInap.equals(other.tanggalRawatInap))
+			return false;
+		if (penanggung != other.penanggung)
+			return false;
+		if (tipePerawatan != other.tipePerawatan)
 			return false;
 		if (totalTagihan == null) {
 			if (other.totalTagihan != null)
 				return false;
 		} else if (!totalTagihan.equals(other.totalTagihan))
+			return false;
+		if (tujuan == null) {
+			if (other.tujuan != null)
+				return false;
+		} else if (!tujuan.equals(other.tujuan))
 			return false;
 		return true;
 	}

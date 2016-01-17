@@ -1,7 +1,6 @@
 package com.dbsys.rs.lib;
 
-public interface Penanggung {
-
-	Tanggungan getTanggungan();
-	
+public enum Penanggung {
+	BPJS,
+	UMUM
 }

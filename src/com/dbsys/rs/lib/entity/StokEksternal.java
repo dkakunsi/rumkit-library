@@ -4,10 +4,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("PEKERJA")
-public class Pekerja extends Pegawai {
+@DiscriminatorValue("EKSTERNAL")
+public class StokEksternal extends Stok {
 
-	public Pekerja() {
-		super("PEKERJA");
+	public StokEksternal() {
+		super("EKSTERNAL");
 	}
 }

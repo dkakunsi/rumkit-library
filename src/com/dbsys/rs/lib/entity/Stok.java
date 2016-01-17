@@ -3,7 +3,6 @@ package com.dbsys.rs.lib.entity;
 import java.sql.Date;
 import java.sql.Time;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -18,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.DateUtil;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Table(name = "stok")
@@ -26,18 +27,53 @@ import com.dbsys.rs.lib.DateUtil;
 	name = "tipe",
 	discriminatorType = DiscriminatorType.STRING
 )
-public abstract class Stok {
+@JsonTypeInfo(
+	use = JsonTypeInfo.Id.NAME,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "tipeStok"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = StokInternal.class, name = "INTERNAL"),
+	@JsonSubTypes.Type(value = StokEksternal.class, name = "EKSTERNAL"),
+	@JsonSubTypes.Type(value = StokKembali.class, name = "KEMBALI"),
+	@JsonSubTypes.Type(value = Stok.class, name = "STOK")
+})
+public class Stok {
+	
+	public enum JenisStok {
+		MASUK,
+		KELUAR
+	}
 
 	protected Long id;
 	protected Long jumlah;
 	protected Date tanggal;
 	protected Time jam;
 	protected Barang barang;
+	protected JenisStok jenis;
 	
-	protected Stok() {
+	// Untuk JSON bukan JPA
+	private String tipeStok;
+	
+	public Stok() {
 		super();
+		this.tipeStok = "STOK";
 		setTanggal(DateUtil.getDate());
 		setJam(DateUtil.getTime());
+	}
+	
+	public Stok(String name) {
+		this();
+		this.tipeStok = name;
+	}
+
+	@Transient
+	public String getTipe() {
+		return tipeStok;
+	}
+
+	public void setTipe(String tipeStok) {
+		this.tipeStok = tipeStok;
 	}
 
 	@Id
@@ -77,7 +113,7 @@ public abstract class Stok {
 		this.jam = jam;
 	}
 
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne
 	@JoinColumn(name = "barang")
 	public Barang getBarang() {
 		return barang;
@@ -87,10 +123,14 @@ public abstract class Stok {
 		this.barang = barang;
 	}
 
-	@Transient
-	public abstract String getName();
-	
-	public void setName(String name) { }
+	@Column(name = "jenis")
+	public JenisStok getJenis() {
+		return jenis;
+	}
+
+	public void setJenis(JenisStok jenis) {
+		this.jenis = jenis;
+	}
 
 	@Override
 	public int hashCode() {

@@ -2,10 +2,10 @@ package com.dbsys.rs.lib.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.dbsys.rs.lib.CodedEntity;
@@ -13,44 +13,46 @@ import com.dbsys.rs.lib.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "pemakaian")
-public class Pemakaian extends Tagihan implements CodedEntity {
-
-	private Barang barang;
-	private String nomorResep;
+@DiscriminatorValue("KEMBALI")
+public class StokKembali extends Stok implements CodedEntity {
 	
+	private Pasien pasien;
+	private String nomor;
+	
+	public StokKembali() {
+		super("KEMBALI");
+		setJenis(JenisStok.MASUK);
+	}
+
 	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "barang")
-	public Barang getBarang() {
-		return barang;
+	@JoinColumn(name = "pasien")
+	public Pasien getPasien() {
+		return pasien;
 	}
 
-	public void setBarang(Barang barang) {
-		this.barang = barang;
-		this.tanggungan = barang;
+	public void setPasien(Pasien pasien) {
+		this.pasien = pasien;
 	}
 
-	@Column(name = "nomor_resep")
-	public String getNomorResep() {
-		return nomorResep;
+	@Column(name = "nomor_kembali")
+	public String getNomor() {
+		return nomor;
 	}
 
-	public void setNomorResep(String nomorResep) {
-		this.nomorResep = nomorResep;
+	public void setNomor(String nomor) {
+		this.nomor = nomor;
 	}
 
-	@Override
-	@Transient
-	public Long getTagihan() {
-		return barang.getHarga() * jumlah + biayaTambahan;
+	public Long hitungPengembalian() {
+		return barang.getHarga() * jumlah;
 	}
 	
 	@Override
-	@Transient
-	public String getNama() {
-		return barang.getNama();
-	}
-
+	public void setJenis(JenisStok jenis) {
+		jenis = JenisStok.MASUK;
+		super.setJenis(jenis);
+	};
+	
 	@Override
 	public String generateKode() {
 		return createKode();
@@ -60,26 +62,26 @@ public class Pemakaian extends Tagihan implements CodedEntity {
 		Integer d = Math.abs(DateUtil.getDate().hashCode());
 		Integer t = Math.abs(DateUtil.getTime().hashCode());
 		
-		return String.format("20%s00%s", d, t);
+		return String.format("30%s00%s", d, t);
 	}
 
 	@Override
 	@JsonIgnore
 	@Transient
 	public String getKode() {
-		return getNomorResep();
+		return getNomor();
 	}
 
 	@Override
 	public void setKode(String kode) {
-		setNomorResep(kode);
+		setNomor(kode);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((barang == null) ? 0 : barang.hashCode());
+		result = prime * result + ((pasien == null) ? 0 : pasien.hashCode());
 		return result;
 	}
 
@@ -91,11 +93,11 @@ public class Pemakaian extends Tagihan implements CodedEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pemakaian other = (Pemakaian) obj;
-		if (barang == null) {
-			if (other.barang != null)
+		StokKembali other = (StokKembali) obj;
+		if (pasien == null) {
+			if (other.pasien != null)
 				return false;
-		} else if (!barang.equals(other.barang))
+		} else if (!pasien.equals(other.pasien))
 			return false;
 		return true;
 	}

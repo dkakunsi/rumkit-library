@@ -11,9 +11,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.NumberException;
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -27,13 +29,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,
 	include = JsonTypeInfo.As.PROPERTY,
-	property = "name"
+	property = "tipeBarang"
 )
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = BahanHabisPakai.class, name = "BHP"),
-	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT")
+	@JsonSubTypes.Type(value = ObatFarmasi.class, name = "OBAT"),
+	@JsonSubTypes.Type(value = Barang.class, name = "BARANG")
 })
-public class Barang implements Penanggung {
+public class Barang implements Tanggungan, CodedEntity {
 
 	protected Long id;
 	protected String kode;
@@ -41,13 +44,28 @@ public class Barang implements Penanggung {
 	protected Long jumlah;
 	protected String satuan;
 	protected Long harga;
-	protected Tanggungan tanggungan;
-
-	// tidak termasuk dalam mapping entity
-	protected String name;
+	protected Penanggung penanggung;
+	
+	// Untuk JSON bukan JPA
+	private String tipeBarang;
 	
 	public Barang() {
 		super();
+		this.tipeBarang = "BARANG";
+	}
+	
+	public Barang(String name) {
+		super();
+		this.tipeBarang = name;
+	}
+
+	@Transient
+	public String getTipe() {
+		return tipeBarang;
+	}
+
+	public void setTipe(String tipeBarang) {
+		this.tipeBarang = tipeBarang;
 	}
 
 	@Id
@@ -69,6 +87,18 @@ public class Barang implements Penanggung {
 		this.kode = kode;
 	}
 
+	@Override
+	public String generateKode() {
+		return createKode();
+	}
+
+	public static String createKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("50%s00%s", d, t);
+	}
+	
 	@Column(name = "nama")
 	public String getNama() {
 		return nama;
@@ -116,22 +146,13 @@ public class Barang implements Penanggung {
 	}
 
 	@Override
-	@Column(name = "tanggungan")
-	public Tanggungan getTanggungan() {
-		return tanggungan;
+	@Column(name = "penanggung")
+	public Penanggung getPenanggung() {
+		return penanggung;
 	}
 
-	public void setTanggungan(Tanggungan tanggungan) {
-		this.tanggungan = tanggungan;
-	}
-	
-	@Transient
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setPenanggung(Penanggung penanggung) {
+		this.penanggung = penanggung;
 	}
 	
 	public Long add(Integer jumlah) {
@@ -159,7 +180,7 @@ public class Barang implements Penanggung {
 		result = prime * result + ((nama == null) ? 0 : nama.hashCode());
 		result = prime * result + ((satuan == null) ? 0 : satuan.hashCode());
 		result = prime * result
-				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
+				+ ((penanggung == null) ? 0 : penanggung.hashCode());
 		return result;
 	}
 
@@ -202,7 +223,7 @@ public class Barang implements Penanggung {
 				return false;
 		} else if (!satuan.equals(other.satuan))
 			return false;
-		if (tanggungan != other.tanggungan)
+		if (penanggung != other.penanggung)
 			return false;
 		return true;
 	}

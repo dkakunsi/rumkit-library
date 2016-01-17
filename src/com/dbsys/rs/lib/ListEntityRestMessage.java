@@ -2,21 +2,16 @@ package com.dbsys.rs.lib;
 
 import java.util.List;
 
-import com.dbsys.rs.lib.entity.Apoteker;
-import com.dbsys.rs.lib.entity.BahanHabisPakai;
-import com.dbsys.rs.lib.entity.Dokter;
+import com.dbsys.rs.lib.entity.Barang;
 import com.dbsys.rs.lib.entity.KategoriTindakan;
-import com.dbsys.rs.lib.entity.ObatFarmasi;
 import com.dbsys.rs.lib.entity.Operator;
 import com.dbsys.rs.lib.entity.Pasien;
-import com.dbsys.rs.lib.entity.Pekerja;
+import com.dbsys.rs.lib.entity.Pegawai;
 import com.dbsys.rs.lib.entity.Pelayanan;
-import com.dbsys.rs.lib.entity.PemakaianBhp;
-import com.dbsys.rs.lib.entity.PemakaianObat;
+import com.dbsys.rs.lib.entity.Pemakaian;
+import com.dbsys.rs.lib.entity.Pembayaran;
 import com.dbsys.rs.lib.entity.Penduduk;
-import com.dbsys.rs.lib.entity.Perawat;
-import com.dbsys.rs.lib.entity.StokKeluar;
-import com.dbsys.rs.lib.entity.StokMasuk;
+import com.dbsys.rs.lib.entity.Stok;
 import com.dbsys.rs.lib.entity.Tindakan;
 import com.dbsys.rs.lib.entity.Unit;
 
@@ -40,11 +35,15 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	protected ListEntityRestMessage(List<T> list) {
 		super("Berhasil", Type.LIST);
-		this.list = list;
+		setList(list);
 	}
 	
 	public List<T> getList() {
 		return list;
+	}
+	
+	public void setList(List<T> list) {
+		this.list = list;
 	}
 
 	/**
@@ -74,48 +73,24 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<Tindakan>(list);
 	}
 
-	public static ListEntityRestMessage<ObatFarmasi> createListObat(List<ObatFarmasi> list) {
-		return new ListEntityRestMessage<ObatFarmasi>(list);
+	public static ListEntityRestMessage<Barang> createListBarang(List<Barang> list) {
+		return new ListEntityRestMessage<Barang>(list);
 	}
 
-	public static ListEntityRestMessage<BahanHabisPakai> createListBhp(List<BahanHabisPakai> list) {
-		return new ListEntityRestMessage<BahanHabisPakai>(list);
-	}
-
-	public static ListEntityRestMessage<Dokter> createListDokter(List<Dokter> list) {
-		return new ListEntityRestMessage<Dokter>(list);
-	}
-
-	public static ListEntityRestMessage<Perawat> createListPerawat(List<Perawat> list) {
-		return new ListEntityRestMessage<Perawat>(list);
-	}
-
-	public static ListEntityRestMessage<Apoteker> createListApoteker(List<Apoteker> list) {
-		return new ListEntityRestMessage<Apoteker>(list);
-	}
-
-	public static ListEntityRestMessage<Pekerja> createListPekerja(List<Pekerja> list) {
-		return new ListEntityRestMessage<Pekerja>(list);
+	public static ListEntityRestMessage<Pegawai> createListPegawai(List<Pegawai> list) {
+		return new ListEntityRestMessage<Pegawai>(list);
 	}
 
 	public static ListEntityRestMessage<KategoriTindakan> createListKategori(List<KategoriTindakan> list) {
 		return new ListEntityRestMessage<KategoriTindakan>(list);
 	}
 
-	public static ListEntityRestMessage<StokMasuk> createListStokMasuk(List<StokMasuk> list) {
+	public static ListEntityRestMessage<Stok> createListStok(List<Stok> list) {
 		return new ListEntityRestMessage<>(list);
 	}
 
-	public static ListEntityRestMessage<StokKeluar> createListStokKeluar(List<StokKeluar> list) {
-		return new ListEntityRestMessage<>(list);
-	}
-
-	public static ListEntityRestMessage<PemakaianBhp> createListPemakaianBhp(List<PemakaianBhp> list) {
-		return new ListEntityRestMessage<PemakaianBhp>(list);
-	}
-
-	public static ListEntityRestMessage<PemakaianObat> createListPemakaianObat(List<PemakaianObat> list) {
-		return new ListEntityRestMessage<PemakaianObat>(list);
+	public static ListEntityRestMessage<Pemakaian> createListPemakaian(List<Pemakaian> list) {
+		return new ListEntityRestMessage<Pemakaian>(list);
 	}
 
 	public static ListEntityRestMessage<Pasien> createListPasien(List<Pasien> list) {
@@ -124,5 +99,9 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	public static ListEntityRestMessage<Pelayanan> createListPelayanan(List<Pelayanan> list) {
 		return new ListEntityRestMessage<Pelayanan>(list);
+	}
+
+	public static ListEntityRestMessage<Pembayaran> createListPembayaran(List<Pembayaran> list) {
+		return new ListEntityRestMessage<Pembayaran>(list);
 	}
 }

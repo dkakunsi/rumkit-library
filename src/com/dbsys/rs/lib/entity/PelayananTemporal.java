@@ -20,8 +20,7 @@ public class PelayananTemporal extends Pelayanan {
 	private Time jamKeluar;
 
 	public PelayananTemporal() {
-		super();
-		setName(Name.TEMPORAL);
+		super("TEMPORAL");
 	}
 	
 	@Column(name = "tanggal_selesai")
@@ -68,33 +67,43 @@ public class PelayananTemporal extends Pelayanan {
 	@Override
 	@Transient
 	public Long getTagihan() {
-		if (tindakan.getSatuan().equals(Tindakan.Satuan.HARI))
-			return getTagihanHarian();
-		return getTagihanJam();
+		if (tindakan.getSatuan().equals(Tindakan.SatuanTindakan.HARI)) {
+			hitungJumlahHari();
+		} else if(tindakan.getSatuan().equals(Tindakan.SatuanTindakan.JAM)) {
+			hitungJumlahJam();
+		}
+		
+		return super.getTagihan();
 	}
 
-	@JsonIgnore
-	@Transient
-	public Long getTagihanHarian() {
-		if (tanggalSelesai == null)
-			return 0L;
+	public Integer hitungJumlahHari() {
+		if (jumlah == null || jumlah == 0) {
+			long jumlahJam = hitungJumlahJam();
+			long hasil = jumlahJam / 24;
+			
+			if (jumlahJam % 24 > 0)
+				hasil++;
+			
+			jumlah = (int)hasil;
+		}
 		
-		jumlah = DateUtil.calculate(tanggal, tanggalSelesai);
-
-		if (jumlah == 0)
-			jumlah = 1;
-		
-		return tindakan.getTarif() * jumlah + biayaTambahan;
+		return jumlah;
 	}
 	
-	@JsonIgnore
-	@Transient
-	public Long getTagihanJam() {
-		if (tanggalSelesai == null || jamKeluar == null)
-			return 0L;
-		
-		jumlah = getJumlahJam();
-		return tindakan.getTarif() * jumlah + biayaTambahan;
+	public Integer hitungJumlahJam() {
+		if (jumlah == null || jumlah == 0) {
+			Date tanggalHitung = tanggalSelesai;
+			Time jamHitung = jamKeluar;
+			
+			if (tanggalHitung == null)
+				tanggalHitung = DateUtil.getDate();
+			if (jamHitung == null)
+				jamHitung = DateUtil.getTime();
+
+			jumlah = getJumlahJam(tanggal, tanggalHitung, jamMasuk, jamHitung);
+		}
+
+		return jumlah;
 	}
 	
 	@JsonIgnore

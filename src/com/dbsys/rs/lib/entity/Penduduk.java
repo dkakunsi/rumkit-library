@@ -8,9 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
+
 @Entity
 @Table(name = "penduduk")
-public class Penduduk {
+public class Penduduk implements CodedEntity {
 
 	public enum Kelamin {
 		PRIA, WANITA
@@ -48,7 +51,21 @@ public class Penduduk {
 	public void setKode(String kode) {
 		this.kode = kode;
 	}
+	
+	public String generateKode() {
+		String kode = createKode();
+		setKode(kode);
+		
+		return kode;
+	}
+	
+	public static String createKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
 
+		return String.format("60%s00%s", d, t);
+	}
+	
 	@Column(name = "nik")
 	public String getNik() {
 		return nik;
@@ -110,11 +127,6 @@ public class Penduduk {
 
 	public void setTelepon(String telepon) {
 		this.telepon = telepon;
-	}
-	
-	public void generateKode() {
-		Integer kode = Math.abs(hashCode());
-		setKode(kode.toString());
 	}
 
 	@Override

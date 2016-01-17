@@ -1,6 +1,5 @@
 package com.dbsys.rs.lib.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,15 +8,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.dbsys.rs.lib.CodedEntity;
+import com.dbsys.rs.lib.DateUtil;
 import com.dbsys.rs.lib.Kelas;
-import com.dbsys.rs.lib.Penanggung;
 import com.dbsys.rs.lib.Tanggungan;
+import com.dbsys.rs.lib.Penanggung;
 
 @Entity
 @Table(name = "tindakan")
-public class Tindakan implements Penanggung {
+public class Tindakan implements Tanggungan, CodedEntity {
 	
-	public enum Satuan {
+	public enum SatuanTindakan {
 		TINDAKAN, HARI, JAM
 	}
 
@@ -27,8 +28,8 @@ public class Tindakan implements Penanggung {
 	protected Long tarif;
 	protected KategoriTindakan kategori;
 	protected Kelas kelas;
-	protected Tanggungan tanggungan;
-	protected Satuan satuan;
+	protected Penanggung penanggung;
+	protected SatuanTindakan satuan;
 	protected String keterangan;
 	
 	public Tindakan() {
@@ -54,6 +55,18 @@ public class Tindakan implements Penanggung {
 		this.kode = kode;
 	}
 
+	@Override
+	public String generateKode() {
+		return createKode();
+	}
+	
+	public static String createKode() {
+		Integer d = Math.abs(DateUtil.getDate().hashCode());
+		Integer t = Math.abs(DateUtil.getTime().hashCode());
+		
+		return String.format("70%s00%s", d, t);
+	}
+	
 	@Column(name = "nama")
 	public String getNama() {
 		return nama;
@@ -72,7 +85,7 @@ public class Tindakan implements Penanggung {
 		this.tarif = tarif;
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "kategori")
 	public KategoriTindakan getKategori() {
 		return kategori;
@@ -92,21 +105,21 @@ public class Tindakan implements Penanggung {
 	}
 
 	@Override
-	@Column(name = "tanggungan")
-	public Tanggungan getTanggungan() {
-		return tanggungan;
+	@Column(name = "penanggung")
+	public Penanggung getPenanggung() {
+		return penanggung;
 	}
 
-	public void setTanggungan(Tanggungan tanggungan) {
-		this.tanggungan = tanggungan;
+	public void setPenanggung(Penanggung penanggung) {
+		this.penanggung = penanggung;
 	}
 
 	@Column(name = "satuan")
-	public Satuan getSatuan() {
+	public SatuanTindakan getSatuan() {
 		return satuan;
 	}
 
-	public void setSatuan(Satuan satuan) {
+	public void setSatuan(SatuanTindakan satuan) {
 		this.satuan = satuan;
 	}
 
@@ -133,7 +146,7 @@ public class Tindakan implements Penanggung {
 		result = prime * result + ((nama == null) ? 0 : nama.hashCode());
 		result = prime * result + ((satuan == null) ? 0 : satuan.hashCode());
 		result = prime * result
-				+ ((tanggungan == null) ? 0 : tanggungan.hashCode());
+				+ ((penanggung == null) ? 0 : penanggung.hashCode());
 		result = prime * result + ((tarif == null) ? 0 : tarif.hashCode());
 		return result;
 	}
@@ -176,7 +189,7 @@ public class Tindakan implements Penanggung {
 			return false;
 		if (satuan != other.satuan)
 			return false;
-		if (tanggungan != other.tanggungan)
+		if (penanggung != other.penanggung)
 			return false;
 		if (tarif == null) {
 			if (other.tarif != null)

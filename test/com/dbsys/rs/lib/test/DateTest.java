@@ -4,67 +4,29 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.Month;
 
 import org.junit.Test;
 
 import com.dbsys.rs.lib.DateUtil;
-import com.dbsys.rs.lib.entity.PelayananTemporal;
 
 public class DateTest {
 	
 	@Test
-	public void testGetHourSameDay() {
-		Date date1 = DateUtil.getDate();
-		Date date2 = date1;
+	public void testGetDate() {
+		Date date1 = DateUtil.getDate(2015, Month.DECEMBER, 12);
+		Date now = DateUtil.getDate();
 		
-		Time time1 = DateUtil.getTime(21, 0, 0);
-		Time time2 = DateUtil.getTime(23, 0, 0);
-		
-		PelayananTemporal pelayanan = new PelayananTemporal();
-		Integer i = pelayanan.getJumlahJam(date1, date2, time1, time2);
-		
-		assertEquals(new Integer(2), i);
+		assertEquals(date1, now);
 	}
 	
 	@Test
-	public void testGetHourDifferentDay_LessThan24Hours() {
-		Date date1 = DateUtil.getDate();
-		Date date2 = DateUtil.add(date1, 1);
+	public void test() {
+		Time t1 = DateUtil.getTime(6, 0, 0);
+		Time t2 = DateUtil.getTime(7, 59, 0);
 		
-		Time time1 = DateUtil.getTime(21, 0, 0);
-		Time time2 = DateUtil.getTime(3, 0, 0);
+		int h = DateUtil.calculate(t1, t2);
 		
-		PelayananTemporal pelayanan = new PelayananTemporal();
-		Integer i = pelayanan.getJumlahJam(date1, date2, time1, time2);
-		
-		assertEquals(new Integer(6), i);
-	}
-	
-	@Test
-	public void testGetHourDifferentDay_MoreThan24Hours() {
-		Date date1 = DateUtil.getDate();
-		Date date2 = DateUtil.add(date1, 1);
-		
-		Time time1 = DateUtil.getTime(21, 0, 0);
-		Time time2 = DateUtil.getTime(22, 0, 0);
-		
-		PelayananTemporal pelayanan = new PelayananTemporal();
-		Integer i = pelayanan.getJumlahJam(date1, date2, time1, time2);
-		
-		assertEquals(new Integer(25), i);
-	}
-	
-	@Test
-	public void testGetHourDifferentDay_Equals24Hours() {
-		Date date1 = DateUtil.getDate();
-		Date date2 = DateUtil.add(date1, 1);
-		
-		Time time1 = DateUtil.getTime(21, 0, 0);
-		Time time2 = DateUtil.getTime(21, 0, 0);
-		
-		PelayananTemporal pelayanan = new PelayananTemporal();
-		Integer i = pelayanan.getJumlahJam(date1, date2, time1, time2);
-		
-		assertEquals(new Integer(24), i);
+		assertEquals(2, h);
 	}
 }
