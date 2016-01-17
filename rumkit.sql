@@ -1,4 +1,4 @@
-CREATE DATABASE rumkit;
+-- CREATE DATABASE rumkit;
 USE rumkit;
 
 CREATE TABLE unit (
@@ -32,7 +32,7 @@ CREATE TABLE token (
 CREATE TABLE penduduk (
 	id int(10) auto_increment,
 	kode varchar(255) not null,
-	nik varchar(255) not null,
+	nik varchar(255) not null, -- menjadi nomor tanggungan BPJS --
 	nama varchar(255) not null,
 	kelamin int(1) not null,
 	tanggal_lahir date not null,
@@ -40,7 +40,6 @@ CREATE TABLE penduduk (
 	agama varchar(255) not null,
 	telepon varchar(255) not null,
 	unique(kode),
-	unique(nik),
 	primary key (id)
 ) ENGINE = InnoDB;
 
@@ -198,6 +197,6 @@ ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_barang FOREIGN KEY (barang) RE
 ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_unit FOREIGN KEY (unit) REFERENCES unit (id);
 ALTER TABLE pemakaian ADD CONSTRAINT fk_pemakaian_pembayaran FOREIGN KEY (pembayaran) REFERENCES pembayaran (kode);
 
-USE mysql;
-CREATE USER 'rumkit_user'@'localhost' IDENTIFIED BY 'liun';
-GRANT ALL PRIVILEGES ON rumkit.* TO 'rumkit_user'@'localhost' WITH GRANT OPTION;
+-- USE mysql;
+-- CREATE USER 'rumkit_user'@'localhost' IDENTIFIED BY 'liun';
+-- GRANT ALL PRIVILEGES ON rumkit.* TO 'rumkit_user'@'localhost' WITH GRANT OPTION;
