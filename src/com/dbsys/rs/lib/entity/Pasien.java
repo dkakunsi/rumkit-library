@@ -244,6 +244,16 @@ public class Pasien implements Tanggungan, CodedEntity {
 		if (perawatan != null)
 			this.ruangPerawatan = perawatan.getUnit();
 	}
+	
+	@ManyToOne
+	@JoinColumn(name = "ruang_perawatan")
+	public Unit getRuangPerawatan() {
+		return ruangPerawatan;
+	}
+		
+	public void setRuangPerawatan(Unit ruangPerawatan) {
+		this.ruangPerawatan = ruangPerawatan;
+	}	
 
 	@ManyToOne
 	@JoinColumn(name = "tujuan")
@@ -335,15 +345,6 @@ public class Pasien implements Tanggungan, CodedEntity {
 	public void setKodePenduduk(String kode) {
 		penduduk.setKode(kode);
 	}
-	
-	@Transient
-	public Unit getRuangPerawatan() {
-		return ruangPerawatan;
-	}
-		
-	public void setRuangPerawatan(Unit ruangPerawatan) {
-		this.ruangPerawatan = ruangPerawatan;
-	}	
 
 	public String generateKode() {
 		return createKode();

@@ -60,6 +60,7 @@ CREATE TABLE pasien (
 	penduduk int(10) not null,
 	perawatan int(10),
 	tujuan int(10),
+	ruang_perawatan int(10),
 	primary key (id),
 	unique (kode)
 ) ENGINE = InnoDB;
@@ -173,6 +174,7 @@ ALTER TABLE token ADD CONSTRAINT fk_token_operator FOREIGN KEY (operator) REFERE
 ALTER TABLE pasien ADD CONSTRAINT fk_pasien_penduduk FOREIGN KEY (penduduk) REFERENCES penduduk (id);
 ALTER TABLE pasien ADD CONSTRAINT fk_pasien_pelayanan FOREIGN KEY (perawatan) REFERENCES pelayanan (id);
 ALTER TABLE pasien ADD CONSTRAINT fk_pasien_unit FOREIGN KEY (tujuan) REFERENCES unit (id);
+ALTER TABLE pasien ADD CONSTRAINT fk_ruang_perawatan FOREIGN KEY (ruang_perawatan) REFERENCES unit (id);
 
 ALTER TABLE pegawai ADD CONSTRAINT fk_pegawai_penduduk FOREIGN KEY (penduduk) REFERENCES penduduk (id);
 
