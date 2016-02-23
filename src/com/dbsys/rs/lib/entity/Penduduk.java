@@ -29,6 +29,11 @@ public class Penduduk implements CodedEntity {
 	protected String agama;
 	protected String telepon;
 	
+	protected String alamat;
+	protected String pekerjaan;
+	protected String jenisKartu;
+	protected Date tanggalDaftar;
+	
 	public Penduduk() {
 		super();
 	}
@@ -127,6 +132,42 @@ public class Penduduk implements CodedEntity {
 
 	public void setTelepon(String telepon) {
 		this.telepon = telepon;
+	}
+
+	@Column(name = "alamat")
+	public String getAlamat() {
+		return alamat;
+	}
+
+	public void setAlamat(String alamat) {
+		this.alamat = alamat;
+	}
+
+	@Column(name = "pekerjaan")
+	public String getPekerjaan() {
+		return pekerjaan;
+	}
+
+	public void setPekerjaan(String pekerjaan) {
+		this.pekerjaan = pekerjaan;
+	}
+
+	@Column(name = "jenis_kartu")
+	public String getJenisKartu() {
+		return jenisKartu;
+	}
+
+	public void setJenisKartu(String jenisKartu) {
+		this.jenisKartu = jenisKartu;
+	}
+
+	@Column(name = "tanggal_daftar")
+	public Date getTanggalDaftar() {
+		return tanggalDaftar;
+	}
+
+	public void setTanggalDaftar(Date tanggalDaftar) {
+		this.tanggalDaftar = tanggalDaftar;
 	}
 
 	@Override
